@@ -135,7 +135,7 @@ module Milsblo:
 | **kicad-cli** | Headless DRC and Gerber export | `kicad-cli pcb drc`, `kicad-cli pcb export gerbers` |
 | **KiBot** | Automated manufacturing file generation | `kibot -c pcbway.kibot.yaml` |
 | **ngspice** | SPICE simulation of power and fan circuits | `ngspice -b milsblo_power.cir` |
-| **PlatformIO** | ESP32 firmware build and flash | `pio run -t upload` |
+| **ESPHome** | ESP32 firmware configuration and OTA updates | `esphome run milsblo.yaml` |
 
 ---
 
@@ -341,42 +341,173 @@ cd gerbers && zip ../milsblo-gerbers.zip * && cd ..
 - Silkscreen: white
 - Min order: 5 pcs (~$5 + shipping)
 
-### Phase 7: ESP32 firmware
+### Phase 7: ESPHome configuration
 
-**Goal:** PlatformIO project with fan control, sensor reading, and web UI.
+**Goal:** ESPHome YAML configuration for fan control, sensor reading, and Home Assistant integration.
 
 ```
 firmware/
-├── platformio.ini
-├── src/
-│   └── main.cpp
-├── include/
-│   └── config.h
-└── data/               # SPIFFS web UI files
-    └── index.html
+└── milsblo.yaml        # ESPHome configuration
 ```
 
-**platformio.ini:**
-```ini
-[env:esp32s3]
-platform = espressif32
-board = esp32-s3-devkitc-1
-framework = arduino
-monitor_speed = 115200
-lib_deps =
-    adafruit/Adafruit BME280 Library
-    adafruit/Adafruit Unified Sensor
-    me-no-dev/ESPAsyncWebServer
-    me-no-dev/AsyncTCP
+**milsblo.yaml:**
+```yaml
+esphome:
+  name: milsblo
+  friendly_name: Milsblo Fan Controller
+  platformio_options:
+    board_build.flash_mode: dio
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret milsblo_api_key
+
+ota:
+  - platform: esphome
+    password: !secret milsblo_ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot in case wifi connection fails
+  ap:
+    ssid: "Milsblo Fallback Hotspot"
+    password: !secret milsblo_ap_password
+
+# Web server for debugging (optional, disable for production)
+web_server:
+  port: 80
+
+# I2C bus for BME280
+i2c:
+  sda: GPIO8
+  scl: GPIO9
+  scan: true
+
+# BME280 sensor
+sensor:
+  - platform: bme280_i2c
+    temperature:
+      name: "Temperature"
+      filters:
+        - offset: -1.0  # Compensate for self-heating
+      accuracy_decimals: 1
+    pressure:
+      name: "Pressure"
+      accuracy_decimals: 0
+    humidity:
+      name: "Humidity"
+      accuracy_decimals: 0
+    address: 0x76
+    update_interval: 30s
+
+  # Fan 1 tach
+  - platform: pulse_counter
+    pin:
+      number: GPIO6
+      mode:
+        input: true
+        pullup: true
+    name: "Fan 1 Speed"
+    unit_of_measurement: 'RPM'
+    filters:
+      - multiply: 0.5  # Most PC fans output 2 pulses per revolution
+    count_mode:
+      rising_edge: INCREMENT
+      falling_edge: DISABLE
+    update_interval: 10s
+
+  # Fan 2 tach
+  - platform: pulse_counter
+    pin:
+      number: GPIO7
+      mode:
+        input: true
+        pullup: true
+    name: "Fan 2 Speed"
+    unit_of_measurement: 'RPM'
+    filters:
+      - multiply: 0.5
+    count_mode:
+      rising_edge: INCREMENT
+      falling_edge: DISABLE
+    update_interval: 10s
+
+# PWM outputs for fan control
+output:
+  - platform: ledc
+    pin: GPIO4
+    frequency: 25000 Hz
+    id: fan1_pwm
+
+  - platform: ledc
+    pin: GPIO5
+    frequency: 25000 Hz
+    id: fan2_pwm
+
+# Fan control entities
+fan:
+  - platform: speed
+    output: fan1_pwm
+    name: "Fan 1"
+
+  - platform: speed
+    output: fan2_pwm
+    name: "Fan 2"
+
+# Optional: Power Good status from CH224K
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO10
+      mode:
+        input: true
+    name: "USB-C PD Power Good"
+    device_class: power
 ```
 
-**Key firmware features:**
-- 25kHz LEDC PWM on GPIO 4 and 5
-- Tach reading via pulse counting on GPIO 6 and 7 (interrupt-driven)
-- BME280 forced-mode reads every 30 seconds (avoids self-heating). Apply ~1°C temperature offset correction in firmware — BME280 reads 1–2°C high due to internal self-heating even in forced mode. Use a 3.3V-only breakout to minimize this.
-- Simple async web server for fan speed control and sensor dashboard
-- Optional: MQTT for Home Assistant integration (relevant for your HA setup)
-- Optional: mDNS at `milsblo.local`
+**Key ESPHome features:**
+- **LEDC PWM** on GPIO 4 and 5 at 25kHz (silent operation)
+- **Pulse counter** tach reading on GPIO 6 and 7 with 10-second sampling windows
+- **BME280 I2C** sensor with -1°C offset correction for self-heating
+- **Fan entities** with native Home Assistant speed control (0-100%)
+- **Web UI** at `http://milsblo.local` for debugging
+- **Native Home Assistant integration** via API
+- **OTA updates** for wireless firmware upgrades
+- **Fallback AP mode** if WiFi fails
+
+**Note on tach accuracy with low-side PWM:** ESPHome's pulse_counter samples continuously, so tach readings may be inaccurate at low PWM duty cycles (when the fan GND is floating most of the time). For accurate RPM readings, run fans at ≥50% speed or use the `update_interval` to average over time.
+
+**secrets.yaml** (create in same directory):
+```yaml
+wifi_ssid: "YourSSID"
+wifi_password: "YourPassword"
+milsblo_api_key: "generate-with-esphome"
+milsblo_ota_password: "generate-with-esphome"
+milsblo_ap_password: "fallback-password"
+```
+
+**Installation:**
+```bash
+# Install ESPHome
+pip install esphome
+
+# Compile and upload (first time via USB)
+esphome run milsblo.yaml
+
+# Future updates via OTA
+esphome run milsblo.yaml --device milsblo.local
+```
 
 ---
 
@@ -416,9 +547,9 @@ milsblo/
 │       ├── power/
 │       ├── fan/
 │       └── sensor/
-├── firmware/                ← PlatformIO ESP32 project
-│   ├── platformio.ini
-│   └── src/
+├── firmware/                ← ESPHome configuration
+│   ├── milsblo.yaml
+│   └── secrets.yaml
 ├── simulation/              ← ngspice netlists
 │   ├── power_chain.cir
 │   └── fan_driver.cir
