@@ -1,0 +1,22 @@
+requires-atopile: "0.12.5"
+
+paths:
+  src: ./src
+  layout: ./layouts
+
+builds:
+  default:
+    entry: milsblo.ato:Milsblo
+
+# This metadata is only required for publishing
+# Uncomment it and fill out the fields to publish your package
+# package:
+#   identifier: # fill me!/my_first_ato_project
+#   repository: # fill me!
+#   version: "0.1.0"  # recommended first version
+#   authors:
+#     - name: Pepper Powderly
+#       email: pepper@atopile.io
+#   summary: # fill me!
+#   license: MIT license
+#   homepage: # fill me!
