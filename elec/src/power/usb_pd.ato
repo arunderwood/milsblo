@@ -1,0 +1,63 @@
+import Resistor, Capacitor
+
+from "parts/SHOU_HAN_TYPE_C_16PIN_2MD_073/SHOU_HAN_TYPE_C_16PIN_2MD_073.ato" import SHOU_HAN_TYPE_C_16PIN_2MD_073_package
+from "parts/WCH_CH224K/WCH_CH224K.ato" import WCH_CH224K_package
+
+module USBPD:
+    """USB-C PD sink: negotiates 12V via CH224K. CC1/CC2 get 5.1kΩ pulldowns."""
+
+    # External interface
+    signal gnd
+    signal v12      # 12V output (after PD negotiation)
+    signal pg       # Power Good → ESP32 GPIO 10
+
+    # Components
+    usb_c  = new SHOU_HAN_TYPE_C_16PIN_2MD_073_package
+    ch224k = new WCH_CH224K_package
+
+    # Passives
+    r_cc1  = new Resistor     # 5.1kΩ CC1 pulldown (required for PD)
+    r_cc2  = new Resistor     # 5.1kΩ CC2 pulldown (required for PD)
+    r_cfg1 = new Resistor     # 24kΩ CFG1 → GND = 12V selection
+    r_vdd  = new Resistor     # 470Ω VBUS → VDD (series protection)
+    c_vdd  = new Capacitor    # 1µF VDD bypass
+
+    r_cc1.resistance  = 5.1kohm +/- 5%
+    r_cc2.resistance  = 5.1kohm +/- 5%
+    r_cfg1.resistance = 24kohm +/- 1%
+    r_vdd.resistance  = 470ohm +/- 5%
+    c_vdd.capacitance = 1uF +/- 10%
+
+    # VBUS: USB-C → CH224K → v12 rail
+    usb_c.VBUS ~ ch224k.VBUS
+    usb_c.VBUS ~ v12
+
+    # Ground + shield
+    usb_c.GND ~ ch224k.GND
+    usb_c.GND ~ gnd
+    usb_c.SHELL ~ gnd
+
+    # CC pulldowns (PD negotiation)
+    usb_c.CC1 ~ r_cc1.p1; r_cc1.p2 ~ gnd
+    usb_c.CC2 ~ r_cc2.p1; r_cc2.p2 ~ gnd
+
+    # CH224K CC + DP/DM connections
+    usb_c.CC1 ~ ch224k.CC1
+    usb_c.CC2 ~ ch224k.CC2
+    usb_c.DP1 ~ ch224k.DP
+    usb_c.DN1 ~ ch224k.DM
+    # DP2/DN2, SBU1/SBU2 left unconnected (not needed for power-only PD)
+
+    # Voltage selection: 24kΩ on CFG1 → GND = 12V
+    ch224k.CFG1 ~ r_cfg1.p1; r_cfg1.p2 ~ gnd
+    # CFG2/CFG3 left unconnected (default config)
+
+    # VDD supply: VBUS → 470Ω → VDD, bypass to GND
+    # TODO Phase 5: Add 5.1V zener clamp from VDD to GND (e.g. BZT52C5V1, LCSC C8051).
+    # At 12V VBUS the 470Ω alone is insufficient — VDD will see ~12V, exceeding the 5.5V max.
+    # Run `ato create part -s C8051` (interactive TTY) then add zener to this module.
+    usb_c.VBUS ~ r_vdd.p1; r_vdd.p2 ~ ch224k.VDD
+    ch224k.VDD ~ c_vdd.p1; c_vdd.p2 ~ gnd
+
+    # Power Good
+    ch224k.PG ~ pg

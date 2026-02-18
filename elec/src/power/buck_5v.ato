@@ -1,0 +1,51 @@
+import Resistor, Capacitor, Inductor
+
+from "parts/Diodes_Incorporated_AP63205WU_7/Diodes_Incorporated_AP63205WU_7.ato" import Diodes_Incorporated_AP63205WU_7_package
+
+module Buck5V:
+    """AP63205WU-7: 12V → 5V, 2A. EN gated by CH224K PG for power sequencing."""
+
+    # External interface
+    signal gnd
+    signal v12   # 12V input
+    signal pg    # CH224K Power Good → EN (sequencing)
+    signal v5    # 5V output → ESP32 VIN
+
+    # IC
+    buck = new Diodes_Incorporated_AP63205WU_7_package
+
+    # Passives
+    L1     = new Inductor    # 4.7µH switching inductor
+    c_in   = new Capacitor   # 22µF input bypass
+    c_out  = new Capacitor   # 22µF output filter
+    c_bst  = new Capacitor   # 100nF bootstrap
+    r_hi   = new Resistor    # 750kΩ FB top (for ~5.1V output)
+    r_lo   = new Resistor    # 100kΩ FB bottom
+
+    L1.inductance     = 4.7uH   +/- 10%
+    c_in.capacitance  = 22uF    +/- 10%
+    c_out.capacitance = 22uF    +/- 10%
+    c_bst.capacitance = 100nF   +/- 10%
+    r_hi.resistance   = 750kohm +/- 1%
+    r_lo.resistance   = 100kohm +/- 1%
+
+    # Input
+    buck.VIN ~ v12
+    buck.GND ~ gnd
+    c_in.p1 ~ v12; c_in.p2 ~ gnd
+
+    # Enable: PG from CH224K (power sequencing)
+    buck.EN ~ pg
+
+    # Switching: SW → inductor → VOUT
+    buck.SW ~ L1.p1; L1.p2 ~ v5
+
+    # Bootstrap: BST → 100nF → SW
+    buck.BST ~ c_bst.p1; c_bst.p2 ~ buck.SW
+
+    # Output filter
+    c_out.p1 ~ v5; c_out.p2 ~ gnd
+
+    # Feedback divider: VOUT → r_hi → FB → r_lo → GND  (VOUT ≈ 0.6V × (1 + 750k/100k) = 5.1V)
+    v5 ~ r_hi.p1; r_hi.p2 ~ buck.FB
+    buck.FB ~ r_lo.p1; r_lo.p2 ~ gnd

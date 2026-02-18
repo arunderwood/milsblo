@@ -1,0 +1,18 @@
+#pragma experiment("TRAITS")
+import has_designator_prefix
+import has_part_picked
+import is_atomic_part
+import is_auto_generated
+
+component FH_CMP201209UD4R7KT_package:
+    # This trait marks this file as auto-generated
+    # If you want to manually change it, remove the trait
+    trait is_auto_generated<system="ato_part", source="easyeda:C395016", date="2026-02-18T01:43:44.838948+00:00", checksum="c4419b82b4a494ff891a532fe4b884090c13bdf40bd479cae28308d32eceaa14">
+
+    trait is_atomic_part<manufacturer="FH", partnumber="CMP201209UD4R7KT", footprint="L0805.kicad_mod", symbol="CMP201209UD4R7KT.kicad_sym", model="R0805_L2.0-W1.3-H0.6.step">
+    trait has_part_picked::by_supplier<supplier_id="lcsc", supplier_partno="C395016", manufacturer="FH", partno="CMP201209UD4R7KT">
+    trait has_designator_prefix<prefix="L">
+
+    # pins
+    pin 1
+    pin 2

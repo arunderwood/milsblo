@@ -1,0 +1,32 @@
+import Resistor
+
+from "parts/CJT_A2541WR_4P/CJT_A2541WR_4P.ato" import CJT_A2541WR_4P_package
+
+module FanDriver:
+    """One 4-pin PWM fan channel. Instantiate twice for two fans."""
+
+    # External interface
+    signal gnd
+    signal v12       # 12V always-on to fan
+    signal v3v3      # 3.3V for tach pullup (from ESP32)
+    signal gpio_pwm  # from ESP32 GPIO (25kHz PWM)
+    signal gpio_tach # to ESP32 GPIO (tach input)
+
+    # Components
+    hdr    = new CJT_A2541WR_4P_package
+    r_pwm  = new Resistor    # 100Ω series on PWM (GPIO protection)
+    r_tach = new Resistor    # 10kΩ tach pullup to 3.3V
+
+    r_pwm.resistance  = 100ohm +/- 5%
+    r_tach.resistance = 10kohm +/- 5%
+
+    # Pin 1 = GND, Pin 2 = +12V
+    hdr.p1 ~ gnd
+    hdr.p2 ~ v12
+
+    # Pin 3 = Tach: pullup to 3.3V, read by ESP32
+    hdr.p3 ~ r_tach.p1; r_tach.p2 ~ v3v3
+    hdr.p3 ~ gpio_tach
+
+    # Pin 4 = PWM: 100Ω series from ESP32 GPIO
+    gpio_pwm ~ r_pwm.p1; r_pwm.p2 ~ hdr.p4

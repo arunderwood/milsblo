@@ -1,0 +1,39 @@
+import Resistor, Capacitor
+
+from "parts/JST_Sales_America_SM04B_SRSS_TB_LF__SN/JST_Sales_America_SM04B_SRSS_TB_LF__SN.ato" import JST_Sales_America_SM04B_SRSS_TB_LF__SN_package
+
+module SensorPort:
+    """Qwiic/STEMMA QT JST-SH 4-pin connector with I2C pullups and decoupling."""
+
+    # External interface
+    signal gnd
+    signal v3v3  # 3.3V from ESP32
+    signal sda   # I2C data
+    signal scl   # I2C clock
+
+    # Components
+    conn  = new JST_Sales_America_SM04B_SRSS_TB_LF__SN_package
+    r_sda = new Resistor    # 4.7kΩ SDA pullup
+    r_scl = new Resistor    # 4.7kΩ SCL pullup
+    c_dec = new Capacitor   # 100nF 3.3V decoupling
+
+    r_sda.resistance  = 4.7kohm +/- 5%
+    r_scl.resistance  = 4.7kohm +/- 5%
+    c_dec.capacitance = 100nF   +/- 10%
+
+    # Qwiic pinout: GND=1, 3V3=2, SDA=3, SCL=4
+    conn.p1 ~ gnd
+    conn.p2 ~ v3v3
+    conn.p3 ~ sda
+    conn.p4 ~ scl
+
+    # Mounting tabs → GND
+    conn.p5 ~ gnd
+    conn.p6 ~ gnd
+
+    # I2C pullups to 3.3V
+    sda ~ r_sda.p1; r_sda.p2 ~ v3v3
+    scl ~ r_scl.p1; r_scl.p2 ~ v3v3
+
+    # Decoupling
+    c_dec.p1 ~ v3v3; c_dec.p2 ~ gnd

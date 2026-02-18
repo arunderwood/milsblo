@@ -5,10 +5,7 @@ import is_atomic_part
 import is_auto_generated
 
 component CJT_A2541WR_4P_package:
-    # This trait marks this file as auto-generated
-    # If you want to manually change it, remove the trait
-    trait is_auto_generated<system="ato_part", source="easyeda:C225490", date="2026-02-18T00:11:33.894166+00:00", checksum="9c84d193f3650c9d31c0204507a73d5781d5edac48276bbee8cdaea40d52bf8e">
-
+    # Manually modified: added named signal aliases for bare pins
     trait is_atomic_part<manufacturer="CJT", partnumber="A2541WR-4P", footprint="HDR-TH_4P-P2.54-H-M-W10.3.kicad_mod", symbol="A2541WR-4P.kicad_sym", model="HDR-TH_4P-P2.54-M-WI-1X4P.step">
     trait has_part_picked::by_supplier<supplier_id="lcsc", supplier_partno="C225490", manufacturer="CJT", partno="A2541WR-4P">
     trait has_designator_prefix<prefix="H">
@@ -18,3 +15,9 @@ component CJT_A2541WR_4P_package:
     pin 2
     pin 3
     pin 4
+
+    # Named signal aliases (4-pin PC fan: GND=1, +12V=2, Tach=3, PWM=4)
+    signal p1 ~ pin 1
+    signal p2 ~ pin 2
+    signal p3 ~ pin 3
+    signal p4 ~ pin 4

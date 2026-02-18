@@ -1,27 +1,76 @@
-"""Milsblo — USB-C PD powered ESP32-S3 fan controller backpack PCB.
+"""Milsblo — USB-C PD powered ESP32-S3 fan controller backpack PCB."""
 
-Phase 1: component imports verified. Phase 2 will add submodules and wiring.
-"""
+import Capacitor
 
-from "parts/WCH_CH224K/WCH_CH224K.ato" import WCH_CH224K_package
-from "parts/Diodes_Incorporated_AP63205WU_7/Diodes_Incorporated_AP63205WU_7.ato" import Diodes_Incorporated_AP63205WU_7_package
-from "parts/SHOU_HAN_TYPE_C_16PIN_2MD_073/SHOU_HAN_TYPE_C_16PIN_2MD_073.ato" import SHOU_HAN_TYPE_C_16PIN_2MD_073_package
-from "parts/JST_Sales_America_SM04B_SRSS_TB_LF__SN/JST_Sales_America_SM04B_SRSS_TB_LF__SN.ato" import JST_Sales_America_SM04B_SRSS_TB_LF__SN_package
-from "parts/CJT_A2541WR_4P/CJT_A2541WR_4P.ato" import CJT_A2541WR_4P_package
+from "power/usb_pd.ato" import USBPD
+from "power/buck_5v.ato" import Buck5V
+from "fan/fan_driver.ato" import FanDriver
+from "sensor/sensor_port.ato" import SensorPort
 
 module Milsblo:
-    """Top-level board — Phase 1 placeholder, Phase 2 will wire all connections."""
+    """Top-level board module — Phase 2 complete circuit."""
 
-    # USB-C PD input
-    usb_c   = new SHOU_HAN_TYPE_C_16PIN_2MD_073_package
+    # ── Power subsystems ──────────────────────────────────────
+    pd     = new USBPD
+    buck   = new Buck5V
+    fan1   = new FanDriver
+    fan2   = new FanDriver
+    sensor = new SensorPort
 
-    # Power management
-    pd_sink = new WCH_CH224K_package
-    buck    = new Diodes_Incorporated_AP63205WU_7_package
+    # Board-level power rails
+    signal gnd    # common ground
+    signal v12    # 12V PD-negotiated rail
+    signal v5     # 5V buck output → ESP32 VIN
+    signal v3v3   # 3.3V from ESP32 3V3 pin (via female header)
+    signal pg     # CH224K Power Good
 
-    # Fan headers — 4-pin right-angle, 2.54mm (GND=pin1, +12V=pin2, Tach=pin3, PWM=pin4)
-    fan1_header = new CJT_A2541WR_4P_package
-    fan2_header = new CJT_A2541WR_4P_package
+    # Board-level 12V bulk decoupling (100µF electrolytic near fan headers)
+    c_bulk = new Capacitor
+    c_bulk.capacitance = 100uF +/- 20%
+    c_bulk.p1 ~ v12; c_bulk.p2 ~ gnd
 
-    # BME280 sensor connector — right-angle Qwiic/STEMMA QT (GND=pin1, 3.3V=pin2, SDA=pin3, SCL=pin4)
-    sensor_conn = new JST_Sales_America_SM04B_SRSS_TB_LF__SN_package
+    # ── Wire power subsystems ─────────────────────────────────
+    pd.gnd ~ gnd
+    pd.v12 ~ v12
+    pd.pg  ~ pg
+
+    buck.gnd ~ gnd
+    buck.v12 ~ v12
+    buck.pg  ~ pg
+    buck.v5  ~ v5
+
+    # ── ESP32 interface signals ───────────────────────────────
+    # These signals connect to the female header pins (physical headers to be
+    # added in Phase 5 with LCSC 1×22 female header parts).
+    # HUMAN VERIFY: pin positions vs actual ESP32-S3-DevKitC-1 pinout diagram.
+    signal esp32_vin    # VIN pin on DevKit → from buck v5
+    signal esp32_gpio4  # Fan 1 PWM
+    signal esp32_gpio5  # Fan 2 PWM
+    signal esp32_gpio6  # Fan 1 Tach
+    signal esp32_gpio7  # Fan 2 Tach
+    signal esp32_gpio8  # I2C SDA
+    signal esp32_gpio9  # I2C SCL
+    signal esp32_gpio10 # CH224K PG input
+
+    esp32_vin    ~ v5
+    esp32_gpio10 ~ pg
+    # v3v3 comes FROM the ESP32 3V3 output pin through the header
+
+    # ── Fan channels ──────────────────────────────────────────
+    fan1.gnd       ~ gnd
+    fan1.v12       ~ v12
+    fan1.v3v3      ~ v3v3
+    fan1.gpio_pwm  ~ esp32_gpio4
+    fan1.gpio_tach ~ esp32_gpio6
+
+    fan2.gnd       ~ gnd
+    fan2.v12       ~ v12
+    fan2.v3v3      ~ v3v3
+    fan2.gpio_pwm  ~ esp32_gpio5
+    fan2.gpio_tach ~ esp32_gpio7
+
+    # ── Sensor ────────────────────────────────────────────────
+    sensor.gnd  ~ gnd
+    sensor.v3v3 ~ v3v3
+    sensor.sda  ~ esp32_gpio8
+    sensor.scl  ~ esp32_gpio9
