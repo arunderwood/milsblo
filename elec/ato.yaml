@@ -6,7 +6,7 @@ paths:
 
 builds:
   default:
-    entry: milsblo.ato:Milsblo
+    entry: src/milsblo.ato:Milsblo
 
 # This metadata is only required for publishing
 # Uncomment it and fill out the fields to publish your package

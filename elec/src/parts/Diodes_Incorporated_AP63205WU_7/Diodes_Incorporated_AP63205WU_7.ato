@@ -1,0 +1,22 @@
+#pragma experiment("TRAITS")
+import has_designator_prefix
+import has_part_picked
+import is_atomic_part
+import is_auto_generated
+
+component Diodes_Incorporated_AP63205WU_7_package:
+    # This trait marks this file as auto-generated
+    # If you want to manually change it, remove the trait
+    trait is_auto_generated<system="ato_part", source="easyeda:C2071056", date="2026-02-17T03:29:48.055136+00:00", checksum="901ed05dcf933fcf29021d943b3351eeb2304f25b3318988327d9a4997f5be70">
+
+    trait is_atomic_part<manufacturer="Diodes Incorporated", partnumber="AP63205WU-7", footprint="TSOT-23-6_L2.9-W1.6-P0.95-LS2.8-BL.kicad_mod", symbol="AP63205WU-7.kicad_sym", model="TSOT-23-6_L2.9-W1.6-H1.1-LS2.8-P0.95.step">
+    trait has_part_picked::by_supplier<supplier_id="lcsc", supplier_partno="C2071056", manufacturer="Diodes Incorporated", partno="AP63205WU-7">
+    trait has_designator_prefix<prefix="U">
+
+    # pins
+    signal BST ~ pin 6
+    signal EN ~ pin 2
+    signal FB ~ pin 1
+    signal GND ~ pin 4
+    signal SW ~ pin 5
+    signal VIN ~ pin 3

@@ -1,4 +1,27 @@
-"""Brand new atopile project!"""
+"""Milsblo — USB-C PD powered ESP32-S3 fan controller backpack PCB.
 
-module App:
-    pass
+Phase 1: component imports verified. Phase 2 will add submodules and wiring.
+"""
+
+from "parts/WCH_CH224K/WCH_CH224K.ato" import WCH_CH224K_package
+from "parts/Diodes_Incorporated_AP63205WU_7/Diodes_Incorporated_AP63205WU_7.ato" import Diodes_Incorporated_AP63205WU_7_package
+from "parts/SHOU_HAN_TYPE_C_16PIN_2MD_073/SHOU_HAN_TYPE_C_16PIN_2MD_073.ato" import SHOU_HAN_TYPE_C_16PIN_2MD_073_package
+from "parts/JST_Sales_America_SM04B_SRSS_TB_LF__SN/JST_Sales_America_SM04B_SRSS_TB_LF__SN.ato" import JST_Sales_America_SM04B_SRSS_TB_LF__SN_package
+from "parts/CJT_A2541WR_4P/CJT_A2541WR_4P.ato" import CJT_A2541WR_4P_package
+
+module Milsblo:
+    """Top-level board — Phase 1 placeholder, Phase 2 will wire all connections."""
+
+    # USB-C PD input
+    usb_c   = new SHOU_HAN_TYPE_C_16PIN_2MD_073_package
+
+    # Power management
+    pd_sink = new WCH_CH224K_package
+    buck    = new Diodes_Incorporated_AP63205WU_7_package
+
+    # Fan headers — 4-pin right-angle, 2.54mm (GND=pin1, +12V=pin2, Tach=pin3, PWM=pin4)
+    fan1_header = new CJT_A2541WR_4P_package
+    fan2_header = new CJT_A2541WR_4P_package
+
+    # BME280 sensor connector — right-angle Qwiic/STEMMA QT (GND=pin1, 3.3V=pin2, SDA=pin3, SCL=pin4)
+    sensor_conn = new JST_Sales_America_SM04B_SRSS_TB_LF__SN_package

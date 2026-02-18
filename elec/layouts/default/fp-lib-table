@@ -1,0 +1,38 @@
+(fp_lib_table
+    (version 7)
+    (lib
+        (name "CJT_A2541WR_4P")
+        (type "KiCad")
+        (uri "${KIPRJMOD}/../../src/parts/CJT_A2541WR_4P")
+        (options "")
+        (descr "atopile: part lib: CJT_A2541WR_4P")
+    )
+    (lib
+        (name "Diodes_Incorporated_AP63205WU_7")
+        (type "KiCad")
+        (uri "${KIPRJMOD}/../../src/parts/Diodes_Incorporated_AP63205WU_7")
+        (options "")
+        (descr "atopile: part lib: Diodes_Incorporated_AP63205WU_7")
+    )
+    (lib
+        (name "JST_Sales_America_SM04B_SRSS_TB_LF__SN")
+        (type "KiCad")
+        (uri "${KIPRJMOD}/../../src/parts/JST_Sales_America_SM04B_SRSS_TB_LF__SN")
+        (options "")
+        (descr "atopile: part lib: JST_Sales_America_SM04B_SRSS_TB_LF__SN")
+    )
+    (lib
+        (name "SHOU_HAN_TYPE_C_16PIN_2MD_073")
+        (type "KiCad")
+        (uri "${KIPRJMOD}/../../src/parts/SHOU_HAN_TYPE_C_16PIN_2MD_073")
+        (options "")
+        (descr "atopile: part lib: SHOU_HAN_TYPE_C_16PIN_2MD_073")
+    )
+    (lib
+        (name "WCH_CH224K")
+        (type "KiCad")
+        (uri "${KIPRJMOD}/../../src/parts/WCH_CH224K")
+        (options "")
+        (descr "atopile: part lib: WCH_CH224K")
+    )
+)
