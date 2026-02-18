@@ -1,0 +1,59 @@
+* milsblo fan PWM driver simulation
+* ESP32-S3 GPIO → 100Ω series resistor → fan pin 4 (PWM input)
+*
+* Design values:
+*   GPIO output:   3.3V logic, 25kHz, 50% duty cycle
+*   R_PWM:         100Ω series (GPIO protection only)
+*   Fan pin 4 model: 10nF input capacitance + 100kΩ pullup to 5V
+*                  (typical 4-pin PWM fan, per Intel fan spec)
+*
+* RC time constant: τ = 100Ω × 10nF = 1µs
+* f_3dB = 1/(2π×τ) = 159kHz  >>  25kHz PWM fundamental → ✓
+*   Rise/fall 10%→90%: t_r = 2.2 × τ = 2.2µs
+*   At 25kHz (T=40µs), half-period = 20µs >> 2.2µs → full logic swing ✓
+*
+* Intel PWM fan specification (for reference):
+*   Logic-HIGH threshold: ≥ 2.0V for reliable PWM recognition
+*   Logic-LOW  threshold: ≤ 0.8V
+*   Frequency: 21–28kHz recommended (25kHz used here)
+*
+* Result to verify:
+*   V(VFAN) HIGH plateau ≥ 2.0V  (should reach ~3.3V with 100Ω/100kΩ divider)
+*   V(VFAN) LOW  plateau ≤ 0.8V  (should reach ~0V; pullup doesn't overdrive LOW)
+
+* ── GPIO source ───────────────────────────────────────────────────────
+* 3.3V pulse, 25kHz (T=40µs), 50% duty, realistic 10ns GPIO edges
+* Source impedance ~50Ω (ESP32 GPIO drive strength medium, ~12mA)
+Vgpio VGPIO_SRC 0 PULSE(0 3.3 0 10ns 10ns 19.99us 40us)
+Rgpio_out VGPIO_SRC VGPIO 50
+
+* ── PWM protection resistor ───────────────────────────────────────────
+R_PWM VGPIO VFAN 100
+
+* ── Fan pin 4 model ───────────────────────────────────────────────────
+* Internal pullup: 5V fan supply → 100kΩ → fan pin 4
+* This matches the Intel 4-wire fan spec schematic
+Vfan_supply VFAN_5V 0 5V
+Rpullup VFAN_5V VFAN 100k
+
+* Input capacitance of fan PWM controller (10nF typical)
+Cfan VFAN 0 10nF
+
+* ── Analysis ──────────────────────────────────────────────────────────
+* 3 full PWM periods at 25kHz = 120µs; capture steady-state waveform
+.tran 10ns 120us
+
+* ── Measurements ──────────────────────────────────────────────────────
+* HIGH level at fan pin (should be ≥ 2.0V)
+.measure tran Vfan_high MAX V(VFAN) FROM=80us TO=120us
+* LOW level at fan pin (should be ≤ 0.8V)
+.measure tran Vfan_low  MIN V(VFAN) FROM=80us TO=120us
+* Rise time 10%→90% (referenced to HIGH level, approximate)
+.measure tran t_rise TRIG V(VFAN) VAL=0.33 RISE=2 TARG V(VFAN) VAL=2.97 RISE=2
+* Fall time 90%→10%
+.measure tran t_fall TRIG V(VFAN) VAL=2.97 FALL=2 TARG V(VFAN) VAL=0.33 FALL=2
+
+* Save waveforms
+.save V(VGPIO) V(VFAN)
+
+.end
