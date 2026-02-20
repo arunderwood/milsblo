@@ -43,6 +43,13 @@
         (descr "atopile: part lib: FOJAN_FRC0402F7503TS")
     )
     (lib
+        (name "FemaleHeader_1x22_2v54mm")
+        (type "KiCad")
+        (uri "${KIPRJMOD}/../../src/parts/FemaleHeader_1x22_2v54mm")
+        (options "")
+        (descr "atopile: part lib: FemaleHeader_1x22_2v54mm")
+    )
+    (lib
         (name "JST_Sales_America_SM04B_SRSS_TB_LF__SN")
         (type "KiCad")
         (uri "${KIPRJMOD}/../../src/parts/JST_Sales_America_SM04B_SRSS_TB_LF__SN")

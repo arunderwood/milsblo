@@ -1,0 +1,113 @@
+"""ESP32-S3-DevKitC-1 v1.1 header pin interface.
+
+Defines the signal mapping between this backpack's circuits and the
+ESP32-S3-DevKitC-1 v1.1 dev board's 44 header pins (2× 1×22).
+
+Physical female header components (FemaleHeader_1x22_2v54mm_package) use a
+hand-crafted KiCad footprint/symbol in elec/src/parts/FemaleHeader_1x22_2v54mm/.
+Buy BOOMELE C9811 (1×40P) and snap to 22 pins, or any 1×22 2.54mm female header.
+
+Pin mapping — HUMAN VERIFY against official Espressif pinout before layout:
+  https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s3/
+  esp32-s3-devkitc-1/user_guide.html
+
+Left header J1 (22 pins, top → bottom, component side facing up):
+  p1  = 3V3    ← output FROM DevKit → v3v3 supply for pullups
+  p2  = 3V3    ← second 3V3 pin (same net)
+  p3  = RST    — NC on backpack
+  p4  = GPIO4  → Fan 1 PWM (25 kHz)
+  p5  = GPIO5  → Fan 2 PWM (25 kHz)
+  p6  = GPIO6  → Fan 1 Tach (pulse counter)
+  p7  = GPIO7  → Fan 2 Tach (pulse counter)
+  p8  = GPIO15 — NC
+  p9  = GPIO16 — NC
+  p10 = GPIO17 — NC
+  p11 = GPIO18 — NC
+  p12 = GPIO8  → I2C SDA (pulled up to 3V3 via sensor_port 4.7 kΩ)
+  p13 = GPIO3  — NC
+  p14 = GPIO46 — NC
+  p15 = GPIO9  → I2C SCL (pulled up to 3V3 via sensor_port 4.7 kΩ)
+  p16 = GPIO10 → CH224K PG input (Power Good)
+  p17 = GPIO11 — NC
+  p18 = GPIO12 — NC
+  p19 = GPIO13 — NC
+  p20 = GPIO14 — NC
+  p21 = 5V     ← VIN input to DevKit, supplied by buck converter
+  p22 = GND
+
+Right header J3 (22 pins, top → bottom):
+  p1  = GND
+  p2  = GPIO43/TX  — NC (no UART on backpack)
+  p3  = GPIO44/RX  — NC
+  p4  = GPIO1      — NC
+  p5  = GPIO2      — NC
+  p6  = GPIO42     — NC
+  p7  = GPIO41     — NC
+  p8  = GPIO40     — NC
+  p9  = GPIO39     — NC
+  p10 = GPIO38     — NC
+  p11 = GPIO37     — NC
+  p12 = GPIO36     — NC
+  p13 = GPIO35     — NC
+  p14 = GPIO0/BOOT — NC (boot strapping — do not pull low)
+  p15 = GPIO45     — NC
+  p16 = GPIO48     — NC
+  p17 = GPIO47     — NC
+  p18 = GPIO21     — NC
+  p19 = GPIO20     — NC
+  p20 = GPIO19     — NC
+  p21 = NC         — no function
+  p22 = GND
+"""
+
+from "parts/FemaleHeader_1x22_2v54mm/FemaleHeader_1x22_2v54mm.ato" import FemaleHeader_1x22_2v54mm_package
+
+module ESP32Headers:
+    """Physical 2× 1×22 female headers + signal mapping for ESP32-S3-DevKitC-1 v1.1.
+
+    j1 = left header, j3 = right header (matching DevKit silkscreen labels).
+    HUMAN VERIFY: all pin positions against official Espressif pinout.
+    """
+
+    # ── Physical headers ──────────────────────────────────────────────────────
+    j1 = new FemaleHeader_1x22_2v54mm_package   # Left header  (J1 on DevKit)
+    j3 = new FemaleHeader_1x22_2v54mm_package   # Right header (J3 on DevKit)
+
+    # ── Power signals ─────────────────────────────────────────────────────────
+    signal gnd    # GND — J1 p22, J3 p1 and p22
+    signal v5     # 5V from buck → DevKit VIN (J1 p21)
+    signal v3v3   # 3.3V output FROM DevKit (J1 p1, p2) → tach/sensor pullups
+
+    # ── GPIO signals (left header J1) ─────────────────────────────────────────
+    signal gpio4   # J1 p4  — Fan 1 PWM  (25 kHz, LEDC ch 0)
+    signal gpio5   # J1 p5  — Fan 2 PWM  (25 kHz, LEDC ch 1)
+    signal gpio6   # J1 p6  — Fan 1 Tach (pulse counter, 10 kΩ pullup to v3v3)
+    signal gpio7   # J1 p7  — Fan 2 Tach (pulse counter, 10 kΩ pullup to v3v3)
+    signal gpio8   # J1 p12 — I2C SDA    (4.7 kΩ pullup to v3v3)
+    signal gpio9   # J1 p15 — I2C SCL    (4.7 kΩ pullup to v3v3)
+    signal gpio10  # J1 p16 — CH224K PG  (power good input)
+
+    # ── Left header (J1) connections ──────────────────────────────────────────
+    # HUMAN VERIFY: confirm all positions against DevKitC-1 v1.1 pinout diagram
+    j1.p1  ~ v3v3    # 3V3 output from DevKit
+    j1.p2  ~ v3v3    # 3V3 (second pin, same net)
+    # j1.p3            RST — NC on backpack
+    j1.p4  ~ gpio4   # GPIO4 → Fan 1 PWM
+    j1.p5  ~ gpio5   # GPIO5 → Fan 2 PWM
+    j1.p6  ~ gpio6   # GPIO6 → Fan 1 Tach
+    j1.p7  ~ gpio7   # GPIO7 → Fan 2 Tach
+    # j1.p8..p11       GPIO15-18 — NC
+    j1.p12 ~ gpio8   # GPIO8  → I2C SDA
+    # j1.p13           GPIO3  — NC
+    # j1.p14           GPIO46 — NC
+    j1.p15 ~ gpio9   # GPIO9  → I2C SCL
+    j1.p16 ~ gpio10  # GPIO10 → CH224K PG
+    # j1.p17..p20      GPIO11-14 — NC
+    j1.p21 ~ v5      # 5V → DevKit VIN
+    j1.p22 ~ gnd     # GND
+
+    # ── Right header (J3) connections ─────────────────────────────────────────
+    # Only GND pins are used on the backpack — all GPIO rows are NC
+    j3.p1  ~ gnd     # GND
+    # j3.p2..p21       all NC (TX, RX, various GPIOs, BOOT, NC)
+    j3.p22 ~ gnd     # GND

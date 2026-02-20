@@ -1,0 +1,41 @@
+#pragma experiment("TRAITS")
+import has_designator_prefix
+import is_atomic_part
+
+component FemaleHeader_1x22_2v54mm_package:
+    """1×22 single-row 2.54mm pitch female through-hole header.
+
+    Buy: any standard 1×22 or snap from 1×40 (BOOMELE C9811).
+    KiCad footprint: FemaleHeader_1x22_2v54mm:PinSocket_1x22_P2.54mm_Vertical
+    Footprint generated from standard 2.54mm through-hole geometry.
+    """
+    trait is_atomic_part<manufacturer="Generic", partnumber="PinSocket-1x22-2.54mm", footprint="PinSocket_1x22_P2.54mm_Vertical.kicad_mod", symbol="PinSocket_1x22_P2.54mm_Vertical.kicad_sym", model="">
+    trait has_designator_prefix<prefix="J">
+
+    pin 1;  pin 2;  pin 3;  pin 4;  pin 5;  pin 6
+    pin 7;  pin 8;  pin 9;  pin 10; pin 11; pin 12
+    pin 13; pin 14; pin 15; pin 16; pin 17; pin 18
+    pin 19; pin 20; pin 21; pin 22
+
+    signal p1  ~ pin 1
+    signal p2  ~ pin 2
+    signal p3  ~ pin 3
+    signal p4  ~ pin 4
+    signal p5  ~ pin 5
+    signal p6  ~ pin 6
+    signal p7  ~ pin 7
+    signal p8  ~ pin 8
+    signal p9  ~ pin 9
+    signal p10 ~ pin 10
+    signal p11 ~ pin 11
+    signal p12 ~ pin 12
+    signal p13 ~ pin 13
+    signal p14 ~ pin 14
+    signal p15 ~ pin 15
+    signal p16 ~ pin 16
+    signal p17 ~ pin 17
+    signal p18 ~ pin 18
+    signal p19 ~ pin 19
+    signal p20 ~ pin 20
+    signal p21 ~ pin 21
+    signal p22 ~ pin 22

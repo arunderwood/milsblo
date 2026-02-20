@@ -6,22 +6,41 @@ from "power/usb_pd.ato" import USBPD
 from "power/buck_5v.ato" import Buck5V
 from "fan/fan_driver.ato" import FanDriver
 from "sensor/sensor_port.ato" import SensorPort
+from "esp32_headers.ato" import ESP32Headers
 
 module Milsblo:
-    """Top-level board module — Phase 2 complete circuit."""
+    """Top-level board module.
 
-    # ── Power subsystems ──────────────────────────────────────
-    pd     = new USBPD
-    buck   = new Buck5V
-    fan1   = new FanDriver
-    fan2   = new FanDriver
-    sensor = new SensorPort
+    Subsystems:
+      pd      — CH224K USB-C PD sink + USB-C connector (negotiates 12V)
+      buck    — AP63205WU-7 12V→5V buck converter
+      fan1/2  — 4-pin PWM fan headers (×2, no MOSFETs needed)
+      sensor  — JST-SH Qwiic/STEMMA QT port + I2C pullups
+      headers — ESP32-S3-DevKitC-1 v1.1 female header interface
 
-    # Board-level power rails
+    Power flow:
+      USB-C PD charger → USB-C connector → CH224K → 12V rail
+        → AP63205 → 5V → ESP32 DevKit VIN (via headers.v5)
+        → fans (always-on 12V on pin 2)
+      ESP32 DevKit 3V3 output → headers.v3v3 → tach pullups, sensor 3V3
+
+    HUMAN VERIFY: all ESP32 GPIO pin positions before PCB layout.
+    See esp32_headers.ato for the complete 44-pin mapping.
+    """
+
+    # ── Subsystems ────────────────────────────────────────────────────────────
+    pd      = new USBPD
+    buck    = new Buck5V
+    fan1    = new FanDriver
+    fan2    = new FanDriver
+    sensor  = new SensorPort
+    headers = new ESP32Headers
+
+    # ── Board-level power rails ───────────────────────────────────────────────
     signal gnd    # common ground
     signal v12    # 12V PD-negotiated rail
     signal v5     # 5V buck output → ESP32 VIN
-    signal v3v3   # 3.3V from ESP32 3V3 pin (via female header)
+    signal v3v3   # 3.3V FROM ESP32 3V3 pin → tach pullups + sensor
     signal pg     # CH224K Power Good
 
     # Board-level 12V bulk decoupling (100µF electrolytic near fan headers)
@@ -29,7 +48,7 @@ module Milsblo:
     c_bulk.capacitance = 100uF +/- 20%
     c_bulk.p1 ~ v12; c_bulk.p2 ~ gnd
 
-    # ── Wire power subsystems ─────────────────────────────────
+    # ── USB-PD + buck ─────────────────────────────────────────────────────────
     pd.gnd ~ gnd
     pd.v12 ~ v12
     pd.pg  ~ pg
@@ -39,42 +58,32 @@ module Milsblo:
     buck.pg  ~ pg
     buck.v5  ~ v5
 
-    # ── ESP32 interface signals ───────────────────────────────
-    # These signals connect to the female header pins (physical headers to be
-    # added in Phase 5 with LCSC 1×22 female header parts).
-    # HUMAN VERIFY: pin positions vs actual ESP32-S3-DevKitC-1 pinout diagram.
-    signal esp32_vin    # VIN pin on DevKit → from buck v5
-    signal esp32_gpio4  # Fan 1 PWM
-    signal esp32_gpio5  # Fan 2 PWM
-    signal esp32_gpio6  # Fan 1 Tach
-    signal esp32_gpio7  # Fan 2 Tach
-    signal esp32_gpio8  # I2C SDA
-    signal esp32_gpio9  # I2C SCL
-    signal esp32_gpio10 # CH224K PG input
+    # ── ESP32 headers (pin interface) ─────────────────────────────────────────
+    # HUMAN VERIFY: confirm GPIO positions against DevKitC-1 v1.1 official pinout.
+    # Physical 1×22 female header components are added in Phase 5 (KiCad layout);
+    # see esp32_headers.ato for the full pin map and part-creation instructions.
+    headers.gnd   ~ gnd
+    headers.v5    ~ v5      # Buck 5V → DevKit VIN (J1 pin 21)
+    headers.v3v3  ~ v3v3    # DevKit 3V3 output (J1 pins 1-2) → pullup supply
 
-    esp32_vin    ~ v5
-    esp32_gpio10 ~ pg
-    # PHASE 5 TODO: v3v3 comes FROM the ESP32 3V3 output pin through the female header.
-    # When female headers are added, wire the 3V3 header pin to v3v3:
-    #   signal esp32_3v3   # ESP32-S3-DevKitC-1 3V3 output pin
-    #   esp32_3v3 ~ v3v3
-    # Without this connection, tach pullups and sensor port have no power source.
-
-    # ── Fan channels ──────────────────────────────────────────
+    # ── Fan channels ──────────────────────────────────────────────────────────
     fan1.gnd       ~ gnd
     fan1.v12       ~ v12
     fan1.v3v3      ~ v3v3
-    fan1.gpio_pwm  ~ esp32_gpio4
-    fan1.gpio_tach ~ esp32_gpio6
+    fan1.gpio_pwm  ~ headers.gpio4    # GPIO4 — Fan 1 PWM
+    fan1.gpio_tach ~ headers.gpio6    # GPIO6 — Fan 1 Tach
 
     fan2.gnd       ~ gnd
     fan2.v12       ~ v12
     fan2.v3v3      ~ v3v3
-    fan2.gpio_pwm  ~ esp32_gpio5
-    fan2.gpio_tach ~ esp32_gpio7
+    fan2.gpio_pwm  ~ headers.gpio5    # GPIO5 — Fan 2 PWM
+    fan2.gpio_tach ~ headers.gpio7    # GPIO7 — Fan 2 Tach
 
-    # ── Sensor ────────────────────────────────────────────────
+    # ── Sensor port ───────────────────────────────────────────────────────────
     sensor.gnd  ~ gnd
     sensor.v3v3 ~ v3v3
-    sensor.sda  ~ esp32_gpio8
-    sensor.scl  ~ esp32_gpio9
+    sensor.sda  ~ headers.gpio8    # GPIO8 — I2C SDA
+    sensor.scl  ~ headers.gpio9    # GPIO9 — I2C SCL
+
+    # ── CH224K Power Good → ESP32 ─────────────────────────────────────────────
+    headers.gpio10 ~ pg    # GPIO10 — CH224K PG input
