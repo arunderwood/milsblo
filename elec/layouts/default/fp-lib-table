@@ -29,6 +29,13 @@
         (descr "atopile: part lib: Diodes_Incorporated_AP63205WU_7")
     )
     (lib
+        (name "Everlight_Elec_19_217_GHC_YR1S2_3T")
+        (type "KiCad")
+        (uri "${KIPRJMOD}/../../src/parts/Everlight_Elec_19_217_GHC_YR1S2_3T")
+        (options "")
+        (descr "atopile: part lib: Everlight_Elec_19_217_GHC_YR1S2_3T")
+    )
+    (lib
         (name "FH_CMP201209UD4R7KT")
         (type "KiCad")
         (uri "${KIPRJMOD}/../../src/parts/FH_CMP201209UD4R7KT")
@@ -57,6 +64,13 @@
         (descr "atopile: part lib: JST_Sales_America_SM04B_SRSS_TB_LF__SN")
     )
     (lib
+        (name "KNSCHA_RVT100UF35V167RV0082")
+        (type "KiCad")
+        (uri "${KIPRJMOD}/../../src/parts/KNSCHA_RVT100UF35V167RV0082")
+        (options "")
+        (descr "atopile: part lib: KNSCHA_RVT100UF35V167RV0082")
+    )
+    (lib
         (name "MDD_Microdiode_Electronics_BZT52C5V1")
         (type "KiCad")
         (uri "${KIPRJMOD}/../../src/parts/MDD_Microdiode_Electronics_BZT52C5V1")
@@ -83,6 +97,13 @@
         (uri "${KIPRJMOD}/../../src/parts/Samsung_Electro_Mechanics_CL31A226KAHNNNE")
         (options "")
         (descr "atopile: part lib: Samsung_Electro_Mechanics_CL31A226KAHNNNE")
+    )
+    (lib
+        (name "Shikues_MMBT3904")
+        (type "KiCad")
+        (uri "${KIPRJMOD}/../../src/parts/Shikues_MMBT3904")
+        (options "")
+        (descr "atopile: part lib: Shikues_MMBT3904")
     )
     (lib
         (name "UNI_ROYAL_0402WGF1003TCE")

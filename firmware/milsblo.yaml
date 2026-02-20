@@ -111,12 +111,6 @@ fan:
     output: fan2_pwm
     name: "Fan 2"
 
-# CH224K Power Good status — GPIO 10
-binary_sensor:
-  - platform: gpio
-    pin:
-      number: GPIO10
-      mode:
-        input: true
-    name: "USB-C PD Power Good"
-    device_class: power
+# GPIO10 is NC — Power Good is indicated by a hardware LED on the PCB (NPN + green LED
+# in usb_pd.ato). Not routed to ESP32 to avoid overvoltage on GPIO (abs max 3.6V;
+# CH224K PG may be push-pull to VDD = 5.1V).

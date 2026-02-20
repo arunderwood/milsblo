@@ -1,0 +1,18 @@
+#pragma experiment("TRAITS")
+import has_designator_prefix
+import has_part_picked
+import is_atomic_part
+import is_auto_generated
+
+component KNSCHA_RVT100UF35V167RV0082_package:
+    # This trait marks this file as auto-generated
+    # If you want to manually change it, remove the trait
+    trait is_auto_generated<system="ato_part", source="easyeda:C5138965", date="2026-02-20T22:48:29.560212+00:00", checksum="f7d6c68504f8bdc1206f2f0448b316c765c77bb138492a3fc1fd8dbd6205ea51">
+
+    trait is_atomic_part<manufacturer="KNSCHA", partnumber="RVT100UF35V167RV0082", footprint="CAP-SMD_BD6.3-L6.6-W6.6-FD.kicad_mod", symbol="RVT100UF35V167RV0082.kicad_sym", model="CAP-SMD_BD6.3-L6.6-W6.6-FD.step">
+    trait has_part_picked::by_supplier<supplier_id="lcsc", supplier_partno="C5138965", manufacturer="KNSCHA", partno="RVT100UF35V167RV0082">
+    trait has_designator_prefix<prefix="U">
+
+    # pins
+    pin 1
+    pin 2

@@ -24,6 +24,7 @@ module Buck5V:
     r_lo   = new Resistor    # 100kΩ FB bottom
 
     c_in.capacitance  = 22uF    +/- 10%
+    c_in.max_voltage  = 25V to 10000V    # must not pick low-voltage part on 12V rail
     c_out.capacitance = 22uF    +/- 10%
     c_bst.capacitance = 100nF   +/- 10%
     r_hi.resistance   = 750kohm +/- 1%

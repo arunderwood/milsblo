@@ -3,14 +3,21 @@ import Resistor, Capacitor
 from "parts/SHOU_HAN_TYPE_C_16PIN_2MD_073/SHOU_HAN_TYPE_C_16PIN_2MD_073.ato" import SHOU_HAN_TYPE_C_16PIN_2MD_073_package
 from "parts/WCH_CH224K/WCH_CH224K.ato" import WCH_CH224K_package
 from "parts/MDD_Microdiode_Electronics_BZT52C5V1/MDD_Microdiode_Electronics_BZT52C5V1.ato" import MDD_Microdiode_Electronics_BZT52C5V1_package
+from "parts/Shikues_MMBT3904/Shikues_MMBT3904.ato" import Shikues_MMBT3904_package
+from "parts/Everlight_Elec_19_217_GHC_YR1S2_3T/Everlight_Elec_19_217_GHC_YR1S2_3T.ato" import Everlight_Elec_19_217_GHC_YR1S2_3T_package
 
 module USBPD:
-    """USB-C PD sink: negotiates 12V via CH224K. CC1/CC2 get 5.1kΩ pulldowns."""
+    """USB-C PD sink: negotiates 12V via CH224K. CC1/CC2 get 5.1kΩ pulldowns.
+
+    PG LED indicator: lights green when CH224K signals Power Good (12V negotiated).
+      VDD (5.1V) → 470Ω → LED → NPN collector/emitter → GND
+      NPN base pulled up to VDD via 100kΩ; PG drags base low via 10kΩ when not good.
+    """
 
     # External interface
     signal gnd
     signal v12      # 12V output (after PD negotiation)
-    signal pg       # Power Good → ESP32 GPIO 10
+    signal pg       # Power Good (connected to AP63205 EN for sequencing)
 
     # Components
     usb_c  = new SHOU_HAN_TYPE_C_16PIN_2MD_073_package
@@ -22,6 +29,7 @@ module USBPD:
     r_cfg1 = new Resistor     # 24kΩ CFG1 → GND = 12V selection
     r_vdd  = new Resistor     # 470Ω VBUS → VDD (series protection)
     c_vdd  = new Capacitor    # 1µF VDD bypass
+    c_vbus = new Capacitor    # 100nF local VBUS bypass (prevents PD negotiation glitches)
     z_vdd  = new MDD_Microdiode_Electronics_BZT52C5V1_package  # 5.1V clamp: prevents VDD exceeding 5.5V max when VBUS = 12V
 
     r_cc1.resistance  = 5.1kohm +/- 5%
@@ -29,6 +37,7 @@ module USBPD:
     r_cfg1.resistance = 24kohm +/- 1%
     r_vdd.resistance  = 470ohm +/- 5%
     c_vdd.capacitance = 1uF +/- 10%
+    c_vbus.capacitance = 100nF +/- 10%
 
     # VBUS: USB-C → CH224K → v12 rail
     usb_c.VBUS ~ ch224k.VBUS
@@ -61,5 +70,32 @@ module USBPD:
     z_vdd.A ~ gnd           # anode → GND
     ch224k.VDD ~ c_vdd.p1; c_vdd.p2 ~ gnd
 
+    # Local VBUS bypass (prevents glitches during PD negotiation current pulses)
+    usb_c.VBUS ~ c_vbus.p1; c_vbus.p2 ~ gnd
+
     # Power Good
     ch224k.PG ~ pg
+
+    # ── PG LED indicator ───────────────────────────────────────────────────────
+    # Lights when PG is asserted (power good / 12V negotiated).
+    # Works for both open-drain and push-pull PG outputs.
+    # When PG = LOW: base = VDD × 10k/(10k+100k) = 0.46V < 0.7V → NPN OFF → LED dark
+    # When PG = open-drain HIGH-Z / push-pull 5.1V: base pulled to ~VDD → NPN ON → LED lit
+    q_pg      = new Shikues_MMBT3904_package
+    led_pg    = new Everlight_Elec_19_217_GHC_YR1S2_3T_package
+    r_led     = new Resistor
+    r_pg_pull = new Resistor
+    r_pg_ser  = new Resistor
+
+    r_led.resistance     = 470ohm  +/- 5%
+    r_pg_pull.resistance = 100kohm +/- 5%
+    r_pg_ser.resistance  = 10kohm  +/- 5%
+
+    # LED current path: VDD → 470Ω → LED anode → LED cathode → NPN collector → emitter → GND
+    ch224k.VDD ~ r_led.p1; r_led.p2 ~ led_pg.A
+    led_pg.C ~ q_pg.C
+    q_pg.E ~ gnd
+
+    # NPN base: VDD pullup (100kΩ) + PG series resistor (10kΩ)
+    ch224k.VDD ~ r_pg_pull.p1; r_pg_pull.p2 ~ q_pg.B
+    pg ~ r_pg_ser.p1; r_pg_ser.p2 ~ q_pg.B

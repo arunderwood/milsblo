@@ -46,6 +46,7 @@ module Milsblo:
     # Board-level 12V bulk decoupling (100µF electrolytic near fan headers)
     c_bulk = new Capacitor
     c_bulk.capacitance = 100uF +/- 20%
+    c_bulk.max_voltage = 25V to 10000V    # must not pick 6.3V tantalum on 12V rail
     c_bulk.p1 ~ v12; c_bulk.p2 ~ gnd
 
     # ── USB-PD + buck ─────────────────────────────────────────────────────────
@@ -85,5 +86,7 @@ module Milsblo:
     sensor.sda  ~ headers.gpio8    # GPIO8 — I2C SDA
     sensor.scl  ~ headers.gpio9    # GPIO9 — I2C SCL
 
-    # ── CH224K Power Good → ESP32 ─────────────────────────────────────────────
-    headers.gpio10 ~ pg    # GPIO10 — CH224K PG input
+    # ── CH224K Power Good ──────────────────────────────────────────────────────
+    # GPIO10 NOT connected to pg — CH224K PG may be push-pull to VDD (5.1V),
+    # which exceeds ESP32 GPIO abs max (3.6V). PG LED indicator in usb_pd.ato
+    # provides hardware power-good indication instead.

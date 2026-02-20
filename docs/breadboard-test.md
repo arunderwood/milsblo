@@ -87,6 +87,12 @@ Work through these stages in order. Verify each stage passes before proceeding.
 **Fail criteria:** Voltage stays at 5V (PD not negotiating — check charger supports PD 2.0/3.0),
 or shows <11V (poor contact), or charger protection trips immediately (short circuit).
 
+**5V-only charger warning:** milsblo will NOT power up with a 5V-only USB-C charger or a
+USB-A-to-C cable. CH224K only negotiates 12V; if the charger does not offer PD at 12V, PG
+stays low, the AP63205 EN pin is never asserted, the buck never starts, and the ESP32 never
+boots. Use a 65W+ USB-C PD charger that explicitly supports 12V (check the charger's PD
+voltage list in its specs).
+
 ---
 
 ### Stage 2: 5V Buck — ESP32 power rail
@@ -242,6 +248,12 @@ If SDO pin is connected to VCC on the breakout, add `address: 0x77` to milsblo.y
 
 1. **Fan header pinout:** Standard 4-pin PC fan = GND / +12V / Tach / PWM (pins 1–4). Some
    fans have different wire colors. Verify with fan manufacturer's datasheet or multimeter.
+   **Pin 1 orientation:** The PCB fan headers (CJT A2541WR-4P) have no key tab — the fan
+   cable's keyed housing will fit in either orientation. Always connect with the cable notch
+   toward the "Pin 1 ▸" silkscreen arrow (to be added in Phase 5 layout). Reversed connection
+   puts 12V on the GND pin and GND on the 12V pin — this will damage the fan or the PCB.
+   On breadboard: use a multimeter to confirm pin 2 (+12V, yellow wire on most fans) before
+   applying 12V power.
 
 2. **3-pin fans will run at full speed.** If you accidentally use a 3-pin fan, PWM pin 4 is
    unconnected — fan runs at 100% always. No damage, but no speed control.

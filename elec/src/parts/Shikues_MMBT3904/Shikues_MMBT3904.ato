@@ -1,0 +1,14 @@
+#pragma experiment("TRAITS")
+import has_designator_prefix
+import has_part_picked
+import is_atomic_part
+
+component Shikues_MMBT3904_package:
+    trait is_atomic_part<manufacturer="Shikues", partnumber="MMBT3904", footprint="SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR.kicad_mod", symbol="MMBT3904_C111113.kicad_sym", model="SOT-23-3L_L2.9-W1.6-H1.1-LS2.8-P0.95.step">
+    trait has_part_picked::by_supplier<supplier_id="lcsc", supplier_partno="C111113", manufacturer="Shikues", partno="MMBT3904">
+    trait has_designator_prefix<prefix="Q">
+
+    # SOT-23 pinout: pin 1 = Base, pin 2 = Emitter, pin 3 = Collector
+    signal B ~ pin 1
+    signal E ~ pin 2
+    signal C ~ pin 3
