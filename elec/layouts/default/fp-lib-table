@@ -43,6 +43,13 @@
         (descr "atopile: part lib: JST_Sales_America_SM04B_SRSS_TB_LF__SN")
     )
     (lib
+        (name "MDD_Microdiode_Electronics_BZT52C5V1")
+        (type "KiCad")
+        (uri "${KIPRJMOD}/../../src/parts/MDD_Microdiode_Electronics_BZT52C5V1")
+        (options "")
+        (descr "atopile: part lib: MDD_Microdiode_Electronics_BZT52C5V1")
+    )
+    (lib
         (name "SHOU_HAN_TYPE_C_16PIN_2MD_073")
         (type "KiCad")
         (uri "${KIPRJMOD}/../../src/parts/SHOU_HAN_TYPE_C_16PIN_2MD_073")

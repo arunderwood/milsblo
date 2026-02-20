@@ -2,6 +2,7 @@ import Resistor, Capacitor
 
 from "parts/SHOU_HAN_TYPE_C_16PIN_2MD_073/SHOU_HAN_TYPE_C_16PIN_2MD_073.ato" import SHOU_HAN_TYPE_C_16PIN_2MD_073_package
 from "parts/WCH_CH224K/WCH_CH224K.ato" import WCH_CH224K_package
+from "parts/MDD_Microdiode_Electronics_BZT52C5V1/MDD_Microdiode_Electronics_BZT52C5V1.ato" import MDD_Microdiode_Electronics_BZT52C5V1_package
 
 module USBPD:
     """USB-C PD sink: negotiates 12V via CH224K. CC1/CC2 get 5.1kΩ pulldowns."""
@@ -21,6 +22,7 @@ module USBPD:
     r_cfg1 = new Resistor     # 24kΩ CFG1 → GND = 12V selection
     r_vdd  = new Resistor     # 470Ω VBUS → VDD (series protection)
     c_vdd  = new Capacitor    # 1µF VDD bypass
+    z_vdd  = new MDD_Microdiode_Electronics_BZT52C5V1_package  # 5.1V clamp: prevents VDD exceeding 5.5V max when VBUS = 12V
 
     r_cc1.resistance  = 5.1kohm +/- 5%
     r_cc2.resistance  = 5.1kohm +/- 5%
@@ -52,11 +54,11 @@ module USBPD:
     ch224k.CFG1 ~ r_cfg1.p1; r_cfg1.p2 ~ gnd
     # CFG2/CFG3 left unconnected (default config)
 
-    # VDD supply: VBUS → 470Ω → VDD, bypass to GND
-    # TODO Phase 5: Add 5.1V zener clamp from VDD to GND (e.g. BZT52C5V1, LCSC C8051).
-    # At 12V VBUS the 470Ω alone is insufficient — VDD will see ~12V, exceeding the 5.5V max.
-    # Run `ato create part -s C8051` (interactive TTY) then add zener to this module.
+    # VDD supply: VBUS → 470Ω → VDD, 5.1V Zener clamp to GND, 1µF bypass to GND
+    # Zener math: (12V - 5.1V) / 470Ω = 14.7mA; Zener dissipation = 74.9mW (< 500mW rating) ✓
     usb_c.VBUS ~ r_vdd.p1; r_vdd.p2 ~ ch224k.VDD
+    z_vdd.C ~ ch224k.VDD   # cathode → VDD node (clamps at 5.1V)
+    z_vdd.A ~ gnd           # anode → GND
     ch224k.VDD ~ c_vdd.p1; c_vdd.p2 ~ gnd
 
     # Power Good

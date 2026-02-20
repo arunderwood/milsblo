@@ -102,7 +102,6 @@
     (net 59 "pg")
     (net 60 "DN2")
     (net 61 "fan2-gpio_tach")
-    (net 62 "VDD")
     (net 63 "scl")
     (net 64 "SBU1")
     (net 65 "fan2-_4")
@@ -113,6 +112,7 @@
     (net 70 "CFG3")
     (net 71 "SW")
     (net 72 "CFG1")
+    (net 1 "C")
     (footprint "AVX_TAJB107K006RNJ:CASE-B_3528"
         (layer "F.Cu")
         (uuid "b3bafa6b-efcb-4540-984b-850e4642524b")
@@ -4375,7 +4375,7 @@
             (at -0.42 0 0)
             (size 0.5 0.54)
             (layers "F.Cu" "F.Paste" "F.Mask")
-            (net 62 "VDD")
+            (net 1 "C")
             (uuid "c0bb5817-21fd-4103-b7c6-b69b80edf0ef")
         )
         (model "${KIPRJMOD}/../../src/parts/Samsung_Electro_Mechanics_CL05A105KA5NQNC/C0402_L1.0-W0.5-H0.5.step"
@@ -4718,7 +4718,7 @@
             (at -2 3 90)
             (size 1.5 0.6)
             (layers "F.Cu" "F.Paste" "F.Mask")
-            (net 62 "VDD")
+            (net 1 "C")
             (uuid "e25862d7-e7db-467f-abb4-aeb0007296a5")
         )
         (pad "11" smd rect
@@ -5802,7 +5802,7 @@
             (at 0.75 0 0)
             (size 0.81 0.86)
             (layers "F.Cu" "F.Paste" "F.Mask")
-            (net 62 "VDD")
+            (net 1 "C")
             (uuid "6cf18963-bc89-4f57-aa65-10a027a3bba7")
         )
         (pad "1" smd rect
@@ -7294,6 +7294,219 @@
             )
             (rotate
                 (xyz 0 0 0)
+            )
+        )
+    )
+    (footprint "MDD_Microdiode_Electronics_BZT52C5V1:SOD-123_L2.7-W1.6-LS3.7-RD"
+        (layer "F.Cu")
+        (uuid "84d27d8e-2981-4cc2-97fa-da2b4642524b")
+        (at 0 0 0)
+        (property "Reference" "D1"
+            (at 0 -4 0)
+            (layer "F.SilkS")
+            (hide no)
+            (uuid "77b7daee-b1eb-4419-a5a7-97cdbc884229")
+            (effects
+                (font
+                    (size 1 1)
+                    (thickness 0.15)
+                )
+            )
+        )
+        (property "Value" ""
+            (at 0 4 0)
+            (layer "F.Fab")
+            (hide no)
+            (uuid "60cd7cd2-3d93-4ce6-a5f0-01544b49f4fe")
+            (effects
+                (font
+                    (size 1 1)
+                    (thickness 0.15)
+                )
+            )
+        )
+        (property "checksum" "b050ba68dab654d46030f5bab1f4232b7049a2132be2a127ef80fb73816e5a12"
+            (at 0 0 0)
+            (layer "User.9")
+            (hide no)
+            (uuid "5223d3d8-3ed1-4f56-827a-43cde080ecda")
+            (effects
+                (font
+                    (size 0.125 0.125)
+                    (thickness 0.01875)
+                )
+                (hide yes)
+            )
+        )
+        (property "__atopile_lib_fp_hash__" "630451bc-0986-da2d-1050-7e110f879a15"
+            (at 0 0 0)
+            (layer "User.9")
+            (hide yes)
+            (uuid "c1caa562-339d-45a7-b5e9-f23f4642524b")
+            (effects
+                (font
+                    (size 0.125 0.125)
+                    (thickness 0.01875)
+                )
+            )
+        )
+        (property "LCSC" "C173407"
+            (at 0 0 0)
+            (layer "User.9")
+            (hide yes)
+            (uuid "db3f6441-bc5e-4d8a-bccf-a29d4642524b")
+            (effects
+                (font
+                    (size 0.125 0.125)
+                    (thickness 0.01875)
+                )
+            )
+        )
+        (property "Manufacturer" "MDD（Microdiode Electronics）"
+            (at 0 0 0)
+            (layer "User.9")
+            (hide yes)
+            (uuid "439873a6-e078-4d35-9be4-c68d4642524b")
+            (effects
+                (font
+                    (size 0.125 0.125)
+                    (thickness 0.01875)
+                )
+            )
+        )
+        (property "Partnumber" "BZT52C5V1"
+            (at 0 0 0)
+            (layer "User.9")
+            (hide yes)
+            (uuid "4841a948-9b57-4f39-8b8a-0a9b4642524b")
+            (effects
+                (font
+                    (size 0.125 0.125)
+                    (thickness 0.01875)
+                )
+            )
+        )
+        (property "atopile_address" "pd.z_vdd"
+            (at 0 0 0)
+            (layer "User.9")
+            (hide yes)
+            (uuid "a829e430-ff19-4451-b782-e8e44642524b")
+            (effects
+                (font
+                    (size 0.125 0.125)
+                    (thickness 0.01875)
+                )
+            )
+        )
+        (attr smd)
+        (fp_line
+            (start -1.38 -0.93)
+            (end 1.38 -0.93)
+            (stroke
+                (width 0.15)
+                (type solid)
+            )
+            (layer "F.SilkS")
+            (uuid "48328018-8ef2-4f5e-9121-19db7d5dd79c")
+        )
+        (fp_line
+            (start 1.38 -0.93)
+            (end 1.38 -0.68)
+            (stroke
+                (width 0.15)
+                (type solid)
+            )
+            (layer "F.SilkS")
+            (uuid "ce101ccf-4513-4665-8595-1198a39563a9")
+        )
+        (fp_line
+            (start -1.38 0.93)
+            (end 1.38 0.93)
+            (stroke
+                (width 0.15)
+                (type solid)
+            )
+            (layer "F.SilkS")
+            (uuid "63c18e7f-4537-4c0d-9344-3d156064d7c5")
+        )
+        (fp_line
+            (start 1.38 0.93)
+            (end 1.38 0.68)
+            (stroke
+                (width 0.15)
+                (type solid)
+            )
+            (layer "F.SilkS")
+            (uuid "4026c820-c0fc-4dea-8107-0b951b6e7b03")
+        )
+        (fp_line
+            (start -0.97 -0.93)
+            (end -0.97 0.93)
+            (stroke
+                (width 0.15)
+                (type solid)
+            )
+            (layer "F.SilkS")
+            (uuid "aa441de2-a624-44cc-959b-4cbfa84e4b5b")
+        )
+        (fp_circle
+            (center -1.85 0.8)
+            (end -1.82 0.8)
+            (stroke
+                (width 0.06)
+                (type solid)
+            )
+            (fill no)
+            (layer "F.Fab")
+            (uuid "5f96ab3b-8770-43c3-a6d3-acb47302478b")
+        )
+        (fp_text user "%R"
+            (at 0 0 0)
+            (layer "F.Fab")
+            (uuid "107dedc6-46f6-47aa-bb89-515ad6ab322a")
+            (effects
+                (font
+                    (size 1 1)
+                    (thickness 0.15)
+                )
+            )
+            (unlocked no)
+        )
+        (fp_text user "${REFERENCE}"
+            (at 0 -4 0)
+            (layer "F.SilkS")
+            (uuid "77b7daee-b1eb-4419-a5a7-97cdbc884229")
+            (effects
+                (font
+                    (size 1 1)
+                    (thickness 0.15)
+                )
+            )
+            (unlocked no)
+        )
+        (pad "2" smd rect
+            (at 1.64 0 0)
+            (size 0.91 1.22)
+            (layers "F.Cu" "F.Paste" "F.Mask")
+            (net 58 "gnd")
+            (uuid "3d01d643-ca7f-41f7-bb45-7f6a9cb1ca9f")
+        )
+        (pad "1" smd rect
+            (at -1.64 0 0)
+            (size 0.91 1.22)
+            (layers "F.Cu" "F.Paste" "F.Mask")
+            (net 1 "C")
+            (uuid "e6a5724f-7bf7-488f-ad05-98d2b199237f")
+        )
+        (model "${KIPRJMOD}/../../src/parts/MDD_Microdiode_Electronics_BZT52C5V1/SOD-123_L2.7-W1.6-LS3.7-RD-2.step"
+            (offset
+                (xyz 0 0 0)
+            )
+            (scale
+                (xyz 1 1 1)
+            )
+            (rotate
+                (xyz 0 0 180)
             )
         )
     )

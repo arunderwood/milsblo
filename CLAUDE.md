@@ -40,6 +40,7 @@ USB-C connector → CH224K (negotiates 12V)
 | Subsystem | Component | Package | LCSC Part # | Why |
 |-----------|-----------|---------|-------------|-----|
 | USB-C PD sink | **CH224K** | ESSOP-10 | C970725 | Standalone 12V selection via single 24kΩ resistor. No MCU firmware needed. **PD 2.0/3.0 only** (no PD 3.1 EPR). Upgrade path: HUSB238 if PD 3.1 needed in future revision. |
+| CH224K VDD clamp | **BZT52C5V1** | SOD-123 | C173407 | **Required.** Prevents VDD exceeding 5.5V max when VBUS = 12V post-negotiation. Without this, CH224K is permanently destroyed. Zener clamp: cathode → VDD, anode → GND; 470Ω series from VBUS. Dissipation = 74.9mW (< 500mW rating). |
 | Buck converter | **AP63205WU-7** | TSOT-26 | C2071056 | Fixed 5V/2A output, 3.8–32V input, 4 external components. |
 | Temp/humidity sensor | **BME280** (external breakout) | — | — | Connected via JST-SH 4-pin Qwiic/STEMMA QT connector on board. |
 | USB-C connector | **USB-C 16-pin SMD** | — | C2765186 (or similar) | Needs CC1/CC2 for PD negotiation. **Verify LCSC part C2765186 is in stock and has exposed CC1 and CC2 pads** before layout. If unavailable, search LCSC for "USB-C 16-pin mid-mount SMD" with CC pins. 16 pins is sufficient (no USB 3.x data lines needed). |
@@ -180,7 +181,7 @@ milsblo/
 **USB-PD (usb_pd.ato):**
 - USB-C connector with 5.1kΩ pulldowns on CC1/CC2 (required for PD)
 - CH224K wired per datasheet: VBUS → VIN, 24kΩ from CFG1 to GND (selects 12V)
-- 1µF decoupling cap on VDD
+- VDD circuit: VBUS → 470Ω → VDD node; **5.1V Zener (BZT52C5V1, C173407)** cathode→VDD, anode→GND (REQUIRED — without this, VDD=12V destroys the IC); 1µF bypass cap VDD→GND
 - PG (Power Good) output routed to ESP32 GPIO 10
 
 **Buck converter (buck_5v.ato):**

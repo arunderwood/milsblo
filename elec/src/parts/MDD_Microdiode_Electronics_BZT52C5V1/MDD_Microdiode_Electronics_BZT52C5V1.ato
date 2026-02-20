@@ -1,0 +1,18 @@
+#pragma experiment("TRAITS")
+import has_designator_prefix
+import has_part_picked
+import is_atomic_part
+import is_auto_generated
+
+component MDD_Microdiode_Electronics_BZT52C5V1_package:
+    # This trait marks this file as auto-generated
+    # If you want to manually change it, remove the trait
+    trait is_auto_generated<system="ato_part", source="easyeda:C173407", date="2026-02-18T05:54:13.119513+00:00", checksum="f8e82f3c58438e02b20d17010859e144de12b381744a6815b29c4089451d53e1">
+
+    trait is_atomic_part<manufacturer="MDD（Microdiode Electronics）", partnumber="BZT52C5V1", footprint="SOD-123_L2.7-W1.6-LS3.7-RD.kicad_mod", symbol="BZT52C5V1_C173407.kicad_sym", model="SOD-123_L2.7-W1.6-LS3.7-RD-2.step">
+    trait has_part_picked::by_supplier<supplier_id="lcsc", supplier_partno="C173407", manufacturer="MDD（Microdiode Electronics）", partno="BZT52C5V1">
+    trait has_designator_prefix<prefix="D">
+
+    # pins
+    signal A ~ pin 2
+    signal C ~ pin 1
