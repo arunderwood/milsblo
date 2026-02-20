@@ -1,0 +1,164 @@
+(footprint "CENKER_CKCS4018_4_7uH_M:IND-SMD_L4.0-W4.0_SWPA4018S"
+    (layer "F.Cu")
+    (descr "")
+    (version 20241229)
+    (generator "faebryk")
+    (generator_version "v5")
+    (tedit "5DC5F6A4")
+    (property "Reference" "REF**"
+        (at 0 -4 0)
+        (layer "F.SilkS")
+        (hide no)
+        (uuid "3c567be0-9956-4a61-9739-f21f47fc35cf")
+        (effects
+            (font
+                (size 1 1)
+                (thickness 0.15)
+            )
+        )
+    )
+    (property "Value" "IND-SMD_L4.0-W4.0_SWPA4018S"
+        (at 0 4 0)
+        (layer "F.Fab")
+        (hide no)
+        (uuid "8db4e0cc-1675-4264-b0d1-397137952218")
+        (effects
+            (font
+                (size 1 1)
+                (thickness 0.15)
+            )
+        )
+    )
+    (property "checksum" "84accde304dd7330a21d1540696496598563d874eb1cacd68fad7c062fb4e507"
+        (at 0 0 0)
+        (layer "User.9")
+        (hide no)
+        (uuid "bb259d3c-6ad8-4691-a83c-524e418e25a3")
+        (effects
+            (font
+                (size 0.125 0.125)
+                (thickness 0.01875)
+            )
+            (hide yes)
+        )
+    )
+    (attr smd)
+    (fp_line
+        (start -2.08 -2.06)
+        (end -2.08 -2.08)
+        (stroke
+            (width 0.15)
+            (type solid)
+        )
+        (layer "F.SilkS")
+        (uuid "1c446fe8-8078-478a-b8af-6b18d199d0cd")
+    )
+    (fp_line
+        (start -2.08 -2.08)
+        (end 2.08 -2.08)
+        (stroke
+            (width 0.15)
+            (type solid)
+        )
+        (layer "F.SilkS")
+        (uuid "2f286dd3-c3e7-4ca6-81f6-6e77205bfe23")
+    )
+    (fp_line
+        (start 2.08 -2.08)
+        (end 2.08 -2.06)
+        (stroke
+            (width 0.15)
+            (type solid)
+        )
+        (layer "F.SilkS")
+        (uuid "c134aca1-d473-4c48-a67b-722a3e848ab3")
+    )
+    (fp_line
+        (start -2.08 2.06)
+        (end -2.08 2.08)
+        (stroke
+            (width 0.15)
+            (type solid)
+        )
+        (layer "F.SilkS")
+        (uuid "4996de77-9776-48a1-8b6e-491cfd5b6d5f")
+    )
+    (fp_line
+        (start -2.08 2.08)
+        (end 2.08 2.08)
+        (stroke
+            (width 0.15)
+            (type solid)
+        )
+        (layer "F.SilkS")
+        (uuid "e07a92b1-4961-4bd2-9301-6555bc0bd57d")
+    )
+    (fp_line
+        (start 2.08 2.08)
+        (end 2.08 2.06)
+        (stroke
+            (width 0.15)
+            (type solid)
+        )
+        (layer "F.SilkS")
+        (uuid "16be7f55-97b3-4260-b7cb-30f3c72914b1")
+    )
+    (fp_circle
+        (center 2 1.97)
+        (end 2.03 1.97)
+        (stroke
+            (width 0.06)
+            (type solid)
+        )
+        (fill no)
+        (layer "F.Fab")
+        (uuid "faeec4d0-0f2e-40ac-b9c6-89ffda8c452f")
+    )
+    (fp_text user "%R"
+        (at 0 0 0)
+        (layer "F.Fab")
+        (uuid "facbddb8-2987-4f1e-b91e-6fae07d8f7ec")
+        (effects
+            (font
+                (size 1 1)
+                (thickness 0.15)
+            )
+        )
+        (unlocked no)
+    )
+    (fp_text user "${REFERENCE}"
+        (at 0 -4 0)
+        (layer "F.SilkS")
+        (uuid "3c567be0-9956-4a61-9739-f21f47fc35cf")
+        (effects
+            (font
+                (size 1 1)
+                (thickness 0.15)
+            )
+        )
+        (unlocked no)
+    )
+    (pad "1" smd rect
+        (at 1.78 0 0)
+        (size 2.12 3.82)
+        (layers "F.Cu" "F.Paste" "F.Mask")
+        (uuid "256dc7aa-8475-4848-b764-846afb9d32b5")
+    )
+    (pad "2" smd rect
+        (at -1.78 0 0)
+        (size 2.12 3.82)
+        (layers "F.Cu" "F.Paste" "F.Mask")
+        (uuid "e5629fa9-46fd-4795-8275-f34f3bbf4975")
+    )
+    (model "${KIPRJMOD}/../../src/parts/CENKER_CKCS4018_4_7uH_M/IND-SMD_L4.0-W4.0-H3.0.step"
+        (offset
+            (xyz 0 0 0)
+        )
+        (scale
+            (xyz 1 1 1)
+        )
+        (rotate
+            (xyz 0 0 270)
+        )
+    )
+)

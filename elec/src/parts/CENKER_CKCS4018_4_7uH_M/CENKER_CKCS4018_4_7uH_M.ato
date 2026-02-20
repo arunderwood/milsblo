@@ -1,0 +1,13 @@
+#pragma experiment("TRAITS")
+import has_designator_prefix
+import has_part_picked
+import is_atomic_part
+
+component CENKER_CKCS4018_4_7uH_M_package:
+    trait is_atomic_part<manufacturer="CENKER", partnumber="CKCS4018-4.7uH/M", footprint="IND-SMD_L4.0-W4.0_SWPA4018S.kicad_mod", symbol="CKCS4018-4.7UH_M.kicad_sym", model="IND-SMD_L4.0-W4.0-H3.0.step">
+    trait has_part_picked::by_supplier<supplier_id="lcsc", supplier_partno="C354574", manufacturer="CENKER", partno="CKCS4018-4.7uH/M">
+    trait has_designator_prefix<prefix="L">
+
+    # pins
+    signal p1 ~ pin 1
+    signal p2 ~ pin 2

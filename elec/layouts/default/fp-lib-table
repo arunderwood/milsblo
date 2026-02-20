@@ -8,6 +8,13 @@
         (descr "atopile: part lib: AVX_TAJB107K006RNJ")
     )
     (lib
+        (name "CENKER_CKCS4018_4_7uH_M")
+        (type "KiCad")
+        (uri "${KIPRJMOD}/../../src/parts/CENKER_CKCS4018_4_7uH_M")
+        (options "")
+        (descr "atopile: part lib: CENKER_CKCS4018_4_7uH_M")
+    )
+    (lib
         (name "CJT_A2541WR_4P")
         (type "KiCad")
         (uri "${KIPRJMOD}/../../src/parts/CJT_A2541WR_4P")
