@@ -8,6 +8,8 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: atopile/setup-atopile@main
+        with:
+          working-directory: elec
 
       - name: Sync dependencies
         run: ato sync
