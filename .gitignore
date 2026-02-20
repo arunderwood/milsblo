@@ -6,5 +6,8 @@ __pycache__/
 *.pyc
 .venv/
 
+# Credentials — never commit
+firmware/secrets.yaml
+
 # macOS
 .DS_Store

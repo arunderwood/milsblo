@@ -22,7 +22,14 @@ module Buck5V:
     r_hi   = new Resistor    # 750kΩ FB top (for ~5.1V output)
     r_lo   = new Resistor    # 100kΩ FB bottom
 
-    L1.inductance     = 4.7uH   +/- 10%
+    L1.inductance     = 4.7uH   +/- 20%
+    # ⚠ REPLACE INDUCTOR BEFORE PCB LAYOUT ⚠
+    # Auto-selected FH CMP201209UD4R7KT (C395016) is a MULTILAYER CHIP INDUCTOR — NOT a power inductor.
+    #   Rated current: 350mA  (IL_peak = 708mA → will saturate at 2× rated current — catastrophic)
+    #   DCR:           400mΩ  (at 500mA: 100mW dissipation, inductor will run hot)
+    # Required: shielded SMD POWER inductor, 4.7µH ±20%, Isat ≥ 1.0A, DCR ≤ 100mΩ
+    # Confirmed replacement: CENKER CKCS4018-4.7uH/M, LCSC C354574
+    #   Isat: 1.7A ✓   Rated: 1.2A ✓   DCR: 90mΩ ✓   Package: SMD 4018   Price: ~$0.02
     c_in.capacitance  = 22uF    +/- 10%
     c_out.capacitance = 22uF    +/- 10%
     c_bst.capacitance = 100nF   +/- 10%

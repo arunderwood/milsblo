@@ -63,7 +63,7 @@ sensor:
       number: GPIO6
       mode:
         input: true
-        pullup: true
+        pullup: true  # Breadboard safety net; PCB has authoritative 10kΩ to v3v3 (harmless in parallel)
     name: "Fan 1 Speed"
     unit_of_measurement: 'RPM'
     filters:
@@ -79,7 +79,7 @@ sensor:
       number: GPIO7
       mode:
         input: true
-        pullup: true
+        pullup: true  # Breadboard safety net; PCB has authoritative 10kΩ to v3v3 (harmless in parallel)
     name: "Fan 2 Speed"
     unit_of_measurement: 'RPM'
     filters:

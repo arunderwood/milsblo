@@ -54,7 +54,11 @@ module Milsblo:
 
     esp32_vin    ~ v5
     esp32_gpio10 ~ pg
-    # v3v3 comes FROM the ESP32 3V3 output pin through the header
+    # PHASE 5 TODO: v3v3 comes FROM the ESP32 3V3 output pin through the female header.
+    # When female headers are added, wire the 3V3 header pin to v3v3:
+    #   signal esp32_3v3   # ESP32-S3-DevKitC-1 3V3 output pin
+    #   esp32_3v3 ~ v3v3
+    # Without this connection, tach pullups and sensor port have no power source.
 
     # ── Fan channels ──────────────────────────────────────────
     fan1.gnd       ~ gnd

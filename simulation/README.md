@@ -33,16 +33,28 @@ The `-b` flag runs in batch mode (no GUI). Measured results print to stdout.
 ### power_chain.cir
 
 Behavioral model: ideal 5.1V controlled source (AP63205 closed-loop) + real LC filter
-(L1=4.7µH, Cout=22µF) + ripple current injection (ΔIL=1.07A pk-pk at 580kHz).
+(L1=4.7µH/90mΩ DCR, Cout=22µF) + ripple current injection (ΔIL=0.416A pk-pk at 1.5MHz per AP63205WU-7 datasheet).
 Load step: 500mA → 50mA at t=30µs.
 
-| Measurement | Simulated | Analytical / Target | Pass? |
-|-------------|-----------|---------------------|-------|
-| `Vout_500mA` (steady-state avg) | **5.075V** | 5.1V − 25mV DCR = 5.075V | ✓ |
-| `Vout_ripple` (pk-pk at 500mA) | **12.3mV** | 13.7mV analytical, target <50mV | ✓ |
+**Note:** Fsw corrected from an initial 580kHz estimate to 1.5MHz (AP63205WU-7 datasheet, Diodes Inc.).
+DCR updated to 90mΩ (CENKER CKCS4018-4.7uH/M replacement inductor, see below).
+Re-run `ngspice -b simulation/power_chain.cir` to regenerate measurements with the updated simulation.
+
+| Measurement | Value | Analytical / Target | Pass? |
+|-------------|-------|---------------------|-------|
+| `Vout_500mA` (steady-state avg) | ~5.055V (analytical) | 5.1V − 45mV DCR = 5.055V | ✓ |
+| `Vout_ripple` (pk-pk at 500mA) | ~2.8mV (analytical) | 2.83mV analytical, target <50mV | ✓ |
 | `Vfb_ss` (feedback voltage) | **0.597V** | 0.600V Vref | ✓ |
 | `Vout_overshoot` (load removed) | **5.104V** | Minimal (well-damped) | ✓ |
 | `Vout_50mA` (settled after step) | **5.098V** | 5.1V − 2.5mV DCR = 5.097V | ✓ |
+
+**⚠ Inductor must be replaced — original auto-selected part is wrong type:**
+The original auto-selected FH CMP201209UD4R7KT (C395016) is a **multilayer chip inductor**,
+not a power inductor. Rated current: **350mA** (IL_peak = 708mA — would saturate and fail).
+DCR: **400mΩ** (100mW dissipation at 500mA load).
+
+**Confirmed replacement: CENKER CKCS4018-4.7uH/M, LCSC [C354574](https://www.lcsc.com/product-detail/C354574.html)**
+Isat: 1.7A ✓ | Rated: 1.2A ✓ | DCR: 90mΩ ✓ | Package: SMD 4018 | ~$0.02/unit
 
 ### fan_driver.cir
 
@@ -68,31 +80,36 @@ the converter as two components:
 1. **Ideal 5.1V voltage source** — models the closed-loop regulator maintaining
    the output at the feedback setpoint (Vout = Vref × 850k/100k = 5.1V).
 
-2. **Real LC output filter** (L1=4.7µH, Cout=22µF, RL1=50mΩ, ESR=3mΩ) — carries
+2. **Real LC output filter** (L1=4.7µH, Cout=22µF, RL1=90mΩ, ESR=3mΩ) — carries
    the actual switching ripple and limits load-step response. The ripple current
-   (ΔIL = 1.07A pk-pk at 580kHz) is injected as a sinusoidal source across Cout.
+   (ΔIL = 0.416A pk-pk at 1.5MHz) is injected as a sinusoidal source across Cout.
 
 This is the standard small-signal equivalent circuit for a regulated buck converter.
 The simulation accurately validates ripple magnitude and output voltage regulation.
 
 ### CCM/DCM boundary note
 
-At 500mA load, the converter operates at the CCM/DCM boundary:
+At 1.5MHz Fsw and 500mA load, the converter operates firmly in CCM:
 ```
-ΔIL_pk-pk = 1.07A  →  IL_valley = 500mA − 535mA = −35mA
+ΔIL_pk-pk = 0.416A  →  IL_valley = 500mA − 208mA = 292mA  (well above 0)
+CCM boundary (IL_crit): 208mA load  →  converter stays in CCM above ~200mA
 ```
-The AP63205 automatically handles this with its adaptive conduction mode. The
+The AP63205 automatically handles the CCM/DCM transition below 208mA. The
 behavioral model above avoids modeling the switching transitions directly, which
 eliminates DCM ringing artifacts that appear in open-loop switched models
 without a control loop.
 
 ### Ripple calculation (analytical)
 
+Fsw = 1.5MHz per AP63205WU-7 datasheet (Diodes Inc.):
 ```
-ΔIL    = (Vin − Vout) × D / (Fsw × L) = 6.9 × 0.425 / (580kHz × 4.7µH) = 1.07A pk-pk
-ΔV_cap = ΔIL / (8 × Fsw × Cout)       = 1.07 / (8 × 580kHz × 22µF)     = 10.5mV
-ΔV_esr = ΔIL × ESR                    = 1.07 × 3mΩ                       = 3.2mV
-ΔVout  ≈ 13.7mV pk-pk  (simulated: 12.3mV — within 10%)  ✓
+ΔIL    = (Vin − Vout) × D / (Fsw × L) = 6.9 × 0.425 / (1.5MHz × 4.7µH) = 0.416A pk-pk
+ΔV_cap = ΔIL / (8 × Fsw × Cout)       = 0.416 / (8 × 1.5MHz × 22µF)    = 1.58mV
+ΔV_esr = ΔIL × ESR                    = 0.416 × 3mΩ                      = 1.25mV
+ΔVout  ≈ 2.83mV pk-pk  ✓  (target < 50mV)
+
+IL_peak = 500mA + 208mA = 708mA  → Isat of L1 must exceed 750mA
+DCR drop at 500mA: 0.5A × 90mΩ = 45mV  → Vout = 5.055V at full load (feedback-regulated, acceptable)
 ```
 
 ### Fan PWM RC filter

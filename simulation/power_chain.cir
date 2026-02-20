@@ -4,24 +4,26 @@
 * Design values:
 *   Vin    = 12V
 *   Vout   = 5.1V  (Vref=0.6V, FB divider 750kΩ/100kΩ)
-*   Fsw    = 580kHz, T=1.724µs
-*   D      = 5.1/12 = 0.425  →  t_on=0.732µs, t_off=0.992µs
-*   L1     = 4.7µH (DCR=50mΩ)
+*   Fsw    = 1.5MHz (AP63205WU-7 datasheet, Diodes Inc.), T=0.667µs
+*   D      = 5.1/12 = 0.425  →  t_on=0.283µs, t_off=0.384µs
+*   L1     = 4.7µH (DCR=90mΩ — CENKER CKCS4018-4.7uH/M, C354574)
 *   Cout   = 22µF ceramic (ESR=3mΩ)
 *
 * ── Analytical design verification ───────────────────────────────────
 *
 * 1. Inductor ripple current:
-*    ΔIL = (Vin-Vout)×D / (Fsw×L) = 6.9×0.425/(580k×4.7µ) = 1.07A pk-pk  ✓
+*    ΔIL = (Vin-Vout)×D / (Fsw×L) = 6.9×0.425/(1.5M×4.7µ) = 0.416A pk-pk  ✓
 *
-* 2. CCM boundary (minimum load for continuous conduction):
-*    IL_crit = ΔIL/2 = 0.535A
-*    At 500mA load: near CCM/DCM boundary. AP63205 handles this automatically.
+* 2. CCM boundary and peak current:
+*    IL_crit = ΔIL/2 = 0.208A  (converter stays in CCM above 208mA load ✓)
+*    IL_valley = 500mA − 208mA = 292mA  (well above 0, firmly CCM at 500mA)
+*    IL_peak = 500mA + 208mA = 708mA
+*    VERIFY BEFORE PCB LAYOUT: FH CMP201209UD4R7KT (C395016) Isat must exceed 750mA
 *
 * 3. Output ripple voltage:
-*    ΔVout_cap = ΔIL / (8×Fsw×Cout) = 1.07/(8×580k×22µ) = 10.5mV
-*    ΔVout_esr = ΔIL × ESR = 1.07 × 0.003 = 3.2mV
-*    ΔVout_total ≈ 13.7mV pk-pk  ✓  (target: < 50mV)
+*    ΔVout_cap = ΔIL / (8×Fsw×Cout) = 0.416/(8×1.5M×22µ) = 1.58mV
+*    ΔVout_esr = ΔIL × ESR = 0.416 × 0.003 = 1.25mV
+*    ΔVout_total ≈ 2.83mV pk-pk  ✓  (target: < 50mV)
 *
 * 4. Feedback divider check: Vout×100k/850k = 5.1×0.1176 = 0.6V = Vref  ✓
 *
@@ -59,7 +61,7 @@ Vreg  VREG  0  5.1          ; ideal 5.1V source (closed-loop AP63205)
 * ── DCR voltage drop model ───────────────────────────────────────────
 * At DC: Vout = 5.1 - IL × RL1. At 500mA: 5.075V.
 * At AC: RL1 has negligible effect (small vs. Z_Cout and Z_L1).
-Rdc  VREG  VOUT  0.05       ; 50mΩ DCR (provides DC voltage drop at load current)
+Rdc  VREG  VOUT  0.09       ; 90mΩ DCR — CENKER CKCS4018-4.7uH/M (0.5A × 90mΩ = 45mV drop → Vout=5.055V)
 
 * ── Output cap (22µF ceramic, ESR 3mΩ) ──────────────────────────────
 Cout  VOUT  VCOUT  22uF
@@ -67,10 +69,10 @@ Resr  VCOUT 0      0.003
 
 * ── Switching ripple current: AC component of IL, flows into Cout ────
 * In a real buck, AC inductor ripple bypasses the DC load and flows through Cout.
-* ΔIL = 1.07A pk-pk → half-amplitude = 0.535A at Fsw = 580kHz
+* ΔIL = 0.416A pk-pk → half-amplitude = 0.208A at Fsw = 1.5MHz
 * Sinusoidal approximation: same pk-pk, slightly more energy than triangular.
 * Connected across Cout (VOUT to VCOUT) to model ripple through cap + ESR.
-Iripple  VOUT  VCOUT  SIN(0 0.535 580k)
+Iripple  VOUT  VCOUT  SIN(0 0.208 1.5Meg)
 
 * ── Feedback divider (750kΩ / 100kΩ) ────────────────────────────────
 Rfb1  VOUT  VFB  750k
