@@ -1,0 +1,45 @@
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: atopile/setup-atopile@main
+
+      - name: Sync dependencies
+        run: ato sync
+        working-directory: elec
+
+      - name: Build circuit
+        id: build
+        run: ato build --frozen
+        working-directory: elec
+        continue-on-error: true
+
+      - name: Install KiCad CLI
+        run: |
+          sudo add-apt-repository --yes ppa:kicad/kicad-8-releases
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends kicad
+
+      - name: Export PCB layout diagram
+        run: |
+          kicad-cli pcb export svg \
+            --layers "F.Cu,B.Cu,F.SilkS,B.SilkS,Edge.Cuts" \
+            --black-and-white \
+            --output elec/build/pcb-layout.svg \
+            elec/layouts/default/default.kicad_pcb
+        continue-on-error: true
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: elec/build/
+
+      - name: Check build status
+        if: steps.build.outcome == 'failure'
+        run: exit 1
