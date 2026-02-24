@@ -27,7 +27,6 @@ jobs:
 
       - name: Install KiCad CLI
         run: |
-          sudo add-apt-repository --yes ppa:kicad/kicad-8-releases
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends kicad
 

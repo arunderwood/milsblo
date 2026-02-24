@@ -1,4 +1,5 @@
-import Resistor, Capacitor
+import Resistor
+import Capacitor
 
 from "parts/Diodes_Incorporated_AP63205WU_7/Diodes_Incorporated_AP63205WU_7.ato" import Diodes_Incorporated_AP63205WU_7_package
 from "parts/CENKER_CKCS4018_4_7uH_M/CENKER_CKCS4018_4_7uH_M.ato" import CENKER_CKCS4018_4_7uH_M_package

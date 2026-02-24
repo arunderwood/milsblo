@@ -1,4 +1,5 @@
-import Resistor, Capacitor
+import Resistor
+import Capacitor
 
 from "parts/JST_Sales_America_SM04B_SRSS_TB_LF__SN/JST_Sales_America_SM04B_SRSS_TB_LF__SN.ato" import JST_Sales_America_SM04B_SRSS_TB_LF__SN_package
 

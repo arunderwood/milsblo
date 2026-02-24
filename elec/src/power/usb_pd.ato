@@ -1,4 +1,5 @@
-import Resistor, Capacitor
+import Resistor
+import Capacitor
 
 from "parts/SHOU_HAN_TYPE_C_16PIN_2MD_073/SHOU_HAN_TYPE_C_16PIN_2MD_073.ato" import SHOU_HAN_TYPE_C_16PIN_2MD_073_package
 from "parts/WCH_CH224K/WCH_CH224K.ato" import WCH_CH224K_package
