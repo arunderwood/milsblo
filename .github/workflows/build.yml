@@ -32,6 +32,15 @@ jobs:
               /board/layouts/default/default.kicad_pcb
         continue-on-error: true
 
+      - name: Add PCB preview to job summary
+        run: |
+          echo "## PCB Layout" >> $GITHUB_STEP_SUMMARY
+          if [ -f elec/build/pcb-layout.svg ]; then
+            echo "<img src=\"data:image/svg+xml;base64,$(base64 -w0 elec/build/pcb-layout.svg)\" width=\"900\" />" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "_PCB layout not yet available — complete Phase 5 (KiCad layout) to generate this diagram._" >> $GITHUB_STEP_SUMMARY
+          fi
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
