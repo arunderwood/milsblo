@@ -3,6 +3,8 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -32,11 +34,24 @@ jobs:
               /board/layouts/default/default.kicad_pcb
         continue-on-error: true
 
+      - name: Publish PCB layout SVG
+        if: github.ref == 'refs/heads/main'
+        run: |
+          if [ -f elec/build/pcb-layout.svg ]; then
+            mkdir -p docs
+            cp elec/build/pcb-layout.svg docs/pcb-layout.svg
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add docs/pcb-layout.svg
+            git diff --cached --quiet || git commit -m "ci: update PCB layout preview [skip ci]"
+            git push
+          fi
+
       - name: Add PCB preview to job summary
         run: |
           echo "## PCB Layout" >> $GITHUB_STEP_SUMMARY
           if [ -f elec/build/pcb-layout.svg ]; then
-            echo "<img src=\"data:image/svg+xml;base64,$(base64 -w0 elec/build/pcb-layout.svg)\" width=\"900\" />" >> $GITHUB_STEP_SUMMARY
+            echo "![PCB Layout](https://raw.githubusercontent.com/arunderwood/milsblo/main/docs/pcb-layout.svg)" >> $GITHUB_STEP_SUMMARY
           else
             echo "_PCB layout not yet available — complete Phase 5 (KiCad layout) to generate this diagram._" >> $GITHUB_STEP_SUMMARY
           fi
