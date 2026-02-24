@@ -20,10 +20,8 @@ jobs:
         working-directory: elec
 
       - name: Build circuit
-        id: build
         run: ato build --frozen
         working-directory: elec
-        continue-on-error: true
 
       - name: Install KiCad CLI
         run: |
@@ -44,7 +42,3 @@ jobs:
         with:
           name: build
           path: elec/build/
-
-      - name: Check build status
-        if: steps.build.outcome == 'failure'
-        run: exit 1
