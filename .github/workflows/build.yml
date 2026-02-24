@@ -20,19 +20,16 @@ jobs:
         run: uv run ato build --frozen
         working-directory: elec
 
-      - name: Install KiCad CLI
-        run: |
-          sudo add-apt-repository --yes ppa:kicad/kicad-9-releases
-          sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends kicad
-
       - name: Export PCB layout diagram
         run: |
-          kicad-cli pcb export svg \
-            --layers "F.Cu,B.Cu,F.SilkS,B.SilkS,Edge.Cuts" \
-            --black-and-white \
-            --output elec/build/pcb-layout.svg \
-            elec/layouts/default/default.kicad_pcb
+          docker run --rm \
+            -v "$(pwd)/elec:/board" \
+            ghcr.io/inti-cmnb/kicad9_auto:latest \
+            kicad-cli pcb export svg \
+              --layers "F.Cu,B.Cu,F.SilkS,B.SilkS,Edge.Cuts" \
+              --black-and-white \
+              --output /board/build/pcb-layout.svg \
+              /board/layouts/default/default.kicad_pcb
         continue-on-error: true
 
       - name: Upload artifacts
