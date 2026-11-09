@@ -1,0 +1,1879 @@
+(export
+    (version "E")
+    (components
+        (comp
+            (ref "C1")
+            (value "100nF ±10% 50V X7R")
+            (footprint "YAGEO_CC0603KRX7R9BB104:C0603")
+            (property
+                (name "LCSC")
+                (value "C14663")
+            )
+            (property
+                (name "Manufacturer")
+                (value "YAGEO")
+            )
+            (property
+                (name "Partnumber")
+                (value "CC0603KRX7R9BB104")
+            )
+            (property
+                (name "PARAM_capacitance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 9e-08, \"max\": 1.1e-07}}]}}, \"unit\": \"farad\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 50.0, \"max\": 50.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_temperature_coefficient")
+                (value "{\"type\": \"EnumSet\", \"data\": {\"elements\": [{\"name\": \"X7R\"}], \"enum\": {\"name\": \"TemperatureCoefficient\", \"values\": {\"Y5V\": 1, \"Z5U\": 2, \"X7S\": 3, \"X5R\": 4, \"X6R\": 5, \"X7R\": 6, \"X8R\": 7, \"C0G\": 8}}}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "buck.c_bst")
+            )
+            (tstamps "1")
+            (fields)
+        )
+        (comp
+            (ref "C2")
+            (value "22µF ±10% 25V X5R")
+            (footprint "Samsung_Electro_Mechanics_CL31A226KAHNNNE:C1206")
+            (property
+                (name "LCSC")
+                (value "C12891")
+            )
+            (property
+                (name "Manufacturer")
+                (value "Samsung Electro-Mechanics")
+            )
+            (property
+                (name "Partnumber")
+                (value "CL31A226KAHNNNE")
+            )
+            (property
+                (name "PARAM_capacitance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 1.9799999967e-05, \"max\": 2.4200000033e-05}}]}}, \"unit\": \"farad\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 25.0, \"max\": 25.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_temperature_coefficient")
+                (value "{\"type\": \"EnumSet\", \"data\": {\"elements\": [{\"name\": \"X5R\"}], \"enum\": {\"name\": \"TemperatureCoefficient\", \"values\": {\"Y5V\": 1, \"Z5U\": 2, \"X7S\": 3, \"X5R\": 4, \"X6R\": 5, \"X7R\": 6, \"X8R\": 7, \"C0G\": 8}}}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "buck.c_in")
+            )
+            (tstamps "2")
+            (fields)
+        )
+        (comp
+            (ref "C3")
+            (value "22µF ±10% 25V X5R")
+            (footprint "Samsung_Electro_Mechanics_CL31A226KAHNNNE:C1206")
+            (property
+                (name "LCSC")
+                (value "C12891")
+            )
+            (property
+                (name "Manufacturer")
+                (value "Samsung Electro-Mechanics")
+            )
+            (property
+                (name "Partnumber")
+                (value "CL31A226KAHNNNE")
+            )
+            (property
+                (name "PARAM_capacitance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 1.9799999967e-05, \"max\": 2.4200000033e-05}}]}}, \"unit\": \"farad\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 25.0, \"max\": 25.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_temperature_coefficient")
+                (value "{\"type\": \"EnumSet\", \"data\": {\"elements\": [{\"name\": \"X5R\"}], \"enum\": {\"name\": \"TemperatureCoefficient\", \"values\": {\"Y5V\": 1, \"Z5U\": 2, \"X7S\": 3, \"X5R\": 4, \"X6R\": 5, \"X7R\": 6, \"X8R\": 7, \"C0G\": 8}}}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "buck.c_out")
+            )
+            (tstamps "3")
+            (fields)
+        )
+        (comp
+            (ref "C4")
+            (value "100µF ±20% 35V")
+            (footprint "KNSCHA_RVT100UF35V167RV0082:CAP-SMD_BD6.3-L6.6-W6.6-FD")
+            (property
+                (name "LCSC")
+                (value "C5138965")
+            )
+            (property
+                (name "Manufacturer")
+                (value "KNSCHA")
+            )
+            (property
+                (name "Partnumber")
+                (value "RVT100UF35V167RV0082")
+            )
+            (property
+                (name "PARAM_capacitance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 7.9999999702e-05, \"max\": 0.000120000000298}}]}}, \"unit\": \"farad\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 35.0, \"max\": 35.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_temperature_coefficient")
+                (value "{\"type\": \"EnumSet\", \"data\": {\"elements\": [{\"name\": \"C0G\"}, {\"name\": \"X5R\"}, {\"name\": \"X6R\"}, {\"name\": \"X7R\"}, {\"name\": \"X7S\"}, {\"name\": \"X8R\"}, {\"name\": \"Y5V\"}, {\"name\": \"Z5U\"}], \"enum\": {\"name\": \"TemperatureCoefficient\", \"values\": {\"Y5V\": 1, \"Z5U\": 2, \"X7S\": 3, \"X5R\": 4, \"X6R\": 5, \"X7R\": 6, \"X8R\": 7, \"C0G\": 8}}}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "c_bulk")
+            )
+            (tstamps "4")
+            (fields)
+        )
+        (comp
+            (ref "C5")
+            (value "1µF ±10% 25V X5R")
+            (footprint "Samsung_Electro_Mechanics_CL05A105KA5NQNC:C0402")
+            (property
+                (name "LCSC")
+                (value "C52923")
+            )
+            (property
+                (name "Manufacturer")
+                (value "Samsung Electro-Mechanics")
+            )
+            (property
+                (name "Partnumber")
+                (value "CL05A105KA5NQNC")
+            )
+            (property
+                (name "PARAM_capacitance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 8.99999999e-07, \"max\": 1.100000001e-06}}]}}, \"unit\": \"farad\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 25.0, \"max\": 25.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_temperature_coefficient")
+                (value "{\"type\": \"EnumSet\", \"data\": {\"elements\": [{\"name\": \"X5R\"}], \"enum\": {\"name\": \"TemperatureCoefficient\", \"values\": {\"Y5V\": 1, \"Z5U\": 2, \"X7S\": 3, \"X5R\": 4, \"X6R\": 5, \"X7R\": 6, \"X8R\": 7, \"C0G\": 8}}}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "pd.c_vdd")
+            )
+            (tstamps "5")
+            (fields)
+        )
+        (comp
+            (ref "C6")
+            (value "100nF ±10% 50V X7R")
+            (footprint "YAGEO_CC0603KRX7R9BB104:C0603")
+            (property
+                (name "LCSC")
+                (value "C14663")
+            )
+            (property
+                (name "Manufacturer")
+                (value "YAGEO")
+            )
+            (property
+                (name "Partnumber")
+                (value "CC0603KRX7R9BB104")
+            )
+            (property
+                (name "PARAM_capacitance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 9e-08, \"max\": 1.1e-07}}]}}, \"unit\": \"farad\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 50.0, \"max\": 50.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_temperature_coefficient")
+                (value "{\"type\": \"EnumSet\", \"data\": {\"elements\": [{\"name\": \"X7R\"}], \"enum\": {\"name\": \"TemperatureCoefficient\", \"values\": {\"Y5V\": 1, \"Z5U\": 2, \"X7S\": 3, \"X5R\": 4, \"X6R\": 5, \"X7R\": 6, \"X8R\": 7, \"C0G\": 8}}}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "sensor.c_dec")
+            )
+            (tstamps "6")
+            (fields)
+        )
+        (comp
+            (ref "C7")
+            (value "100nF ±10% 50V X7R")
+            (footprint "YAGEO_CC0603KRX7R9BB104:C0603")
+            (property
+                (name "LCSC")
+                (value "C14663")
+            )
+            (property
+                (name "Manufacturer")
+                (value "YAGEO")
+            )
+            (property
+                (name "Partnumber")
+                (value "CC0603KRX7R9BB104")
+            )
+            (property
+                (name "PARAM_capacitance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 9e-08, \"max\": 1.1e-07}}]}}, \"unit\": \"farad\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 50.0, \"max\": 50.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_temperature_coefficient")
+                (value "{\"type\": \"EnumSet\", \"data\": {\"elements\": [{\"name\": \"X7R\"}], \"enum\": {\"name\": \"TemperatureCoefficient\", \"values\": {\"Y5V\": 1, \"Z5U\": 2, \"X7S\": 3, \"X5R\": 4, \"X6R\": 5, \"X7R\": 6, \"X8R\": 7, \"C0G\": 8}}}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "pd.c_vbus")
+            )
+            (tstamps "7")
+            (fields)
+        )
+        (comp
+            (ref "CN1")
+            (value "JST_Sales_America_SM04B_SRSS_TB_LF__SN_package")
+            (footprint "JST_Sales_America_SM04B_SRSS_TB_LF__SN:CONN-SMD_4P-P1.00_SM04B-SRSS-TB-LF-SN")
+            (property
+                (name "LCSC")
+                (value "C160404")
+            )
+            (property
+                (name "Manufacturer")
+                (value "JST Sales America")
+            )
+            (property
+                (name "Partnumber")
+                (value "SM04B-SRSS-TB(LF)(SN)")
+            )
+            (property
+                (name "atopile_address")
+                (value "sensor.conn")
+            )
+            (tstamps "8")
+            (fields)
+        )
+        (comp
+            (ref "D1")
+            (value "MDD_Microdiode_Electronics_BZT52C5V1_package")
+            (footprint "MDD_Microdiode_Electronics_BZT52C5V1:SOD-123_L2.7-W1.6-LS3.7-RD")
+            (property
+                (name "LCSC")
+                (value "C173407")
+            )
+            (property
+                (name "Manufacturer")
+                (value "MDD（Microdiode Electronics）")
+            )
+            (property
+                (name "Partnumber")
+                (value "BZT52C5V1")
+            )
+            (property
+                (name "atopile_address")
+                (value "pd.z_vdd")
+            )
+            (tstamps "9")
+            (fields)
+        )
+        (comp
+            (ref "H1")
+            (value "CJT_A2541WR_4P_package")
+            (footprint "CJT_A2541WR_4P:HDR-TH_4P-P2.54-H-M-W10.3")
+            (property
+                (name "LCSC")
+                (value "C225490")
+            )
+            (property
+                (name "Manufacturer")
+                (value "CJT")
+            )
+            (property
+                (name "Partnumber")
+                (value "A2541WR-4P")
+            )
+            (property
+                (name "atopile_address")
+                (value "fan1.hdr")
+            )
+            (tstamps "10")
+            (fields)
+        )
+        (comp
+            (ref "H2")
+            (value "CJT_A2541WR_4P_package")
+            (footprint "CJT_A2541WR_4P:HDR-TH_4P-P2.54-H-M-W10.3")
+            (property
+                (name "LCSC")
+                (value "C225490")
+            )
+            (property
+                (name "Manufacturer")
+                (value "CJT")
+            )
+            (property
+                (name "Partnumber")
+                (value "A2541WR-4P")
+            )
+            (property
+                (name "atopile_address")
+                (value "fan2.hdr")
+            )
+            (tstamps "11")
+            (fields)
+        )
+        (comp
+            (ref "J1")
+            (value "FemaleHeader_1x22_2v54mm_package")
+            (footprint "FemaleHeader_1x22_2v54mm:PinSocket_1x22_P2.54mm_Vertical")
+            (property
+                (name "atopile_address")
+                (value "headers.j1")
+            )
+            (tstamps "12")
+            (fields)
+        )
+        (comp
+            (ref "J2")
+            (value "FemaleHeader_1x22_2v54mm_package")
+            (footprint "FemaleHeader_1x22_2v54mm:PinSocket_1x22_P2.54mm_Vertical")
+            (property
+                (name "atopile_address")
+                (value "headers.j3")
+            )
+            (tstamps "13")
+            (fields)
+        )
+        (comp
+            (ref "L1")
+            (value "CENKER_CKCS4018_4_7uH_M_package")
+            (footprint "CENKER_CKCS4018_4_7uH_M:IND-SMD_L4.0-W4.0_SWPA4018S")
+            (property
+                (name "LCSC")
+                (value "C354574")
+            )
+            (property
+                (name "Manufacturer")
+                (value "CENKER")
+            )
+            (property
+                (name "Partnumber")
+                (value "CKCS4018-4.7uH/M")
+            )
+            (property
+                (name "PARAM_dc_resistance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 0.0, \"max\": null}}]}}, \"unit\": \"ohm\"}}")
+            )
+            (property
+                (name "PARAM_inductance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 4.229999993e-06, \"max\": 5.170000007e-06}}]}}, \"unit\": \"henry\"}}")
+            )
+            (property
+                (name "PARAM_max_current")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 0.0, \"max\": null}}]}}, \"unit\": \"ampere\"}}")
+            )
+            (property
+                (name "PARAM_saturation_current")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 0.0, \"max\": null}}]}}, \"unit\": \"ampere\"}}")
+            )
+            (property
+                (name "PARAM_self_resonant_frequency")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 0.0, \"max\": null}}]}}, \"unit\": \"hertz\"}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "buck.L1")
+            )
+            (tstamps "14")
+            (fields)
+        )
+        (comp
+            (ref "LED1")
+            (value "Everlight_Elec_19_217_GHC_YR1S2_3T_package")
+            (footprint "Everlight_Elec_19_217_GHC_YR1S2_3T:LED0603-RD")
+            (property
+                (name "LCSC")
+                (value "C72043")
+            )
+            (property
+                (name "Manufacturer")
+                (value "Everlight Elec")
+            )
+            (property
+                (name "Partnumber")
+                (value "19-217/GHC-YR1S2/3T")
+            )
+            (property
+                (name "atopile_address")
+                (value "pd.led_pg")
+            )
+            (tstamps "15")
+            (fields)
+        )
+        (comp
+            (ref "Q1")
+            (value "Shikues_MMBT3904_package")
+            (footprint "Shikues_MMBT3904:SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR")
+            (property
+                (name "LCSC")
+                (value "C111113")
+            )
+            (property
+                (name "Manufacturer")
+                (value "Shikues")
+            )
+            (property
+                (name "Partnumber")
+                (value "MMBT3904")
+            )
+            (property
+                (name "atopile_address")
+                (value "pd.q_pg")
+            )
+            (tstamps "16")
+            (fields)
+        )
+        (comp
+            (ref "R1")
+            (value "750kΩ ±1% 62.5mW")
+            (footprint "FOJAN_FRC0402F7503TS:R0402")
+            (property
+                (name "LCSC")
+                (value "C2909381")
+            )
+            (property
+                (name "Manufacturer")
+                (value "FOJAN")
+            )
+            (property
+                (name "Partnumber")
+                (value "FRC0402F7503TS")
+            )
+            (property
+                (name "PARAM_max_power")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 0.0625, \"max\": 0.0625}}]}}, \"unit\": \"watt\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 50.0, \"max\": 50.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_resistance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 742500.0001676381, \"max\": 757499.9998323619}}]}}, \"unit\": \"ohm\"}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "buck.r_hi")
+            )
+            (tstamps "17")
+            (fields)
+        )
+        (comp
+            (ref "R10")
+            (value "470Ω ±1% 100mW")
+            (footprint "UNI_ROYAL_0603WAF4700T5E:R0603")
+            (property
+                (name "LCSC")
+                (value "C23179")
+            )
+            (property
+                (name "Manufacturer")
+                (value "UNI-ROYAL(Uniroyal Elec)")
+            )
+            (property
+                (name "Partnumber")
+                (value "0603WAF4700T5E")
+            )
+            (property
+                (name "PARAM_max_power")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 0.1, \"max\": 0.1}}]}}, \"unit\": \"watt\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 75.0, \"max\": 75.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_resistance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 465.3000001050532, \"max\": 474.6999998949468}}]}}, \"unit\": \"ohm\"}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "pd.r_vdd")
+            )
+            (tstamps "18")
+            (fields)
+        )
+        (comp
+            (ref "R11")
+            (value "4.7kΩ ±1% 62.5mW")
+            (footprint "UNI_ROYAL_0402WGF4701TCE:R0402")
+            (property
+                (name "LCSC")
+                (value "C25900")
+            )
+            (property
+                (name "Manufacturer")
+                (value "UNI-ROYAL(Uniroyal Elec)")
+            )
+            (property
+                (name "Partnumber")
+                (value "0402WGF4701TCE")
+            )
+            (property
+                (name "PARAM_max_power")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 0.0625, \"max\": 0.0625}}]}}, \"unit\": \"watt\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 50.0, \"max\": 50.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_resistance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 4653.000001050532, \"max\": 4746.999998949468}}]}}, \"unit\": \"ohm\"}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "sensor.r_scl")
+            )
+            (tstamps "19")
+            (fields)
+        )
+        (comp
+            (ref "R12")
+            (value "4.7kΩ ±1% 62.5mW")
+            (footprint "UNI_ROYAL_0402WGF4701TCE:R0402")
+            (property
+                (name "LCSC")
+                (value "C25900")
+            )
+            (property
+                (name "Manufacturer")
+                (value "UNI-ROYAL(Uniroyal Elec)")
+            )
+            (property
+                (name "Partnumber")
+                (value "0402WGF4701TCE")
+            )
+            (property
+                (name "PARAM_max_power")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 0.0625, \"max\": 0.0625}}]}}, \"unit\": \"watt\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 50.0, \"max\": 50.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_resistance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 4653.000001050532, \"max\": 4746.999998949468}}]}}, \"unit\": \"ohm\"}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "sensor.r_sda")
+            )
+            (tstamps "20")
+            (fields)
+        )
+        (comp
+            (ref "R13")
+            (value "470Ω ±1% 100mW")
+            (footprint "UNI_ROYAL_0603WAF4700T5E:R0603")
+            (property
+                (name "LCSC")
+                (value "C23179")
+            )
+            (property
+                (name "Manufacturer")
+                (value "UNI-ROYAL(Uniroyal Elec)")
+            )
+            (property
+                (name "Partnumber")
+                (value "0603WAF4700T5E")
+            )
+            (property
+                (name "PARAM_max_power")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 0.1, \"max\": 0.1}}]}}, \"unit\": \"watt\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 75.0, \"max\": 75.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_resistance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 465.3000001050532, \"max\": 474.6999998949468}}]}}, \"unit\": \"ohm\"}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "pd.r_led")
+            )
+            (tstamps "21")
+            (fields)
+        )
+        (comp
+            (ref "R14")
+            (value "100kΩ ±1% 62.5mW")
+            (footprint "UNI_ROYAL_0402WGF1003TCE:R0402")
+            (property
+                (name "LCSC")
+                (value "C25741")
+            )
+            (property
+                (name "Manufacturer")
+                (value "UNI-ROYAL(Uniroyal Elec)")
+            )
+            (property
+                (name "Partnumber")
+                (value "0402WGF1003TCE")
+            )
+            (property
+                (name "PARAM_max_power")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 0.0625, \"max\": 0.0625}}]}}, \"unit\": \"watt\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 50.0, \"max\": 50.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_resistance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 99000.00002235174, \"max\": 100999.99997764826}}]}}, \"unit\": \"ohm\"}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "pd.r_pg_pull")
+            )
+            (tstamps "22")
+            (fields)
+        )
+        (comp
+            (ref "R15")
+            (value "10kΩ ±1% 100mW")
+            (footprint "UNI_ROYAL_0603WAF1002T5E:R0603")
+            (property
+                (name "LCSC")
+                (value "C25804")
+            )
+            (property
+                (name "Manufacturer")
+                (value "UNI-ROYAL(Uniroyal Elec)")
+            )
+            (property
+                (name "Partnumber")
+                (value "0603WAF1002T5E")
+            )
+            (property
+                (name "PARAM_max_power")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 0.1, \"max\": 0.1}}]}}, \"unit\": \"watt\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 75.0, \"max\": 75.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_resistance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 9900.000002235174, \"max\": 10099.999997764826}}]}}, \"unit\": \"ohm\"}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "pd.r_pg_ser")
+            )
+            (tstamps "23")
+            (fields)
+        )
+        (comp
+            (ref "R2")
+            (value "100kΩ ±1% 62.5mW")
+            (footprint "UNI_ROYAL_0402WGF1003TCE:R0402")
+            (property
+                (name "LCSC")
+                (value "C25741")
+            )
+            (property
+                (name "Manufacturer")
+                (value "UNI-ROYAL(Uniroyal Elec)")
+            )
+            (property
+                (name "Partnumber")
+                (value "0402WGF1003TCE")
+            )
+            (property
+                (name "PARAM_max_power")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 0.0625, \"max\": 0.0625}}]}}, \"unit\": \"watt\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 50.0, \"max\": 50.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_resistance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 99000.00002235174, \"max\": 100999.99997764826}}]}}, \"unit\": \"ohm\"}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "buck.r_lo")
+            )
+            (tstamps "24")
+            (fields)
+        )
+        (comp
+            (ref "R3")
+            (value "100Ω ±1% 100mW")
+            (footprint "UNI_ROYAL_0603WAF1000T5E:R0603")
+            (property
+                (name "LCSC")
+                (value "C22775")
+            )
+            (property
+                (name "Manufacturer")
+                (value "UNI-ROYAL(Uniroyal Elec)")
+            )
+            (property
+                (name "Partnumber")
+                (value "0603WAF1000T5E")
+            )
+            (property
+                (name "PARAM_max_power")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 0.1, \"max\": 0.1}}]}}, \"unit\": \"watt\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 75.0, \"max\": 75.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_resistance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 99.00000002235174, \"max\": 100.99999997764826}}]}}, \"unit\": \"ohm\"}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "fan1.r_pwm")
+            )
+            (tstamps "25")
+            (fields)
+        )
+        (comp
+            (ref "R4")
+            (value "10kΩ ±1% 100mW")
+            (footprint "UNI_ROYAL_0603WAF1002T5E:R0603")
+            (property
+                (name "LCSC")
+                (value "C25804")
+            )
+            (property
+                (name "Manufacturer")
+                (value "UNI-ROYAL(Uniroyal Elec)")
+            )
+            (property
+                (name "Partnumber")
+                (value "0603WAF1002T5E")
+            )
+            (property
+                (name "PARAM_max_power")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 0.1, \"max\": 0.1}}]}}, \"unit\": \"watt\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 75.0, \"max\": 75.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_resistance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 9900.000002235174, \"max\": 10099.999997764826}}]}}, \"unit\": \"ohm\"}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "fan1.r_tach")
+            )
+            (tstamps "26")
+            (fields)
+        )
+        (comp
+            (ref "R5")
+            (value "100Ω ±1% 100mW")
+            (footprint "UNI_ROYAL_0603WAF1000T5E:R0603")
+            (property
+                (name "LCSC")
+                (value "C22775")
+            )
+            (property
+                (name "Manufacturer")
+                (value "UNI-ROYAL(Uniroyal Elec)")
+            )
+            (property
+                (name "Partnumber")
+                (value "0603WAF1000T5E")
+            )
+            (property
+                (name "PARAM_max_power")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 0.1, \"max\": 0.1}}]}}, \"unit\": \"watt\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 75.0, \"max\": 75.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_resistance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 99.00000002235174, \"max\": 100.99999997764826}}]}}, \"unit\": \"ohm\"}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "fan2.r_pwm")
+            )
+            (tstamps "27")
+            (fields)
+        )
+        (comp
+            (ref "R6")
+            (value "10kΩ ±1% 100mW")
+            (footprint "UNI_ROYAL_0603WAF1002T5E:R0603")
+            (property
+                (name "LCSC")
+                (value "C25804")
+            )
+            (property
+                (name "Manufacturer")
+                (value "UNI-ROYAL(Uniroyal Elec)")
+            )
+            (property
+                (name "Partnumber")
+                (value "0603WAF1002T5E")
+            )
+            (property
+                (name "PARAM_max_power")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 0.1, \"max\": 0.1}}]}}, \"unit\": \"watt\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 75.0, \"max\": 75.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_resistance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 9900.000002235174, \"max\": 10099.999997764826}}]}}, \"unit\": \"ohm\"}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "fan2.r_tach")
+            )
+            (tstamps "28")
+            (fields)
+        )
+        (comp
+            (ref "R7")
+            (value "5.1kΩ ±1% 62.5mW")
+            (footprint "UNI_ROYAL_0402WGF5101TCE:R0402")
+            (property
+                (name "LCSC")
+                (value "C25905")
+            )
+            (property
+                (name "Manufacturer")
+                (value "UNI-ROYAL(Uniroyal Elec)")
+            )
+            (property
+                (name "Partnumber")
+                (value "0402WGF5101TCE")
+            )
+            (property
+                (name "PARAM_max_power")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 0.0625, \"max\": 0.0625}}]}}, \"unit\": \"watt\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 50.0, \"max\": 50.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_resistance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 5049.000001139939, \"max\": 5150.999998860061}}]}}, \"unit\": \"ohm\"}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "pd.r_cc1")
+            )
+            (tstamps "29")
+            (fields)
+        )
+        (comp
+            (ref "R8")
+            (value "5.1kΩ ±1% 62.5mW")
+            (footprint "UNI_ROYAL_0402WGF5101TCE:R0402")
+            (property
+                (name "LCSC")
+                (value "C25905")
+            )
+            (property
+                (name "Manufacturer")
+                (value "UNI-ROYAL(Uniroyal Elec)")
+            )
+            (property
+                (name "Partnumber")
+                (value "0402WGF5101TCE")
+            )
+            (property
+                (name "PARAM_max_power")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 0.0625, \"max\": 0.0625}}]}}, \"unit\": \"watt\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 50.0, \"max\": 50.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_resistance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 5049.000001139939, \"max\": 5150.999998860061}}]}}, \"unit\": \"ohm\"}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "pd.r_cc2")
+            )
+            (tstamps "30")
+            (fields)
+        )
+        (comp
+            (ref "R9")
+            (value "24kΩ ±1% 62.5mW")
+            (footprint "UNI_ROYAL_0402WGF2402TCE:R0402")
+            (property
+                (name "LCSC")
+                (value "C25769")
+            )
+            (property
+                (name "Manufacturer")
+                (value "UNI-ROYAL(Uniroyal Elec)")
+            )
+            (property
+                (name "Partnumber")
+                (value "0402WGF2402TCE")
+            )
+            (property
+                (name "PARAM_max_power")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 0.0625, \"max\": 0.0625}}]}}, \"unit\": \"watt\"}}")
+            )
+            (property
+                (name "PARAM_max_voltage")
+                (value "{\"type\": \"Quantity_Set_Discrete\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 50.0, \"max\": 50.0}}]}}, \"unit\": \"volt\"}}")
+            )
+            (property
+                (name "PARAM_resistance")
+                (value "{\"type\": \"Quantity_Interval_Disjoint\", \"data\": {\"intervals\": {\"type\": \"Numeric_Interval_Disjoint\", \"data\": {\"intervals\": [{\"type\": \"Numeric_Interval\", \"data\": {\"min\": 23760.000005364418, \"max\": 24239.999994635582}}]}}, \"unit\": \"ohm\"}}")
+            )
+            (property
+                (name "atopile_address")
+                (value "pd.r_cfg1")
+            )
+            (tstamps "31")
+            (fields)
+        )
+        (comp
+            (ref "U1")
+            (value "Diodes_Incorporated_AP63205WU_7_package")
+            (footprint "Diodes_Incorporated_AP63205WU_7:TSOT-23-6_L2.9-W1.6-P0.95-LS2.8-BL")
+            (property
+                (name "LCSC")
+                (value "C2071056")
+            )
+            (property
+                (name "Manufacturer")
+                (value "Diodes Incorporated")
+            )
+            (property
+                (name "Partnumber")
+                (value "AP63205WU-7")
+            )
+            (property
+                (name "atopile_address")
+                (value "buck.buck")
+            )
+            (tstamps "32")
+            (fields)
+        )
+        (comp
+            (ref "U2")
+            (value "WCH_CH224K_package")
+            (footprint "WCH_CH224K:ESSOP-10_L4.9-W3.9-P1.0-LS6.0-TL-EP")
+            (property
+                (name "LCSC")
+                (value "C970725")
+            )
+            (property
+                (name "Manufacturer")
+                (value "WCH")
+            )
+            (property
+                (name "Partnumber")
+                (value "CH224K")
+            )
+            (property
+                (name "atopile_address")
+                (value "pd.ch224k")
+            )
+            (tstamps "33")
+            (fields)
+        )
+        (comp
+            (ref "USB1")
+            (value "SHOU_HAN_TYPE_C_16PIN_2MD_073_package")
+            (footprint "SHOU_HAN_TYPE_C_16PIN_2MD_073:USB-C-SMD_TYPE-C-6PIN-2MD-073")
+            (property
+                (name "LCSC")
+                (value "C2765186")
+            )
+            (property
+                (name "Manufacturer")
+                (value "SHOU HAN")
+            )
+            (property
+                (name "Partnumber")
+                (value "TYPE-C 16PIN 2MD(073)")
+            )
+            (property
+                (name "atopile_address")
+                (value "pd.usb_c")
+            )
+            (tstamps "34")
+            (fields)
+        )
+    )
+    (nets
+        (net
+            (code 1)
+            (name "A")
+            (node
+                (ref "LED1")
+                (pin "2")
+            )
+            (node
+                (ref "R13")
+                (pin "2")
+            )
+        )
+        (net
+            (code 2)
+            (name "B")
+            (node
+                (ref "Q1")
+                (pin "1")
+            )
+            (node
+                (ref "R14")
+                (pin "2")
+            )
+            (node
+                (ref "R15")
+                (pin "2")
+            )
+        )
+        (net
+            (code 3)
+            (name "BST")
+            (node
+                (ref "C1")
+                (pin "1")
+            )
+            (node
+                (ref "U1")
+                (pin "6")
+            )
+        )
+        (net
+            (code 4)
+            (name "CC1")
+            (node
+                (ref "R7")
+                (pin "1")
+            )
+            (node
+                (ref "U2")
+                (pin "7")
+            )
+            (node
+                (ref "USB1")
+                (pin "4")
+            )
+        )
+        (net
+            (code 5)
+            (name "CC2")
+            (node
+                (ref "R8")
+                (pin "1")
+            )
+            (node
+                (ref "U2")
+                (pin "6")
+            )
+            (node
+                (ref "USB1")
+                (pin "10")
+            )
+        )
+        (net
+            (code 6)
+            (name "CFG1")
+            (node
+                (ref "R9")
+                (pin "1")
+            )
+            (node
+                (ref "U2")
+                (pin "9")
+            )
+        )
+        (net
+            (code 7)
+            (name "CFG2")
+            (node
+                (ref "U2")
+                (pin "2")
+            )
+        )
+        (net
+            (code 8)
+            (name "CFG3")
+            (node
+                (ref "U2")
+                (pin "3")
+            )
+        )
+        (net
+            (code 9)
+            (name "DM")
+            (node
+                (ref "U2")
+                (pin "5")
+            )
+            (node
+                (ref "USB1")
+                (pin "7")
+            )
+        )
+        (net
+            (code 10)
+            (name "DN2")
+            (node
+                (ref "USB1")
+                (pin "5")
+            )
+        )
+        (net
+            (code 11)
+            (name "DP")
+            (node
+                (ref "U2")
+                (pin "4")
+            )
+            (node
+                (ref "USB1")
+                (pin "6")
+            )
+        )
+        (net
+            (code 12)
+            (name "DP2")
+            (node
+                (ref "USB1")
+                (pin "8")
+            )
+        )
+        (net
+            (code 13)
+            (name "FB")
+            (node
+                (ref "R1")
+                (pin "2")
+            )
+            (node
+                (ref "R2")
+                (pin "1")
+            )
+            (node
+                (ref "U1")
+                (pin "1")
+            )
+        )
+        (net
+            (code 14)
+            (name "SBU1")
+            (node
+                (ref "USB1")
+                (pin "9")
+            )
+        )
+        (net
+            (code 15)
+            (name "SBU2")
+            (node
+                (ref "USB1")
+                (pin "3")
+            )
+        )
+        (net
+            (code 16)
+            (name "SW")
+            (node
+                (ref "C1")
+                (pin "2")
+            )
+            (node
+                (ref "L1")
+                (pin "1")
+            )
+            (node
+                (ref "U1")
+                (pin "5")
+            )
+        )
+        (net
+            (code 17)
+            (name "_12")
+            (node
+                (ref "J2")
+                (pin "12")
+            )
+        )
+        (net
+            (code 18)
+            (name "_15")
+            (node
+                (ref "J2")
+                (pin "15")
+            )
+        )
+        (net
+            (code 19)
+            (name "_16")
+            (node
+                (ref "J2")
+                (pin "16")
+            )
+        )
+        (net
+            (code 20)
+            (name "_2")
+            (node
+                (ref "J2")
+                (pin "2")
+            )
+        )
+        (net
+            (code 21)
+            (name "_21")
+            (node
+                (ref "J2")
+                (pin "21")
+            )
+        )
+        (net
+            (code 22)
+            (name "_5")
+            (node
+                (ref "J2")
+                (pin "5")
+            )
+        )
+        (net
+            (code 23)
+            (name "_6")
+            (node
+                (ref "J2")
+                (pin "6")
+            )
+        )
+        (net
+            (code 24)
+            (name "_7")
+            (node
+                (ref "J2")
+                (pin "7")
+            )
+        )
+        (net
+            (code 25)
+            (name "c_vdd-C")
+            (node
+                (ref "C5")
+                (pin "1")
+            )
+            (node
+                (ref "D1")
+                (pin "1")
+            )
+            (node
+                (ref "R10")
+                (pin "2")
+            )
+            (node
+                (ref "R13")
+                (pin "1")
+            )
+            (node
+                (ref "R14")
+                (pin "1")
+            )
+            (node
+                (ref "U2")
+                (pin "1")
+            )
+        )
+        (net
+            (code 26)
+            (name "fan1-_4")
+            (node
+                (ref "H1")
+                (pin "4")
+            )
+            (node
+                (ref "R3")
+                (pin "2")
+            )
+        )
+        (net
+            (code 27)
+            (name "fan1-gpio_pwm")
+            (node
+                (ref "J1")
+                (pin "4")
+            )
+            (node
+                (ref "R3")
+                (pin "1")
+            )
+        )
+        (net
+            (code 28)
+            (name "fan1-gpio_tach")
+            (node
+                (ref "H1")
+                (pin "3")
+            )
+            (node
+                (ref "J1")
+                (pin "6")
+            )
+            (node
+                (ref "R4")
+                (pin "1")
+            )
+        )
+        (net
+            (code 29)
+            (name "fan2-_4")
+            (node
+                (ref "H2")
+                (pin "4")
+            )
+            (node
+                (ref "R5")
+                (pin "2")
+            )
+        )
+        (net
+            (code 30)
+            (name "fan2-gpio_pwm")
+            (node
+                (ref "J1")
+                (pin "5")
+            )
+            (node
+                (ref "R5")
+                (pin "1")
+            )
+        )
+        (net
+            (code 31)
+            (name "fan2-gpio_tach")
+            (node
+                (ref "H2")
+                (pin "3")
+            )
+            (node
+                (ref "J1")
+                (pin "7")
+            )
+            (node
+                (ref "R6")
+                (pin "1")
+            )
+        )
+        (net
+            (code 32)
+            (name "footprint-C")
+            (node
+                (ref "LED1")
+                (pin "1")
+            )
+            (node
+                (ref "Q1")
+                (pin "3")
+            )
+        )
+        (net
+            (code 33)
+            (name "footprint-_10-0")
+            (node
+                (ref "J1")
+                (pin "10")
+            )
+        )
+        (net
+            (code 34)
+            (name "footprint-_10-1")
+            (node
+                (ref "J2")
+                (pin "10")
+            )
+        )
+        (net
+            (code 35)
+            (name "footprint-_11-0")
+            (node
+                (ref "J1")
+                (pin "11")
+            )
+        )
+        (net
+            (code 36)
+            (name "footprint-_11-1")
+            (node
+                (ref "J2")
+                (pin "11")
+            )
+        )
+        (net
+            (code 37)
+            (name "footprint-_13-0")
+            (node
+                (ref "J1")
+                (pin "13")
+            )
+        )
+        (net
+            (code 38)
+            (name "footprint-_13-1")
+            (node
+                (ref "J2")
+                (pin "13")
+            )
+        )
+        (net
+            (code 39)
+            (name "footprint-_14-0")
+            (node
+                (ref "J1")
+                (pin "14")
+            )
+        )
+        (net
+            (code 40)
+            (name "footprint-_14-1")
+            (node
+                (ref "J2")
+                (pin "14")
+            )
+        )
+        (net
+            (code 41)
+            (name "footprint-_17-0")
+            (node
+                (ref "J1")
+                (pin "17")
+            )
+        )
+        (net
+            (code 42)
+            (name "footprint-_17-1")
+            (node
+                (ref "J2")
+                (pin "17")
+            )
+        )
+        (net
+            (code 43)
+            (name "footprint-_18-0")
+            (node
+                (ref "J1")
+                (pin "18")
+            )
+        )
+        (net
+            (code 44)
+            (name "footprint-_18-1")
+            (node
+                (ref "J2")
+                (pin "18")
+            )
+        )
+        (net
+            (code 45)
+            (name "footprint-_19-0")
+            (node
+                (ref "J1")
+                (pin "19")
+            )
+        )
+        (net
+            (code 46)
+            (name "footprint-_19-1")
+            (node
+                (ref "J2")
+                (pin "19")
+            )
+        )
+        (net
+            (code 47)
+            (name "footprint-_20-0")
+            (node
+                (ref "J1")
+                (pin "20")
+            )
+        )
+        (net
+            (code 48)
+            (name "footprint-_20-1")
+            (node
+                (ref "J2")
+                (pin "20")
+            )
+        )
+        (net
+            (code 49)
+            (name "footprint-_3-0")
+            (node
+                (ref "J1")
+                (pin "3")
+            )
+        )
+        (net
+            (code 50)
+            (name "footprint-_3-1")
+            (node
+                (ref "J2")
+                (pin "3")
+            )
+        )
+        (net
+            (code 51)
+            (name "footprint-_4")
+            (node
+                (ref "J2")
+                (pin "4")
+            )
+        )
+        (net
+            (code 52)
+            (name "footprint-_8-0")
+            (node
+                (ref "J1")
+                (pin "8")
+            )
+        )
+        (net
+            (code 53)
+            (name "footprint-_8-1")
+            (node
+                (ref "J2")
+                (pin "8")
+            )
+        )
+        (net
+            (code 54)
+            (name "footprint-_9-0")
+            (node
+                (ref "J1")
+                (pin "9")
+            )
+        )
+        (net
+            (code 55)
+            (name "footprint-_9-1")
+            (node
+                (ref "J2")
+                (pin "9")
+            )
+        )
+        (net
+            (code 56)
+            (name "gnd")
+            (node
+                (ref "C2")
+                (pin "2")
+            )
+            (node
+                (ref "C3")
+                (pin "2")
+            )
+            (node
+                (ref "C4")
+                (pin "2")
+            )
+            (node
+                (ref "C5")
+                (pin "2")
+            )
+            (node
+                (ref "C6")
+                (pin "2")
+            )
+            (node
+                (ref "C7")
+                (pin "2")
+            )
+            (node
+                (ref "CN1")
+                (pin "1")
+            )
+            (node
+                (ref "CN1")
+                (pin "5")
+            )
+            (node
+                (ref "CN1")
+                (pin "6")
+            )
+            (node
+                (ref "D1")
+                (pin "2")
+            )
+            (node
+                (ref "H1")
+                (pin "1")
+            )
+            (node
+                (ref "H2")
+                (pin "1")
+            )
+            (node
+                (ref "J1")
+                (pin "22")
+            )
+            (node
+                (ref "J2")
+                (pin "1")
+            )
+            (node
+                (ref "J2")
+                (pin "22")
+            )
+            (node
+                (ref "Q1")
+                (pin "2")
+            )
+            (node
+                (ref "R2")
+                (pin "2")
+            )
+            (node
+                (ref "R7")
+                (pin "2")
+            )
+            (node
+                (ref "R8")
+                (pin "2")
+            )
+            (node
+                (ref "R9")
+                (pin "2")
+            )
+            (node
+                (ref "U1")
+                (pin "4")
+            )
+            (node
+                (ref "U2")
+                (pin "11")
+            )
+            (node
+                (ref "USB1")
+                (pin "1")
+            )
+            (node
+                (ref "USB1")
+                (pin "12")
+            )
+            (node
+                (ref "USB1")
+                (pin "13")
+            )
+            (node
+                (ref "USB1")
+                (pin "14")
+            )
+        )
+        (net
+            (code 57)
+            (name "gpio10")
+            (node
+                (ref "J1")
+                (pin "16")
+            )
+        )
+        (net
+            (code 58)
+            (name "net")
+            (node
+                (ref "USB1")
+                (pin "")
+            )
+        )
+        (net
+            (code 59)
+            (name "pg")
+            (node
+                (ref "R15")
+                (pin "1")
+            )
+            (node
+                (ref "U1")
+                (pin "2")
+            )
+            (node
+                (ref "U2")
+                (pin "10")
+            )
+        )
+        (net
+            (code 60)
+            (name "scl")
+            (node
+                (ref "CN1")
+                (pin "4")
+            )
+            (node
+                (ref "J1")
+                (pin "15")
+            )
+            (node
+                (ref "R11")
+                (pin "1")
+            )
+        )
+        (net
+            (code 61)
+            (name "sda")
+            (node
+                (ref "CN1")
+                (pin "3")
+            )
+            (node
+                (ref "J1")
+                (pin "12")
+            )
+            (node
+                (ref "R12")
+                (pin "1")
+            )
+        )
+        (net
+            (code 62)
+            (name "v12")
+            (node
+                (ref "C2")
+                (pin "1")
+            )
+            (node
+                (ref "C4")
+                (pin "1")
+            )
+            (node
+                (ref "C7")
+                (pin "1")
+            )
+            (node
+                (ref "H1")
+                (pin "2")
+            )
+            (node
+                (ref "H2")
+                (pin "2")
+            )
+            (node
+                (ref "R10")
+                (pin "1")
+            )
+            (node
+                (ref "U1")
+                (pin "3")
+            )
+            (node
+                (ref "U2")
+                (pin "8")
+            )
+            (node
+                (ref "USB1")
+                (pin "11")
+            )
+            (node
+                (ref "USB1")
+                (pin "2")
+            )
+        )
+        (net
+            (code 63)
+            (name "v3v3")
+            (node
+                (ref "C6")
+                (pin "1")
+            )
+            (node
+                (ref "CN1")
+                (pin "2")
+            )
+            (node
+                (ref "J1")
+                (pin "1")
+            )
+            (node
+                (ref "J1")
+                (pin "2")
+            )
+            (node
+                (ref "R11")
+                (pin "2")
+            )
+            (node
+                (ref "R12")
+                (pin "2")
+            )
+            (node
+                (ref "R4")
+                (pin "2")
+            )
+            (node
+                (ref "R6")
+                (pin "2")
+            )
+        )
+        (net
+            (code 64)
+            (name "v5")
+            (node
+                (ref "C3")
+                (pin "1")
+            )
+            (node
+                (ref "J1")
+                (pin "21")
+            )
+            (node
+                (ref "L1")
+                (pin "2")
+            )
+            (node
+                (ref "R1")
+                (pin "1")
+            )
+        )
+    )
+    (libparts)
+    (libraries)
+)
