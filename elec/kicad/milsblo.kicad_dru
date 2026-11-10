@@ -1,0 +1,15 @@
+(version 1)
+
+(rule "12 V rail width"
+	(condition "A.NetName == '/v12' && A.Type == 'track'")
+	(constraint track_width (min 1.016mm)))
+
+(rule "5 V rail width"
+	(condition "A.NetName == '/v5' && A.Type == 'track'")
+	(constraint track_width (min 0.508mm)))
+
+# The USB-C datasheet land pattern places the locating pegs about 0.17 mm from
+# the outer contact pads, so the board-wide hole clearance cannot apply there.
+(rule "USB-C locating pegs"
+	(condition "A.memberOfFootprint('USB1') && B.memberOfFootprint('USB1')")
+	(constraint hole_clearance (min 0.15mm)))

@@ -49,66 +49,6 @@
 	)
 	(attr smd)
 	(duplicate_pad_numbers_are_jumpers no)
-	(fp_line
-		(start -2.08 -2.08)
-		(end 2.08 -2.08)
-		(stroke
-			(width 0.15)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "2f286dd3-c3e7-4ca6-81f6-6e77205bfe23")
-	)
-	(fp_line
-		(start -2.08 -2.06)
-		(end -2.08 -2.08)
-		(stroke
-			(width 0.15)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "1c446fe8-8078-478a-b8af-6b18d199d0cd")
-	)
-	(fp_line
-		(start -2.08 2.06)
-		(end -2.08 2.08)
-		(stroke
-			(width 0.15)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "4996de77-9776-48a1-8b6e-491cfd5b6d5f")
-	)
-	(fp_line
-		(start -2.08 2.08)
-		(end 2.08 2.08)
-		(stroke
-			(width 0.15)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "e07a92b1-4961-4bd2-9301-6555bc0bd57d")
-	)
-	(fp_line
-		(start 2.08 -2.08)
-		(end 2.08 -2.06)
-		(stroke
-			(width 0.15)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "c134aca1-d473-4c48-a67b-722a3e848ab3")
-	)
-	(fp_line
-		(start 2.08 2.08)
-		(end 2.08 2.06)
-		(stroke
-			(width 0.15)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "16be7f55-97b3-4260-b7cb-30f3c72914b1")
-	)
 	(fp_circle
 		(center 2 1.97)
 		(end 2.03 1.97)
@@ -119,17 +59,6 @@
 		(fill no)
 		(layer "F.Fab")
 		(uuid "faeec4d0-0f2e-40ac-b9c6-89ffda8c452f")
-	)
-	(fp_text user "${REFERENCE}"
-		(at 0 -4 0)
-		(layer "F.SilkS")
-		(uuid "3c567be0-9956-4a61-9739-f21f47fc35cf")
-		(effects
-			(font
-				(size 1 1)
-				(thickness 0.15)
-			)
-		)
 	)
 	(fp_text user "${REFERENCE}"
 		(at 0 0 0)

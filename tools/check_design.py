@@ -6,7 +6,7 @@ that a fixed-output regulator's FB pin belongs on the output. These rules come
 from the part datasheets:
 
   AP63205: Diodes Inc. DS41326 Rev. 3-2
-  CH224K:  WCH CH224 manual 1, V2.1
+  CH224A:  WCH CH224 manual 1, V2.1
 
 With kicad-cli available it also gates on ERC and schematic-to-board parity, so
 this one command is the whole design check, locally and in CI.
@@ -33,13 +33,13 @@ GOLDEN = ROOT / "elec/kicad/connectivity.golden"
 MACOS_KICAD_CLI = "/Applications/KiCad/KiCad.app/Contents/MacOS/kicad-cli"
 
 V12 = 12.0
-CH224K_VDD_SHUNT_V = 3.3
-CH224K_VDD_SHUNT_MAX_A = 0.030
+CH224A_VHV_MAX_V = 32.0
+LED_RESISTOR_MIN_OHMS = 2.2e3
 V12_CAP_MIN_RATING = 25.0
 
 RESISTORS = {
     "pd.r_cfg1": 24e3,
-    "pd.r_led": 470,
+    "pd.r_led": 4.7e3,
     "fan1.r_pwm": 100,
     "fan1.r_tach": 10e3,
     "fan2.r_pwm": 100,
@@ -51,8 +51,8 @@ RESISTORS = {
 # J1 pin numbers are the ESP32-S3-DevKitC-1 left header: pin 4 is GPIO4, pin 12
 # is GPIO8, pin 15 is GPIO9.
 PIN_TABLES = {
-    "pd.ch224k": {
-        "1": "ch224k_vdd", "4": "DP", "5": "DM", "6": "CC2", "7": "CC1",
+    "pd.ch224a": {
+        "1": "ch224a_vhv", "4": "DP", "5": "DM", "6": "CC2", "7": "CC1",
         "9": "CFG1", "11": "gnd",
     },
     "buck.buck": {"3": "v12", "4": "gnd", "5": "SW", "6": "BST"},
@@ -265,7 +265,7 @@ def check_ap63205_feedback(design):
 
 
 def check_ap63205_enable(design):
-    # EN starts the buck automatically when tied to VIN or left open. CH224K PG
+    # EN starts the buck automatically when tied to VIN or left open. CH224A PG
     # is open-drain and active low, so on EN it would hold the buck off.
     en = design.net("buck.buck", "2")
     if not (en == "v12" or is_unconnected(en)):
@@ -274,66 +274,56 @@ def check_ap63205_enable(design):
 
 
 def check_pg_led(design):
-    # PG sinks current when power is good, so the LED hangs from VDD into PG.
+    # PG is an open-drain sink, active low. The LED hangs from the supply pin
+    # into PG, so its series resistor sets the current and takes the 12 V drop.
     out = []
-    pg, vdd = design.net("pd.ch224k", "10"), design.net("pd.ch224k", "1")
+    pg, vhv = design.net("pd.ch224a", "10"), design.net("pd.ch224a", "1")
     if design.net("pd.led_pg", "1") != pg:
         out.append(f"PG LED cathode must be on {pg}, found {design.net('pd.led_pg', '1')}")
-    if not design.two_terminal("R", vdd, design.net("pd.led_pg", "2")):
-        out.append("PG LED anode needs a series resistor from CH224K VDD")
+    series = design.two_terminal("R", vhv, design.net("pd.led_pg", "2"))
+    if not series:
+        out.append("PG LED anode needs a series resistor from the CH224A supply")
+    for part in series:
+        ohms = resistance(part.value)
+        if ohms is None or ohms < LED_RESISTOR_MIN_OHMS:
+            out.append(f"{part.ref}: LED series resistor must be at least {LED_RESISTOR_MIN_OHMS:g} ohm on 12 V, found {part.value!r}")
     return out
 
 
-def check_ch224k_vdd_feed(design):
-    # VDD is an internal 3.3 V shunt regulator that sinks at most 30 mA. The
-    # series resistor drops the rest of the rail, so its dissipation does not
-    # depend on what VDD's loads draw.
-    feeds = design.two_terminal("R", "v12", design.net("pd.ch224k", "1"))
-    if len(feeds) != 1:
-        return [f"CH224K VDD needs exactly one series resistor from v12, found {len(feeds)}"]
-    part, ohms, rated = feeds[0], resistance(feeds[0].value), power_rating(feeds[0].value)
-    if ohms is None or rated is None:
-        return [f"{part.ref}: cannot read resistance and power rating from {part.value!r}"]
-    drop = V12 - CH224K_VDD_SHUNT_V
+def check_ch224a_supply(design):
+    # The CH224A supply and VBUS sense pins tolerate 32 V, and WCH's CH224K
+    # replacement note says both former series resistors are shorted or 0 ohm.
+    vhv, sense = design.net("pd.ch224a", "1"), design.net("pd.ch224a", "8")
     out = []
-    if drop / ohms > CH224K_VDD_SHUNT_MAX_A:
-        out.append(f"{part.ref}: {drop / ohms * 1e3:.1f} mA exceeds the VDD shunt limit of 30 mA")
-    if drop**2 / ohms > rated:
-        out.append(f"{part.ref}: dissipates {drop**2 / ohms * 1e3:.0f} mW at 12 V, rated {rated * 1e3:.0f} mW")
+    for role, net, name in (("pd.r_vhv", vhv, "VHV"), ("pd.r_vbus", sense, "VBUS sense")):
+        part = design.by_role(role)
+        if part is None:
+            out.append(f"CH224A {name}: 0 ohm link {role} is missing")
+        elif resistance(part.value) != 0 or design.nets_of(part.ref) != {"v12", net}:
+            out.append(f"CH224A {name} must link to v12 through 0 ohm, found {part.ref} {part.value!r} on {sorted(design.nets_of(part.ref))}")
     return out
 
 
-def check_ch224k_vbus_sense(design):
-    # Pin 8 is a voltage-sense input that needs a series resistor from VBUS.
-    sense = design.net("pd.ch224k", "8")
-    if sense == "v12":
-        return ["CH224K VBUS sense pin is tied directly to v12: it needs a series resistor (10 kOhm in the reference circuit)"]
-    series = design.two_terminal("R", sense, "v12")
-    if not any(resistance(p.value) == 10e3 for p in series):
-        return [f"CH224K VBUS sense pin needs 10 kOhm in series from v12, found {[p.value for p in series]}"]
-    return []
-
-
-def check_ch224k_cc(design):
-    # The CH224K reference circuits run CC straight to the connector; the
+def check_ch224a_cc(design):
+    # The CH224A reference circuits run CC straight to the connector; the
     # 5.1 kOhm pulldowns appear only in the CH224D and CH221K references.
     out = []
     for role_pin, name in (("6", "CC2"), ("7", "CC1")):
-        net = design.net("pd.ch224k", role_pin)
+        net = design.net("pd.ch224a", role_pin)
         for part in design.two_terminal("R", net, "gnd"):
-            out.append(f"{part.ref} pulls {name} to ground: the CH224K reference circuit has no external CC pulldowns")
+            out.append(f"{part.ref} pulls {name} to ground: the CH224A reference circuit has no external CC pulldowns")
     return out
 
 
-def check_ch224k_config(design):
+def check_ch224a_config(design):
     out = []
-    cfg1 = design.net("pd.ch224k", "9")
+    cfg1 = design.net("pd.ch224a", "9")
     if not any(resistance(p.value) == 24e3 for p in design.two_terminal("R", cfg1, "gnd")):
-        out.append("CH224K CFG1 needs 24 kOhm to ground to request 12 V")
+        out.append("CH224A CFG1 needs 24 kOhm to ground to request 12 V")
     for pin in ("2", "3"):
-        net = design.net("pd.ch224k", pin)
+        net = design.net("pd.ch224a", pin)
         if not (is_unconnected(net) or net == "gnd"):
-            out.append(f"CH224K pin {pin} must float or be grounded for single-resistor mode, found {net}")
+            out.append(f"CH224A pin {pin} must float or be grounded for single-resistor mode, found {net}")
     return out
 
 
@@ -341,9 +331,12 @@ def check_support_parts(design):
     out = []
     if not any(p.value.startswith("100nF") for p in design.two_terminal("C", "BST", "SW")):
         out.append("AP63205 needs 100 nF between BST and SW")
-    vdd = design.net("pd.ch224k", "1")
-    if not any(p.value.startswith("1µF") for p in design.two_terminal("C", vdd, "gnd")):
-        out.append("CH224K VDD needs 1 uF to ground")
+    vhv = design.net("pd.ch224a", "1")
+    if not any(p.value.startswith("1µF") for p in design.two_terminal("C", vhv, "gnd")):
+        out.append("CH224A VHV needs 1 uF to ground")
+    v5_caps = [p for p in design.two_terminal("C", "v5", "gnd") if p.value.startswith("22µF")]
+    if len(v5_caps) < 2:
+        out.append(f"AP63205 output needs two 22 uF capacitors per the datasheet typical circuit, found {len(v5_caps)}")
     return out
 
 
@@ -353,11 +346,10 @@ RULES = [
     ("12 V capacitor ratings", check_cap_ratings),
     ("AP63205 feedback", check_ap63205_feedback),
     ("AP63205 enable", check_ap63205_enable),
-    ("CH224K PG LED", check_pg_led),
-    ("CH224K VDD feed", check_ch224k_vdd_feed),
-    ("CH224K VBUS sense", check_ch224k_vbus_sense),
-    ("CH224K CC pins", check_ch224k_cc),
-    ("CH224K voltage selection", check_ch224k_config),
+    ("CH224A PG LED", check_pg_led),
+    ("CH224A supply links", check_ch224a_supply),
+    ("CH224A CC pins", check_ch224a_cc),
+    ("CH224A voltage selection", check_ch224a_config),
     ("support parts", check_support_parts),
 ]
 

@@ -49,110 +49,6 @@
 	)
 	(attr smd)
 	(duplicate_pad_numbers_are_jumpers no)
-	(fp_line
-		(start -2.56 0.94)
-		(end -2.56 -0.94)
-		(stroke
-			(width 0.15)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "1fdb0bfe-d36c-4e50-9ca9-5799d4a59f5a")
-	)
-	(fp_line
-		(start -2.41 -1.09)
-		(end -0.93 -1.09)
-		(stroke
-			(width 0.15)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "2a2f96a3-44e6-4c41-a201-2a0e559ddcb8")
-	)
-	(fp_line
-		(start -0.93 1.09)
-		(end -2.41 1.09)
-		(stroke
-			(width 0.15)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "dffbbf48-eb3e-4607-a583-f2817f333a62")
-	)
-	(fp_line
-		(start 0.93 1.09)
-		(end 2.41 1.09)
-		(stroke
-			(width 0.15)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "8a1e684e-c65c-495f-9e95-d5fd9942cbc4")
-	)
-	(fp_line
-		(start 2.41 -1.09)
-		(end 0.93 -1.09)
-		(stroke
-			(width 0.15)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "0cfe0563-b989-476a-b774-cc8c92787a27")
-	)
-	(fp_line
-		(start 2.56 0.94)
-		(end 2.56 -0.94)
-		(stroke
-			(width 0.15)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "cff019bd-9385-4992-bf77-3a4cf1b49076")
-	)
-	(fp_arc
-		(start -2.56 -0.94)
-		(mid -2.516066 -1.046066)
-		(end -2.41 -1.09)
-		(stroke
-			(width 0.15)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "564f4432-1391-45e3-a21b-74b8f1170286")
-	)
-	(fp_arc
-		(start -2.41 1.09)
-		(mid -2.516066 1.046066)
-		(end -2.56 0.94)
-		(stroke
-			(width 0.15)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "da936c4d-2faa-4938-b03b-6241e2d2a04c")
-	)
-	(fp_arc
-		(start 2.41 -1.09)
-		(mid 2.516066 -1.046066)
-		(end 2.56 -0.94)
-		(stroke
-			(width 0.15)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "cfe1913b-6d4c-40f9-944b-5cad38934953")
-	)
-	(fp_arc
-		(start 2.56 0.94)
-		(mid 2.516066 1.046066)
-		(end 2.41 1.09)
-		(stroke
-			(width 0.15)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "a582dfc1-4347-4c30-b8e2-c37055f18a77")
-	)
 	(fp_circle
 		(center -1.6 0.8)
 		(end -1.57 0.8)
@@ -163,17 +59,6 @@
 		(fill no)
 		(layer "F.Fab")
 		(uuid "5de6f1bd-a3bb-4462-96f9-fa7c4daeb110")
-	)
-	(fp_text user "${REFERENCE}"
-		(at 0 -4 0)
-		(layer "F.SilkS")
-		(uuid "8ec2958e-eb0a-40ba-ad58-1a19b0b1b8b9")
-		(effects
-			(font
-				(size 1 1)
-				(thickness 0.15)
-			)
-		)
 	)
 	(fp_text user "${REFERENCE}"
 		(at 0 0 0)

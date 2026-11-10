@@ -607,7 +607,7 @@
 		)
 		(embedded_fonts no)
 	)
-	(symbol "0603WAF1001T5E"
+	(symbol "0603WAF0000T5E"
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -623,7 +623,7 @@
 				)
 			)
 		)
-		(property "Value" "1kΩ ±1% 100mW"
+		(property "Value" "0Ω ±1% 100mW"
 			(at 0 -5.08 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -644,7 +644,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.lcsc.com/product-detail/C21190.html"
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/f42da6c80a0747bae77c2f98f4e46d1d.pdf?productCode=C21189"
 			(at 0 -10.16 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -666,7 +666,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C21190"
+		(property "LCSC Part" "C21189"
 			(at 0 -12.7 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -677,7 +677,7 @@
 				)
 			)
 		)
-		(symbol "0603WAF1001T5E_0_1"
+		(symbol "0603WAF0000T5E_0_1"
 			(rectangle
 				(start -2.54 1.02)
 				(end 2.54 -1.02)
@@ -849,7 +849,7 @@
 		)
 		(embedded_fonts no)
 	)
-	(symbol "0603WAF4700T5E"
+	(symbol "0603WAF4701T5E"
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -865,7 +865,7 @@
 				)
 			)
 		)
-		(property "Value" "0603WAF4700T5E"
+		(property "Value" "0603WAF4701T5E"
 			(at 0 -5.08 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -886,7 +886,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://lcsc.com/product-detail/Chip-Resistor-Surface-Mount-UniOhm_470R-4700-1_C23179.html"
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C23162"
 			(at 0 -10.16 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -908,7 +908,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C23179"
+		(property "LCSC Part" "C23162"
 			(at 0 -12.7 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -919,7 +919,7 @@
 				)
 			)
 		)
-		(symbol "0603WAF4700T5E_0_1"
+		(symbol "0603WAF4701T5E_0_1"
 			(rectangle
 				(start -2.54 1.02)
 				(end 2.54 -1.02)
@@ -970,7 +970,7 @@
 		)
 		(embedded_fonts no)
 	)
-	(symbol "19-217_GHC-YR1S2_3T"
+	(symbol "19-217_GHC-YQ1R1QY_6T"
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -986,7 +986,7 @@
 				)
 			)
 		)
-		(property "Value" "19-217/GHC-YR1S2/3T"
+		(property "Value" "19-217/GHC-YQ1R1QY/6T"
 			(at 0 -5.08 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1007,7 +1007,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://lcsc.com/product-detail/Light-Emitting-Diodes-LED_0603-Green-light_C72043.html"
+		(property "Datasheet" "https://www.lcsc.com/product-detail/C2986032.html"
 			(at 0 -10.16 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1029,7 +1029,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C72043"
+		(property "LCSC Part" "C2986032"
 			(at 0 -12.7 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1040,7 +1040,7 @@
 				)
 			)
 		)
-		(symbol "19-217_GHC-YR1S2_3T_0_1"
+		(symbol "19-217_GHC-YQ1R1QY_6T_0_1"
 			(polyline
 				(pts
 					(xy -2.29 3.81) (xy -1.27 3.3) (xy -1.78 2.79) (xy -2.29 3.81)
@@ -1816,7 +1816,7 @@
 		)
 		(embedded_fonts no)
 	)
-	(symbol "CH224K"
+	(symbol "CH224A"
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -1832,7 +1832,7 @@
 				)
 			)
 		)
-		(property "Value" "CH224K"
+		(property "Value" "CH224A"
 			(at 0 -16.51 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1875,7 +1875,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C970725"
+		(property "LCSC Part" "C42459160"
 			(at 0 -21.59 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1886,7 +1886,7 @@
 				)
 			)
 		)
-		(symbol "CH224K_0_1"
+		(symbol "CH224A_0_1"
 			(rectangle
 				(start -8.89 12.7)
 				(end 7.62 -13.97)
@@ -1901,7 +1901,7 @@
 			(pin power_in line
 				(at 10.16 10.16 180)
 				(length 2.54)
-				(name "VDD"
+				(name "VHV"
 					(effects
 						(font
 							(size 1.27 1.27)

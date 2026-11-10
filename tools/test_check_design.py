@@ -45,22 +45,23 @@ def remove(role):
 
 MUTATIONS = [
     ("tach pullup wrong", "resistor values", set_value("fan1.r_tach", "330Ω ±1% 100mW")),
-    ("LED resistor wrong", "resistor values", set_value("pd.r_led", "47Ω ±1% 100mW")),
+    ("LED resistor wrong", "resistor values", set_value("pd.r_led", "10kΩ ±1% 100mW")),
     ("12 V capacitor under-rated", "12 V capacitor ratings", set_value("buck.c_in", "22µF ±10% 6.3V X5R")),
     ("fan on the wrong rail", "pin tables", set_pin("fan1.hdr", "2", "v5")),
     ("GPIO moved", "pin tables", set_pin("headers.j1", "4", "fan2_gpio_pwm")),
     ("FB off the output", "AP63205 feedback", set_pin("buck.buck", "1", "FB")),
     ("EN on PG", "AP63205 enable", set_pin("buck.buck", "2", "pg")),
-    ("VBUS sense direct", "CH224K VBUS sense", set_pin("pd.ch224k", "8", "v12")),
-    ("VBUS sense resistor wrong", "CH224K VBUS sense", set_value("pd.r_vbus", "100Ω ±1% 100mW")),
+    ("VBUS sense link not zero ohm", "CH224A supply links", set_value("pd.r_vbus", "10kΩ ±1% 100mW")),
+    ("VBUS sense link off the rail", "CH224A supply links", set_pin("pd.r_vbus", "1", "v5")),
     ("BST capacitor wrong", "support parts", set_value("buck.c_bst", "22µF ±10% 25V X5R")),
-    ("VDD bypass missing", "support parts", remove("pd.c_vdd")),
-    ("VDD resistor overloaded", "CH224K VDD feed", set_value("pd.r_vdd", "470Ω ±1% 100mW")),
-    ("VDD shunt overcurrent", "CH224K VDD feed", set_value("pd.r_vdd", "220Ω ±1% 1W")),
-    ("CC pulldown added", "CH224K CC pins", add_cc_pulldown),
-    ("CFG2 driven", "CH224K voltage selection", set_pin("pd.ch224k", "2", "v3v3")),
-    ("LED cathode off PG", "CH224K PG LED", set_pin("pd.led_pg", "1", "gnd")),
-    ("LED anode off its resistor", "CH224K PG LED", set_pin("pd.led_pg", "2", "v3v3")),
+    ("VHV bypass missing", "support parts", remove("pd.c_vdd")),
+    ("VHV link not zero ohm", "CH224A supply links", set_value("pd.r_vhv", "1kΩ ±1% 100mW")),
+    ("second output capacitor missing", "support parts", remove("buck.c_out2")),
+    ("CC pulldown added", "CH224A CC pins", add_cc_pulldown),
+    ("CFG2 driven", "CH224A voltage selection", set_pin("pd.ch224a", "2", "v3v3")),
+    ("LED cathode off PG", "CH224A PG LED", set_pin("pd.led_pg", "1", "gnd")),
+    ("LED anode off its resistor", "CH224A PG LED", set_pin("pd.led_pg", "2", "v3v3")),
+    ("LED resistor too small", {"CH224A PG LED", "resistor values"}, set_value("pd.r_led", "470Ω ±1% 100mW")),
 ]
 
 
@@ -89,7 +90,7 @@ class DesignRules(unittest.TestCase):
             with self.subTest(label):
                 design = copy.deepcopy(self.design)
                 mutate(design)
-                self.assertEqual(failing(design), {rule})
+                self.assertEqual(failing(design), rule if isinstance(rule, set) else {rule})
 
     def test_left_open_enable_is_allowed(self):
         design = copy.deepcopy(self.design)
