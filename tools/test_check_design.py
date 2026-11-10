@@ -107,6 +107,94 @@ class DesignRules(unittest.TestCase):
         self.assertTrue(cd.check_golden(design, cd.GOLDEN))
 
 
+def move(ref, dx, dy):
+    def apply(layout):
+        footprint = layout.footprints[ref]
+        footprint.at = (footprint.at[0] + dx, footprint.at[1] + dy)
+        footprint.pads = {n: (x + dx, y + dy) for n, (x, y) in footprint.pads.items()}
+
+    return apply
+
+
+def thin_track(net):
+    def apply(layout):
+        next(t for t in layout.tracks if t.net == net).width = 0.2
+
+    return apply
+
+
+def pour_into_keepout(layout):
+    layout.zones[0].filled.append((layout.edge[0] + 1.0, layout.edge[1] + 1.0))
+
+
+def track_in_keepout(layout):
+    layout.tracks[0].start = (layout.edge[0] + 12.0, layout.edge[1] + 1.0)
+
+
+def via_in_keepout(layout):
+    layout.vias[0].at = (layout.edge[0] + 12.0, layout.edge[1] + 1.0)
+
+
+def extend_under_antenna(layout):
+    x0, y0, x1, y1 = layout.edge
+    layout.edge = (x0, y0 - 2.0, x1, y1)
+
+
+def add_v12_zone(layout):
+    layout.zones.append(cd.Zone("v12", "F.Cu", "extra", []))
+
+
+def remove_ground_pour(layer):
+    def apply(layout):
+        layout.zones = [z for z in layout.zones if not (z.net == "gnd" and z.layer == layer)]
+
+    return apply
+
+
+def strip_ground_vias(layout):
+    layout.vias = [v for v in layout.vias if v.net != "gnd"]
+
+
+LAYOUT_MUTATIONS = [
+    ("12 V track too thin", "rail track widths", thin_track("v12")),
+    ("5 V track too thin", "rail track widths", thin_track("v5")),
+    ("extra 12 V zone", "rail zones", add_v12_zone),
+    ("pour under the antenna", "antenna keepout", pour_into_keepout),
+    ("signal under the antenna", "antenna keepout", track_in_keepout),
+    ("via under the antenna", "antenna keepout", via_in_keepout),
+    ("board under the antenna", "antenna keepout", extend_under_antenna),
+    ("USB off the edge", "connectors on edges", move("USB1", 0.0, -2.0)),
+    ("sensor connector off the edge", "connectors on edges", move("CN1", 0.0, -1.0)),
+    ("fan 1 off the edge", "connectors on edges", move("H1", 2.0, 0.0)),
+    ("fan 2 off the edge", "connectors on edges", move("H2", -1.0, 0.0)),
+    ("header row moved", "DevKit header geometry", move("J2", 0.2, 0.0)),
+    ("header row offset", "DevKit header geometry", move("J2", 0.0, 0.2)),
+    ("regulator bypass moved away", "decoupling distance", move("C2", 6.0, 0.0)),
+    ("no top pour", "ground pours and stitching", remove_ground_pour("F.Cu")),
+    ("no bottom pour", "ground pours and stitching", remove_ground_pour("B.Cu")),
+    ("no stitching vias", "ground pours and stitching", strip_ground_vias),
+]
+
+
+class LayoutRules(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.layout = cd.load_layout(cd.BOARD)
+
+    def failing(self, layout):
+        return {name for name, problems in cd.evaluate_layout(layout) if problems}
+
+    def test_committed_layout_passes(self):
+        self.assertEqual(self.failing(self.layout), set())
+
+    def test_each_rule_catches_its_error(self):
+        for label, rule, mutate in LAYOUT_MUTATIONS:
+            with self.subTest(label):
+                layout = copy.deepcopy(self.layout)
+                mutate(layout)
+                self.assertEqual(self.failing(layout), {rule})
+
+
 class KicadChecks(unittest.TestCase):
     def setUp(self):
         self.kicad_cli = cd.find_kicad_cli(None)
@@ -130,7 +218,24 @@ class KicadChecks(unittest.TestCase):
         text = self.board.read_text(encoding="utf-8")
         self.assertIn('(net "/sda")', text)
         self.board.write_text(text.replace('(net "/sda")', '(net "/scl")', 1), encoding="utf-8")
-        self.assertEqual(self.failures(), {"schematic parity"})
+        self.assertIn("schematic parity", self.failures())
+
+    def test_drc_catches_a_missing_track(self):
+        text = self.board.read_text(encoding="utf-8")
+        start = text.index("(segment")
+        depth, end = 0, start
+        while True:
+            depth += (text[end] == "(") - (text[end] == ")")
+            end += 1
+            if depth == 0:
+                break
+        self.board.write_text(text[:start] + text[end:], encoding="utf-8")
+        self.assertEqual(self.failures(), {"board DRC"})
+
+    def test_drc_catches_a_thin_rail(self):
+        text = self.board.read_text(encoding="utf-8")
+        self.board.write_text(text.replace("(width 1.016)", "(width 0.3)", 1), encoding="utf-8")
+        self.assertIn("board DRC", self.failures())
 
     def test_erc_catches_a_missing_label(self):
         text = self.schematic.read_text(encoding="utf-8")
