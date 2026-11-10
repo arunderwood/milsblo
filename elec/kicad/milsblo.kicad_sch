@@ -9,127 +9,6 @@
 		(comment 1 "USB-C PD ESP32-S3 backpack: two 4-pin PWM fans and a BME280 port")
 	)
 	(lib_symbols
-		(symbol "milsblo:0402WGF1003TCE"
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "R"
-				(at 0 5.08 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "0402WGF1003TCE"
-				(at 0 -5.08 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" "milsblo:R0402"
-				(at 0 -7.62 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" "https://lcsc.com/product-detail/Chip-Resistor-Surface-Mount-UniOhm_100KR-1003-1_C25741.html"
-				(at 0 -10.16 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "LCSC Part" "C25741"
-				(at 0 -12.7 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "0402WGF1003TCE_0_1"
-				(rectangle
-					(start -2.54 1.02)
-					(end 2.54 -1.02)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(pin passive line
-					(at -5.08 0 0)
-					(length 2.54)
-					(name "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 5.08 0 180)
-					(length 2.54)
-					(name "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "milsblo:0402WGF2402TCE"
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -372,127 +251,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "milsblo:0402WGF5101TCE"
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "R"
-				(at 0 5.08 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "0402WGF5101TCE"
-				(at 0 -5.08 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" "milsblo:R0402"
-				(at 0 -7.62 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" "https://lcsc.com/product-detail/Chip-Resistor-Surface-Mount-UniOhm_5-1KR-5101-1_C25905.html"
-				(at 0 -10.16 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "LCSC Part" "C25905"
-				(at 0 -12.7 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "0402WGF5101TCE_0_1"
-				(rectangle
-					(start -2.54 1.02)
-					(end 2.54 -1.02)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(pin passive line
-					(at -5.08 0 0)
-					(length 2.54)
-					(name "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 5.08 0 180)
-					(length 2.54)
-					(name "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "milsblo:0603WAF1000T5E"
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -564,6 +322,127 @@
 				)
 			)
 			(symbol "0603WAF1000T5E_0_1"
+				(rectangle
+					(start -2.54 1.02)
+					(end 2.54 -1.02)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 2.54)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "milsblo:0603WAF1001T5E"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "R"
+				(at 0 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "1kΩ ±1% 100mW"
+				(at 0 -5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "milsblo:R0603"
+				(at 0 -7.62 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.lcsc.com/product-detail/C21190.html"
+				(at 0 -10.16 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "LCSC Part" "C21190"
+				(at 0 -12.7 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "0603WAF1001T5E_0_1"
 				(rectangle
 					(start -2.54 1.02)
 					(end 2.54 -1.02)
@@ -2459,303 +2338,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "milsblo:FRC0402F7503TS"
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "R"
-				(at 0 5.08 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "FRC0402F7503TS"
-				(at 0 -5.08 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" "milsblo:R0402"
-				(at 0 -7.62 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "LCSC Part" "C2909381"
-				(at 0 -10.16 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "FRC0402F7503TS_0_1"
-				(rectangle
-					(start -2.54 1.27)
-					(end 2.54 -1.27)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(pin passive line
-					(at -5.08 0 0)
-					(length 2.54)
-					(name "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 5.08 0 180)
-					(length 2.54)
-					(name "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-		(symbol "milsblo:MMBT3904_C111113"
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "Q"
-				(at 0 10.16 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "MMBT3904_C111113"
-				(at 0 -10.16 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" "milsblo:SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR"
-				(at 0 -12.7 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" "https://lcsc.com/product-detail/Transistors-NPN-PNP_MMBT3904_C111113.html"
-				(at 0 -15.24 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "LCSC Part" "C111113"
-				(at 0 -17.78 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "MMBT3904_C111113_0_1"
-				(polyline
-					(pts
-						(xy 0 2.29) (xy 0 -2.29)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 -0.76) (xy 2.54 -2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.54 2.54) (xy 0 0.76)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.54 -2.54) (xy 1.78 -1.27) (xy 1.02 -2.29) (xy 2.54 -2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(pin passive line
-					(at -2.54 0 0)
-					(length 2.54)
-					(name "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 2.54 -5.08 90)
-					(length 2.54)
-					(name "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 2.54 5.08 270)
-					(length 2.54)
-					(name "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "milsblo:PWR_FLAG"
 			(power global)
 			(pin_numbers
@@ -4323,7 +3905,7 @@
 		)
 		(uuid "00b966d3-85c1-5e89-9f1f-d28a919e20a5")
 	)
-	(label "pg"
+	(label "v12"
 		(at 31.75 129.54 180)
 		(effects
 			(font
@@ -4443,26 +4025,6 @@
 		)
 		(uuid "1c1ca192-4113-5630-985d-0b52d52ddc55")
 	)
-	(label "gnd"
-		(at 139.7 127 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "1c1db340-c15c-55c5-bce5-af0284fb9528")
-	)
-	(label "FB"
-		(at 109.22 127 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "1c858bc0-a1f2-5833-a51c-e3f0d779e2f7")
-	)
 	(label "ch224k_vdd"
 		(at 358.14 43.18 0)
 		(effects
@@ -4503,7 +4065,7 @@
 		)
 		(uuid "2c849147-fe0e-5ed3-b9c2-733cbee97408")
 	)
-	(label "pg"
+	(label "v12"
 		(at 30.48 91.44 180)
 		(effects
 			(font
@@ -4542,16 +4104,6 @@
 			(justify left bottom)
 		)
 		(uuid "345880dc-9d4a-54f8-aa52-59fc9a5ab9f5")
-	)
-	(label "CC2"
-		(at 281.94 43.18 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "351306d3-6c25-5910-9edb-fc4de48852b6")
 	)
 	(label "v3v3"
 		(at 124.46 246.38 0)
@@ -4773,7 +4325,7 @@
 		)
 		(uuid "78cdf942-256b-5ed0-b44a-ccd4657c1408")
 	)
-	(label "led_cathode"
+	(label "pg"
 		(at 210.82 43.18 180)
 		(effects
 			(font
@@ -4813,7 +4365,7 @@
 		)
 		(uuid "80358335-c1df-5fb2-8942-a58211db0bf1")
 	)
-	(label "pg_npn_base"
+	(label "ch224k_vbus"
 		(at 40.64 91.44 0)
 		(effects
 			(font
@@ -4843,16 +4395,6 @@
 		)
 		(uuid "8512563e-686d-58a1-a737-3ee551fcab6b")
 	)
-	(label "led_cathode"
-		(at 142.24 55.88 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "855f00aa-7739-5018-b1cf-d82728fda441")
-	)
 	(label "fan2_gpio_pwm"
 		(at 43.18 340.36 180)
 		(effects
@@ -4872,16 +4414,6 @@
 			(justify right bottom)
 		)
 		(uuid "8b438e33-624e-51e9-bc35-d9f5fcfc4e3e")
-	)
-	(label "pg_npn_base"
-		(at 137.16 60.96 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "8b6586ba-650d-5a97-a37d-439c5e2ff976")
 	)
 	(label "gnd"
 		(at 31.75 41.91 180)
@@ -4923,16 +4455,6 @@
 		)
 		(uuid "9662e66b-7930-54f5-93c4-8b381c11775e")
 	)
-	(label "FB"
-		(at 129.54 127 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "986caf48-55b5-50b3-9320-c5ca65bc6b44")
-	)
 	(label "gnd"
 		(at 60.96 330.2 180)
 		(effects
@@ -4963,26 +4485,6 @@
 		)
 		(uuid "9f69672a-2b10-5b44-beb8-206f8edb1e65")
 	)
-	(label "ch224k_vdd"
-		(at 444.5 43.18 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "9f82454a-7d17-5563-829e-d0effdfefb56")
-	)
-	(label "pg_npn_base"
-		(at 454.66 43.18 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "a1914343-240f-54cd-a1b1-579964c1983b")
-	)
 	(label "scl"
 		(at 39.37 293.37 90)
 		(effects
@@ -4992,16 +4494,6 @@
 			(justify left bottom)
 		)
 		(uuid "a33ede10-b67a-5b37-83cc-0b74fefa0661")
-	)
-	(label "gnd"
-		(at 142.24 66.04 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "a3fc090e-f3d6-54b7-b54b-df0c568ddfaf")
 	)
 	(label "v12"
 		(at 31.75 132.08 180)
@@ -5042,16 +4534,6 @@
 			(justify left bottom)
 		)
 		(uuid "aeb1dba0-a2f1-5654-b261-db20942efa48")
-	)
-	(label "CC1"
-		(at 248.92 43.18 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "aec1aa92-c15a-55c8-ae81-1b3699628871")
 	)
 	(label "v12"
 		(at 39.37 207.01 180)
@@ -5103,7 +4585,7 @@
 		)
 		(uuid "b8b24a97-19a7-5afb-91e0-368c70df0222")
 	)
-	(label "FB"
+	(label "v5"
 		(at 31.75 127 180)
 		(effects
 			(font
@@ -5193,7 +4675,7 @@
 		)
 		(uuid "c8ca72ed-686d-5693-97b4-c3ddb963694f")
 	)
-	(label "v12"
+	(label "ch224k_vbus"
 		(at 77.47 59.69 180)
 		(effects
 			(font
@@ -5243,16 +4725,6 @@
 		)
 		(uuid "d72c2274-1499-5341-8e3b-b3161d8878d3")
 	)
-	(label "v5"
-		(at 99.06 127 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "d8c130cf-2e80-56bc-9d3b-ea216d899ca1")
-	)
 	(label "v12"
 		(at 194.31 127 180)
 		(effects
@@ -5294,16 +4766,6 @@
 		(uuid "e9a32129-c27e-5886-8e50-f23d13d1669d")
 	)
 	(label "gnd"
-		(at 259.08 43.18 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "ebbc819d-53aa-5cfb-bfa0-4906531c3926")
-	)
-	(label "gnd"
 		(at 44.45 293.37 90)
 		(effects
 			(font
@@ -5342,16 +4804,6 @@
 			(justify right bottom)
 		)
 		(uuid "f2881790-7f05-5b2d-ac28-3fba9709285d")
-	)
-	(label "gnd"
-		(at 292.1 43.18 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "f65cdb65-ab11-5765-b04a-21cf3c7c5bbd")
 	)
 	(label "fan2_gpio_pwm"
 		(at 68.58 246.38 180)
@@ -5491,129 +4943,6 @@
 			(project "milsblo"
 				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
 					(reference "C3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "milsblo:0402WGF5101TCE")
-		(at 287.02 43.18 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "031e1cbf-7243-5678-98a3-3b385b8b2e45")
-		(property "Reference" "R8"
-			(at 287.02 36.83 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "5.1kΩ ±1% 62.5mW"
-			(at 287.02 50.8 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "milsblo:R0402"
-			(at 287.02 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2206010045_UNI-ROYAL-Uniroyal-Elec-0402WGF5101TCE_C25905.pdf"
-			(at 287.02 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 287.02 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC Part" "C25905"
-			(at 287.02 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
-			(at 287.02 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Partnumber" "0402WGF5101TCE"
-			(at 287.02 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Role" "pd.r_cc2"
-			(at 287.02 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "89ba6adb-8da6-500d-a6d6-bdec27838020")
-		)
-		(pin "2"
-			(uuid "5a7e36b5-4463-5e33-a869-cf6cef6bf45c")
-		)
-		(instances
-			(project "milsblo"
-				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
-					(reference "R8")
 					(unit 1)
 				)
 			)
@@ -6268,129 +5597,6 @@
 		)
 	)
 	(symbol
-		(lib_id "milsblo:0402WGF5101TCE")
-		(at 254 43.18 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "2024cadd-71ff-58e5-8e2c-68cb1aaf9c2c")
-		(property "Reference" "R7"
-			(at 254 36.83 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "5.1kΩ ±1% 62.5mW"
-			(at 254 50.8 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "milsblo:R0402"
-			(at 254 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2206010045_UNI-ROYAL-Uniroyal-Elec-0402WGF5101TCE_C25905.pdf"
-			(at 254 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 254 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC Part" "C25905"
-			(at 254 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
-			(at 254 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Partnumber" "0402WGF5101TCE"
-			(at 254 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Role" "pd.r_cc1"
-			(at 254 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "ddc7c46a-432f-530a-a5c5-b9f5e15e6743")
-		)
-		(pin "2"
-			(uuid "26745d44-053f-5908-a3bb-cc1feb3f3589")
-		)
-		(instances
-			(project "milsblo"
-				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
-					(reference "R7")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "milsblo:0402WGF4701TCE")
 		(at 68.58 289.56 0)
 		(unit 1)
@@ -7006,7 +6212,7 @@
 				)
 			)
 		)
-		(property "Role" "pd.r_pg_ser"
+		(property "Role" "pd.r_vbus"
 			(at 35.56 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -8221,129 +7427,6 @@
 		)
 	)
 	(symbol
-		(lib_id "milsblo:0402WGF1003TCE")
-		(at 134.62 127 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "956cccf7-9213-54ea-9d5c-164053950063")
-		(property "Reference" "R2"
-			(at 134.62 120.65 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "100kΩ ±1% 62.5mW"
-			(at 134.62 134.62 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "milsblo:R0402"
-			(at 134.62 127 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2206010100_UNI-ROYAL-Uniroyal-Elec-0402WGF1003TCE_C25741.pdf"
-			(at 134.62 127 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 134.62 127 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC Part" "C25741"
-			(at 134.62 127 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
-			(at 134.62 127 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Partnumber" "0402WGF1003TCE"
-			(at 134.62 127 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Role" "buck.r_lo"
-			(at 134.62 127 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "e6763c51-d295-50d6-8b6a-08a37e9f4b0c")
-		)
-		(pin "2"
-			(uuid "aa2dfcb0-3eb6-5490-8c3d-a97247c034ca")
-		)
-		(instances
-			(project "milsblo"
-				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
-					(reference "R2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "milsblo:PWR_FLAG")
 		(at 203.2 167.64 0)
 		(unit 1)
@@ -8415,255 +7498,6 @@
 			(project "milsblo"
 				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
 					(reference "#FLG03")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "milsblo:FRC0402F7503TS")
-		(at 104.14 127 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "a41f1c2e-a7db-5802-a0b5-320fd125ebc2")
-		(property "Reference" "R1"
-			(at 104.14 120.65 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "750kΩ ±1% 62.5mW"
-			(at 104.14 134.62 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "milsblo:R0402"
-			(at 104.14 127 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2308241009_FOJAN-FRC0402F7503TS_C2909381.pdf"
-			(at 104.14 127 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 104.14 127 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC Part" "C2909381"
-			(at 104.14 127 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "FOJAN"
-			(at 104.14 127 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Partnumber" "FRC0402F7503TS"
-			(at 104.14 127 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Role" "buck.r_hi"
-			(at 104.14 127 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "729fb8d9-a144-503a-8cc1-f59692a57da2")
-		)
-		(pin "2"
-			(uuid "803c9e63-33c2-53e5-852d-b86cac8dd6d0")
-		)
-		(instances
-			(project "milsblo"
-				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
-					(reference "R1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "milsblo:MMBT3904_C111113")
-		(at 139.7 60.96 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "a8710120-9d0e-50f1-bf4b-21b7b9125a96")
-		(property "Reference" "Q1"
-			(at 139.7 49.53 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "MMBT3904"
-			(at 139.7 73.66 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "milsblo:SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR"
-			(at 139.7 60.96 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 139.7 60.96 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 139.7 60.96 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC Part" "C111113"
-			(at 139.7 60.96 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "Shikues"
-			(at 139.7 60.96 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Partnumber" "MMBT3904"
-			(at 139.7 60.96 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Role" "pd.q_pg"
-			(at 139.7 60.96 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "054e998b-44f5-5ad9-bd7e-43ca4a5615a2")
-		)
-		(pin "2"
-			(uuid "a90968dd-4248-507d-8aa9-f79e30546bd1")
-		)
-		(pin "3"
-			(uuid "53be4a64-bf9e-5d86-afe6-b6955996acd5")
-		)
-		(instances
-			(project "milsblo"
-				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
-					(reference "Q1")
 					(unit 1)
 				)
 			)
@@ -8805,7 +7639,7 @@
 		)
 	)
 	(symbol
-		(lib_id "milsblo:0603WAF4700T5E")
+		(lib_id "milsblo:0603WAF1001T5E")
 		(at 353.06 43.18 0)
 		(unit 1)
 		(body_style 1)
@@ -8825,7 +7659,7 @@
 				)
 			)
 		)
-		(property "Value" "470Ω ±1% 100mW"
+		(property "Value" "1kΩ ±1% 100mW"
 			(at 353.06 50.8 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8846,7 +7680,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2206010116_UNI-ROYAL-Uniroyal-Elec-0603WAF4700T5E_C23179.pdf"
+		(property "Datasheet" "https://www.lcsc.com/product-detail/C21190.html"
 			(at 353.06 43.18 0)
 			(hide yes)
 			(show_name no)
@@ -8868,7 +7702,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C23179"
+		(property "LCSC Part" "C21190"
 			(at 353.06 43.18 0)
 			(hide yes)
 			(show_name no)
@@ -8890,7 +7724,7 @@
 				)
 			)
 		)
-		(property "Partnumber" "0603WAF4700T5E"
+		(property "Partnumber" "0603WAF1001T5E"
 			(at 353.06 43.18 0)
 			(hide yes)
 			(show_name no)
@@ -9691,129 +8525,6 @@
 			(project "milsblo"
 				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
 					(reference "#FLG02")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "milsblo:0402WGF1003TCE")
-		(at 449.58 43.18 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "f9e241c2-aed9-5abd-8cfa-0863e0adad99")
-		(property "Reference" "R14"
-			(at 449.58 36.83 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "100kΩ ±1% 62.5mW"
-			(at 449.58 50.8 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "milsblo:R0402"
-			(at 449.58 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2206010100_UNI-ROYAL-Uniroyal-Elec-0402WGF1003TCE_C25741.pdf"
-			(at 449.58 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 449.58 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC Part" "C25741"
-			(at 449.58 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
-			(at 449.58 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Partnumber" "0402WGF1003TCE"
-			(at 449.58 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Role" "pd.r_pg_pull"
-			(at 449.58 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "532b8dfb-a43a-5d2f-8d7d-a3f442793c67")
-		)
-		(pin "2"
-			(uuid "332468ca-1989-538a-a7ed-83050fe32803")
-		)
-		(instances
-			(project "milsblo"
-				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
-					(reference "R14")
 					(unit 1)
 				)
 			)
