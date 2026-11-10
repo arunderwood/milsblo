@@ -72,6 +72,7 @@ GPIO 9  → I2C SCL (BME280, with 4.7kΩ pullup to 3.3V)
 ```bash
 python3 tools/check_design.py                  # ERC, schematic parity, connectivity and datasheet rules
 python3 tools/check_design.py --update-golden  # accept a connectivity change after reviewing it
+python3 -m unittest discover -s tools          # prove each rule fails on a deliberate error
 ```
 
 - Run `tools/check_design.py` after every schematic change. It uses only the Python standard library and is the same check CI runs in the `kicad/kicad:10.0.8` image.
@@ -85,8 +86,7 @@ python3 tools/check_design.py --update-golden  # accept a connectivity change af
 |------|---------|---------|
 | **KiCad 10.x** | Schematic, PCB layout, routing, DRC, Gerber export | Open `elec/kicad/milsblo.kicad_pro` |
 | **kicad-cli** | Headless DRC and Gerber export | `kicad-cli pcb drc`, `kicad-cli pcb export gerbers` |
-| **KiBot** | Automated manufacturing file generation | `kibot -c pcbway.kibot.yaml` |
-| **ngspice** | SPICE simulation of power and fan circuits | `ngspice -b milsblo_power.cir` |
+| **ngspice** | SPICE simulation of power and fan circuits | `ngspice -b simulation/power_chain.cir` |
 | **ESPHome** | ESP32 firmware configuration and OTA updates | `esphome run milsblo.yaml` |
 
 ---
@@ -122,16 +122,11 @@ The circuit below is what `elec/kicad/milsblo.kicad_sch` implements and `tools/c
 
 **Board level:** 100µF electrolytic on the 12V rail near the fan headers, 100nF local VBUS bypass.
 
-### Phase 3: SPICE simulation (optional but recommended)
+### Phase 3: SPICE simulation (complete)
 
-**Goal:** Verify power regulation and PWM behavior before building hardware.
+`simulation/` covers what has a usable model: ripple on the 5V rail and the fan PWM signal path. The AP63205 has no public SPICE model, so its output voltage, stability and load-step response come from the datasheet and from measuring the board. See `simulation/README.md` for results.
 
-`simulation/power_chain.cir` models an adjustable 0.6V divider at 1.5MHz, which is not this part: the AP63205 is fixed at 5.0V and switches at 1.1MHz. Do not rely on its buck results.
-
-Write ngspice netlists to test:
-
-1. **CH224K → AP63205 power chain:** Verify 5V output is stable under 500mA load (ESP32 peak). Step input from 0→12V to simulate PD negotiation completing.
-2. **Worst-case power budget:** Two fans at 0.3A each + ESP32 at 0.5A = 1.1A at 12V = 13.2W. Verify USB-C PD source provides sufficient power (most 65W chargers handle this easily).
+**Worst-case power budget:** two fans at 0.3A each + ESP32 at 0.5A = 1.1A at 12V = 13.2W, well inside a 65W charger.
 
 ### Phase 4: Breadboard prototype
 
@@ -442,7 +437,7 @@ milsblo/
 │   │   ├── connectivity.golden
 │   │   └── library/
 │   └── preserved/default.net
-├── tools/check_design.py    ← design check, run locally and in CI
+├── tools/                   ← design check and its tests, run locally and in CI
 ├── firmware/                ← ESPHome configuration
 ├── simulation/              ← ngspice netlists
 └── docs/                    ← breadboard guide, layout preview

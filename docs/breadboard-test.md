@@ -79,10 +79,6 @@ Work through these stages in order. Verify each stage passes before proceeding.
 - Multimeter on VOUT+ to GND: **11.9–12.1V** ✓
 - Breakout board's PG (Power Good) LED lights (if present) ✓
 
-**Expected from SPICE (power_chain.cir, Stage 1):**
-- VBUS rises from 5V → 12V as CH224K negotiates (within ~500ms of connection)
-- Output voltage settles to 12V ± 100mV
-
 **Fail criteria:** Voltage stays at 5V (PD not negotiating — check charger supports PD 2.0/3.0),
 or shows <11V (poor contact), or charger protection trips immediately (short circuit).
 

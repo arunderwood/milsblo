@@ -21,6 +21,9 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Test the design checks
+        run: python3 -m unittest discover -s tools
+
       - name: Check design
         run: python3 tools/check_design.py
 

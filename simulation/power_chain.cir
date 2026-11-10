@@ -1,104 +1,43 @@
-* milsblo power chain simulation
-* AP63205WU-7 12V→5.1V behavioral buck converter
+* milsblo 5V rail output ripple
+* AP63205WU-7, 12V to fixed 5.0V, 4.7uH inductor
 *
-* Design values:
-*   Vin    = 12V
-*   Vout   = 5.1V  (Vref=0.6V, FB divider 750kΩ/100kΩ)
-*   Fsw    = 1.5MHz (AP63205WU-7 datasheet, Diodes Inc.), T=0.667µs
-*   D      = 5.1/12 = 0.425  →  t_on=0.283µs, t_off=0.384µs
-*   L1     = 4.7µH (DCR=90mΩ — CENKER CKCS4018-4.7uH/M, C354574)
-*   Cout   = 22µF ceramic (ESR=3mΩ)
+* The AP63205 has no public SPICE model, so regulation and load-step response
+* are not simulated. FB senses the output directly, so the datasheet holds VOUT
+* at 4.95-5.05V at the output pin, including the drop across the inductor DCR.
+* This netlist covers the one quantity the passives set: ripple in the output
+* capacitor.
 *
-* ── Analytical design verification ───────────────────────────────────
+* Design values (Diodes Inc. DS41326 Rev. 3-2):
+*   Vin  = 12V, Vout = 5.0V, D = 5/12 = 0.4167
+*   Fsw  = 1.1MHz, T = 909.09ns, t_on = 378.8ns (minimum on time is 80ns)
+*   L1   = 4.7uH, CENKER CKCS4018-4.7uH/M, C354574 (Isat 1.7A, rated 1.2A)
+*   Cout = 22uF ceramic, ESR 3mOhm, nominal capacitance with no DC-bias derating
 *
-* 1. Inductor ripple current:
-*    ΔIL = (Vin-Vout)×D / (Fsw×L) = 6.9×0.425/(1.5M×4.7µ) = 0.416A pk-pk  ✓
+* Analytical check:
+*   dIL     = (12-5) * 0.4167 / (1.1M * 4.7u) = 0.564A pk-pk
+*   IL_peak = 500mA + 282mA = 782mA at the 500mA ESP32 peak, below Isat
+*   dV_cap  = 0.564 / (8 * 1.1M * 22u)        = 2.91mV
+*   dV_esr  = 0.564 * 3m                      = 1.69mV
 *
-* 2. CCM boundary and peak current:
-*    IL_crit = ΔIL/2 = 0.208A  (converter stays in CCM above 208mA load ✓)
-*    IL_valley = 500mA − 208mA = 292mA  (well above 0, firmly CCM at 500mA)
-*    IL_peak = 500mA + 208mA = 708mA
-*    VERIFY BEFORE PCB LAYOUT: FH CMP201209UD4R7KT (C395016) Isat must exceed 750mA
-*
-* 3. Output ripple voltage:
-*    ΔVout_cap = ΔIL / (8×Fsw×Cout) = 0.416/(8×1.5M×22µ) = 1.58mV
-*    ΔVout_esr = ΔIL × ESR = 0.416 × 0.003 = 1.25mV
-*    ΔVout_total ≈ 2.83mV pk-pk  ✓  (target: < 50mV)
-*
-* 4. Feedback divider check: Vout×100k/850k = 5.1×0.1176 = 0.6V = Vref  ✓
-*
-* 5. Power budget from 12V rail:
-*    Buck:  0.5A × 5.1V / 0.85η = 3.0W
-*    Fans:  2 × 0.3A × 12V      = 7.2W
-*    Total: 10.2W nominal, 13.2W worst-case  <<  65W charger  ✓
-*
-* ── Simulation approach ───────────────────────────────────────────────
-* AP63205 has no public SPICE model. This simulation uses a two-part model:
-*
-*   Part A — Voltage regulation (Vreg): ideal 5.1V source representing the
-*     AP63205's closed-loop control. Drives the LC output filter.
-*
-*   Part B — Ripple (Iripple): sinusoidal current source at Fsw injecting
-*     the AC component of inductor current directly into the output cap.
-*     In a real buck, AC inductor ripple bypasses the load (high impedance)
-*     and flows entirely through Cout. Placing Iripple at Cout models this.
-*
-*   Part C — Inductor DCR (RL1): models DC voltage drop across L1 DCR.
-*     At 500mA: ΔV = 0.5A × 50mΩ = 25mV → Vout = 5.1 - 0.025 = 5.075V ✓
-*
-* This correctly validates:
-*   - Steady-state Vout at 500mA (incl. DCR drop)
-*   - Ripple voltage from Cout capacitance + ESR
-*   - Output cap load-step transient response
+* The inductor presents 32 Ohm at 1.1MHz, so the AC ripple current flows through
+* the capacitor and is modelled as a triangular current source into it.
 
-* ── Supply and input cap ─────────────────────────────────────────────
-Vin  VIN  0  12V
-Cin  VIN  0  22uF
+* One 22uF output capacitor, as on the board
+Iripple1  0  VOUT1  PULSE(-0.282 0.282 0 378.8ns 530.3ns 0 909.09ns)
+Cout1     VOUT1  VESR1  22uF  IC=0
+Resr1     VESR1  0      3m
+Rbleed1   VOUT1  0      1Meg
 
-* ── Regulated output voltage source ──────────────────────────────────
-Vreg  VREG  0  5.1          ; ideal 5.1V source (closed-loop AP63205)
+* Two 22uF output capacitors, as in the datasheet's typical circuit
+Iripple2  0  VOUT2  PULSE(-0.282 0.282 0 378.8ns 530.3ns 0 909.09ns)
+Cout2     VOUT2  VESR2  44uF  IC=0
+Resr2     VESR2  0      1.5m
+Rbleed2   VOUT2  0      1Meg
 
-* ── DCR voltage drop model ───────────────────────────────────────────
-* At DC: Vout = 5.1 - IL × RL1. At 500mA: 5.075V.
-* At AC: RL1 has negligible effect (small vs. Z_Cout and Z_L1).
-Rdc  VREG  VOUT  0.09       ; 90mΩ DCR — CENKER CKCS4018-4.7uH/M (0.5A × 90mΩ = 45mV drop → Vout=5.055V)
+.tran 1ns 40us UIC
+.save V(VOUT1) V(VOUT2)
 
-* ── Output cap (22µF ceramic, ESR 3mΩ) ──────────────────────────────
-Cout  VOUT  VCOUT  22uF
-Resr  VCOUT 0      0.003
-
-* ── Switching ripple current: AC component of IL, flows into Cout ────
-* In a real buck, AC inductor ripple bypasses the DC load and flows through Cout.
-* ΔIL = 0.416A pk-pk → half-amplitude = 0.208A at Fsw = 1.5MHz
-* Sinusoidal approximation: same pk-pk, slightly more energy than triangular.
-* Connected across Cout (VOUT to VCOUT) to model ripple through cap + ESR.
-Iripple  VOUT  VCOUT  SIN(0 0.208 1.5Meg)
-
-* ── Feedback divider (750kΩ / 100kΩ) ────────────────────────────────
-Rfb1  VOUT  VFB  750k
-Rfb2  VFB   0    100k
-
-* ── Load: 500mA → 50mA step at t=30µs ──────────────────────────────
-Rbase  VOUT  0  102         ; 50mA base load (always present)
-Bstep  VOUT  0  I = 0.45 * u(30us - TIME)   ; +450mA before t=30µs
-
-* ── DC operating point ────────────────────────────────────────────────
-.op
-
-* ── Transient: 0→80µs ────────────────────────────────────────────────
-.tran 5ns 80us
-
-.save V(VOUT) V(VCOUT) V(VFB)
-
-* ── Measurements ──────────────────────────────────────────────────────
-* Steady state at 500mA (5–28µs, before load step)
-.measure tran Vout_500mA    AVG  V(VOUT)  FROM=5us  TO=28us
-.measure tran Vout_ripple   PP   V(VOUT)  FROM=5us  TO=28us
-.measure tran Vcout_ripple  PP   V(VCOUT) FROM=5us  TO=28us
-.measure tran Vfb_ss        AVG  V(VFB)   FROM=5us  TO=28us
-
-* Load step: 500mA → 50mA at t=30µs
-.measure tran Vout_overshoot  MAX  V(VOUT)  FROM=30us TO=70us
-.measure tran Vout_50mA      AVG  V(VOUT)  FROM=55us TO=78us
+.measure tran ripple_1x22uF  PP  V(VOUT1)  FROM=20us  TO=40us
+.measure tran ripple_2x22uF  PP  V(VOUT2)  FROM=20us  TO=40us
 
 .end

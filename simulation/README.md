@@ -1,8 +1,6 @@
 # milsblo SPICE Simulations
 
-Phase 3 simulations for the milsblo power chain and fan PWM driver.
-
-> **`power_chain.cir` does not match the board.** It models an adjustable 0.6V feedback divider at 1.5MHz. The AP63205WU-7 is fixed at 5.0V with FB on the output and switches at 1.1MHz, so its buck results do not apply. The fan PWM simulation is unaffected.
+Simulations of the 5V rail ripple and the fan PWM signal path.
 
 ## Prerequisites
 
@@ -15,13 +13,13 @@ brew install ngspice
 
 | File | What it simulates |
 |------|-------------------|
-| `power_chain.cir` | AP63205 12V→5.1V output voltage, ripple, and load-step transient |
+| `power_chain.cir` | AP63205 output ripple with one and two 22µF capacitors |
 | `fan_driver.cir` | ESP32 GPIO → 100Ω → fan pin 4 RC signal path at 25kHz |
 
 ## Running
 
 ```bash
-# Buck converter simulation
+# 5V rail output ripple
 ngspice -b simulation/power_chain.cir
 
 # Fan PWM driver simulation
@@ -30,33 +28,18 @@ ngspice -b simulation/fan_driver.cir
 
 The `-b` flag runs in batch mode (no GUI). Measured results print to stdout.
 
-## Results (verified passing)
+## Results
 
 ### power_chain.cir
 
-Behavioral model: ideal 5.1V controlled source (AP63205 closed-loop) + real LC filter
-(L1=4.7µH/90mΩ DCR, Cout=22µF) + ripple current injection (ΔIL=0.416A pk-pk at 1.5MHz per AP63205WU-7 datasheet).
-Load step: 500mA → 50mA at t=30µs.
+The AP63205 has no public SPICE model, so this netlist simulates only what the passives set: ripple current in the output capacitor. Output voltage, loop stability and load-step response are not simulated. Those need the datasheet and a measurement on the board.
 
-**Note:** Fsw corrected from an initial 580kHz estimate to 1.5MHz (AP63205WU-7 datasheet, Diodes Inc.).
-DCR updated to 90mΩ (CENKER CKCS4018-4.7uH/M replacement inductor, see below).
-Re-run `ngspice -b simulation/power_chain.cir` to regenerate measurements with the updated simulation.
+| Measurement | Simulated | Target | Pass? |
+|-------------|-----------|--------|-------|
+| `ripple_1x22uF` (pk-pk, as on the board) | **3.17mV** | < 50mV | ✓ |
+| `ripple_2x22uF` (pk-pk, datasheet typical circuit) | **1.58mV** | < 50mV | ✓ |
 
-| Measurement | Value | Analytical / Target | Pass? |
-|-------------|-------|---------------------|-------|
-| `Vout_500mA` (steady-state avg) | ~5.055V (analytical) | 5.1V − 45mV DCR = 5.055V | ✓ |
-| `Vout_ripple` (pk-pk at 500mA) | ~2.8mV (analytical) | 2.83mV analytical, target <50mV | ✓ |
-| `Vfb_ss` (feedback voltage) | **0.597V** | 0.600V Vref | ✓ |
-| `Vout_overshoot` (load removed) | **5.104V** | Minimal (well-damped) | ✓ |
-| `Vout_50mA` (settled after step) | **5.098V** | 5.1V − 2.5mV DCR = 5.097V | ✓ |
-
-**⚠ Inductor must be replaced — original auto-selected part is wrong type:**
-The original auto-selected FH CMP201209UD4R7KT (C395016) is a **multilayer chip inductor**,
-not a power inductor. Rated current: **350mA** (IL_peak = 708mA — would saturate and fail).
-DCR: **400mΩ** (100mW dissipation at 500mA load).
-
-**Confirmed replacement: CENKER CKCS4018-4.7uH/M, LCSC [C354574](https://www.lcsc.com/product-detail/C354574.html)**
-Isat: 1.7A ✓ | Rated: 1.2A ✓ | DCR: 90mΩ ✓ | Package: SMD 4018 | ~$0.02/unit
+Both use nominal capacitance. A 22µF ceramic at 5V DC bias has less than its rated value, so measured ripple will be somewhat higher.
 
 ### fan_driver.cir
 
@@ -70,49 +53,32 @@ ESP32 GPIO (3.3V, 50Ω source) → 100Ω series → 10nF fan input cap + 100kΩ 
 | `t_rise` (10%→90%) | **3.28µs** | < 5µs (< 12.5% of half-period) | ✓ |
 | `t_fall` (90%→10%) | **3.32µs** | < 5µs | ✓ |
 
-All measurements pass. Design is validated.
-
 ## Design notes
 
-### AP63205 model rationale
+### AP63205 output
 
-The AP63205 has no public SPICE model. The behavioral model used here represents
-the converter as two components:
-
-1. **Ideal 5.1V voltage source** — models the closed-loop regulator maintaining
-   the output at the feedback setpoint (Vout = Vref × 850k/100k = 5.1V).
-
-2. **Real LC output filter** (L1=4.7µH, Cout=22µF, RL1=90mΩ, ESR=3mΩ) — carries
-   the actual switching ripple and limits load-step response. The ripple current
-   (ΔIL = 0.416A pk-pk at 1.5MHz) is injected as a sinusoidal source across Cout.
-
-This is the standard small-signal equivalent circuit for a regulated buck converter.
-The simulation accurately validates ripple magnitude and output voltage regulation.
-
-### CCM/DCM boundary note
-
-At 1.5MHz Fsw and 500mA load, the converter operates firmly in CCM:
-```
-ΔIL_pk-pk = 0.416A  →  IL_valley = 500mA − 208mA = 292mA  (well above 0)
-CCM boundary (IL_crit): 208mA load  →  converter stays in CCM above ~200mA
-```
-The AP63205 automatically handles the CCM/DCM transition below 208mA. The
-behavioral model above avoids modeling the switching transitions directly, which
-eliminates DCM ringing artifacts that appear in open-loop switched models
-without a control loop.
+The AP63205WU-7 is fixed at 5.0V (4.95–5.05V) and switches at 1.1MHz ([DS41326](https://www.diodes.com/assets/Datasheets/AP63200-AP63201-AP63203-AP63205.pdf)). FB connects directly to the output, so the regulator corrects for the drop across the inductor's resistance.
 
 ### Ripple calculation (analytical)
 
-Fsw = 1.5MHz per AP63205WU-7 datasheet (Diodes Inc.):
 ```
-ΔIL    = (Vin − Vout) × D / (Fsw × L) = 6.9 × 0.425 / (1.5MHz × 4.7µH) = 0.416A pk-pk
-ΔV_cap = ΔIL / (8 × Fsw × Cout)       = 0.416 / (8 × 1.5MHz × 22µF)    = 1.58mV
-ΔV_esr = ΔIL × ESR                    = 0.416 × 3mΩ                      = 1.25mV
-ΔVout  ≈ 2.83mV pk-pk  ✓  (target < 50mV)
+D       = 5.0 / 12                                       = 0.4167
+ΔIL     = (Vin − Vout) × D / (Fsw × L) = 7 × 0.4167 / (1.1MHz × 4.7µH) = 0.564A pk-pk
+ΔV_cap  = ΔIL / (8 × Fsw × Cout)       = 0.564 / (8 × 1.1MHz × 22µF)   = 2.91mV
+ΔV_esr  = ΔIL × ESR                    = 0.564 × 3mΩ                   = 1.69mV
+```
 
-IL_peak = 500mA + 208mA = 708mA  → Isat of L1 must exceed 750mA
-DCR drop at 500mA: 0.5A × 90mΩ = 45mV  → Vout = 5.055V at full load (feedback-regulated, acceptable)
+The capacitive and ESR ripple peak at different times, so the simulated 3.17mV is less than their sum.
+
+### Inductor
+
+CENKER CKCS4018-4.7uH/M, LCSC [C354574](https://www.lcsc.com/product-detail/C354574.html): Isat 1.7A, rated 1.2A, DCR 90mΩ.
+
 ```
+IL_peak = 500mA + 282mA = 782mA at the 500mA ESP32 peak  → below the 1.2A rating
+```
+
+The converter stays in continuous conduction above about 282mA of load.
 
 ### Fan PWM RC filter
 
@@ -124,13 +90,13 @@ t_rise = 2.2 × τ = 2.2µs  (simulated: 3.3µs — slightly higher due to 50Ω 
 The 3.3µs rise time is well within the 20µs half-period at 25kHz. Full logic swing
 is achieved. Fan PWM control is valid.
 
-### Power budget (analytical — verified)
+### Power budget (analytical)
 
 ```
 Fans:    2 × 0.3A × 12V = 7.2W
-Buck:    0.5A × 5.1V / 0.85η ≈ 3.0W  (draws 3W/12V = 250mA from 12V rail)
-Total:   ~10.2W  (worst-case 13.2W at simultaneous fan + ESP32 peak)
-Margin:  65W USB-C PD charger − 13.2W = 51.8W headroom  ✓
+Buck:    0.5A × 5.0V / 0.85η ≈ 2.9W  (draws about 245mA from the 12V rail)
+Total:   ~10.1W nominal
+Margin:  65W USB-C PD charger leaves more than 50W of headroom  ✓
 ```
 
 ## Viewing waveforms (optional)
@@ -139,5 +105,5 @@ Margin:  65W USB-C PD charger − 13.2W = 51.8W headroom  ✓
 ngspice simulation/power_chain.cir
 # at the ngspice prompt:
 run
-plot V(VOUT)
+plot V(VOUT1) V(VOUT2)
 ```
