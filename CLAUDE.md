@@ -1,6 +1,6 @@
 # CLAUDE.md — milsblo
 
-> **milsblo** is a USB-C PD powered, ESP32-S3 backpack PCB that controls two 4-pin PWM PC fans and reads a BME280 temperature/humidity sensor. Designed in Atopile, manufactured at PCBWAY.
+> **milsblo** is a USB-C PD powered, ESP32-S3 backpack PCB that controls two 4-pin PWM PC fans and reads a BME280 temperature/humidity sensor. Designed in KiCad, manufactured at PCBWAY.
 
 ---
 
@@ -40,8 +40,8 @@ USB-C connector → CH224K (negotiates 12V)
 | Subsystem | Component | Package | LCSC Part # | Why |
 |-----------|-----------|---------|-------------|-----|
 | USB-C PD sink | **CH224K** | ESSOP-10 | C970725 | Standalone 12V selection via single 24kΩ resistor. No MCU firmware needed. **PD 2.0/3.0 only** (no PD 3.1 EPR). Upgrade path: HUSB238 if PD 3.1 needed in future revision. |
-| CH224K VDD clamp | **BZT52C5V1** | SOD-123 | C173407 | **Required.** Prevents VDD exceeding 5.5V max when VBUS = 12V post-negotiation. Without this, CH224K is permanently destroyed. Zener clamp: cathode → VDD, anode → GND; 470Ω series from VBUS. Dissipation = 74.9mW (< 500mW rating). |
-| Buck converter | **AP63205WU-7** | TSOT-26 | C2071056 | Fixed 5V/2A output, 3.8–32V input, 4 external components. |
+| CH224K VDD feed | **1kΩ series + BZT52C5V1** | 0603 + SOD-123 | C21190, C173407 | VDD is an internal 3.3V shunt regulator (3.6V max, 30mA max sink). 1kΩ from 12V gives 8.7mA and 76mW in a 100mW part. The 5.1V Zener never conducts and is optional. |
+| Buck converter | **AP63205WU-7** | TSOT-26 | C2071056 | Fixed 5V/2A output, 3.8–32V input, 4 external components. FB connects directly to the output; EN connects to the input. |
 | Temp/humidity sensor | **BME280** (external breakout) | — | — | Connected via JST-SH 4-pin Qwiic/STEMMA QT connector on board. |
 | USB-C connector | **USB-C 16-pin SMD** | — | C2765186 (or similar) | Needs CC1/CC2 for PD negotiation. **Verify LCSC part C2765186 is in stock and has exposed CC1 and CC2 pads** before layout. If unavailable, search LCSC for "USB-C 16-pin mid-mount SMD" with CC pins. 16 pins is sufficient (no USB 3.x data lines needed). |
 | Sensor connector | **JST-SH 4-pin** (SM04B-SRSS-TB) | — | C160404 | Qwiic/STEMMA QT compatible: GND, 3.3V, SDA, SCL. |
@@ -57,169 +57,76 @@ GPIO 6  → Fan 1 Tach input (10kΩ pullup to 3.3V)
 GPIO 7  → Fan 2 Tach input (10kΩ pullup to 3.3V)
 GPIO 8  → I2C SDA (BME280, with 4.7kΩ pullup to 3.3V)
 GPIO 9  → I2C SCL (BME280, with 4.7kΩ pullup to 3.3V)
-GPIO 10 → CH224K PG (Power Good) input, optional status LED
 ```
 
-> **Note:** GPIOs 4–10 on the ESP32-S3-DevKitC-1 are on the left header, well clear of strapping pins, USB, and JTAG. Verify against the official Espressif pinout before finalizing.
+> **Note:** GPIOs 4–9 on the ESP32-S3-DevKitC-1 are on the left header, well clear of strapping pins, USB, and JTAG. Verify against the official Espressif pinout before finalizing.
 
 ---
 
 ## Toolchain
 
-### Primary: Atopile (code-first circuit design)
+### Primary: KiCad 10
 
-Atopile is a Python-like DSL that compiles `.ato` files into KiCad projects. We chose it because:
+`elec/kicad/` is the design source. The schematic is label-only: every connected pin carries a net label and there are no wires, so connectivity changes read as text diffs.
 
-- It has the largest community among code-first EDA tools (~2,600 GitHub stars)
-- An ESP32-S3 board has been designed, manufactured, and proven to work via Atopile + Claude
-- Its constraint solver auto-selects passive components from JLCPCB's catalog
-- CLI-driven workflow (`ato build`, `ato create part`) works naturally from this terminal
-
-**Install:** `uv pip install "atopile>=0.12,<0.13"` (pin to v0.12.x stable series; v0.14+ is a core rewrite — test before upgrading. Requires Python 3.11+)
-
-**Key commands:**
 ```bash
-ato create project milsblo        # scaffold new project
-ato create part -s <LCSC_ID>      # create component from LCSC part number
-ato build                          # compile → KiCad project in build/
-ato install <package>              # install community packages
+python3 tools/check_design.py                  # ERC, schematic parity, connectivity and datasheet rules
+python3 tools/check_design.py --update-golden  # accept a connectivity change after reviewing it
+python3 -m unittest discover -s tools          # prove each rule fails on a deliberate error
 ```
 
-**Language quick reference for this project:**
-```ato
-# Modules define reusable circuit blocks
-module FanDriver:
-    r_pwm = new Resistor   # 100Ω PWM series protection
-
-    r_pwm.value = 100ohm +/- 5%
-
-    # Connections use the ~ operator
-    signal pwm_in          # from ESP32 GPIO
-    signal fan_gnd         # board GND (direct, no switching)
-    signal fan_12v         # 12V rail (always-on)
-    signal fan_tach        # tach output to ESP32 GPIO
-    signal fan_pwm_out     # to fan pin 4
-
-    pwm_in ~ r_pwm.p1; r_pwm.p2 ~ fan_pwm_out
-    # No MOSFETs or flyback diodes — fan's internal controller handles switching
-
-# Top-level board module composes subsystems
-module Milsblo:
-    # Power
-    usb_c = new USB_C_Connector
-    pd_sink = new CH224K
-    buck = new AP63205
-
-    # Fan channels (4-pin PWM, no MOSFETs needed)
-    fan1 = new FanDriver
-    fan2 = new FanDriver
-
-    # Sensor
-    sensor_conn = new JST_SH_4pin
-
-    # Dev board
-    esp32_headers = new DevKitC1_Headers
-```
+- Run `tools/check_design.py` after every schematic change. It uses only the Python standard library and is the same check CI runs in the `kicad/kicad:10.0.8` image.
+- Parts live in the project library, `elec/kicad/library/`. Every BOM part carries an `LCSC Part` field.
+- `kicad-cli` has no update-PCB command. Sync with Update PCB from Schematic in KiCad (re-link by reference designator on, replace footprints off), then confirm the check still passes.
+- `elec/preserved/default.net` is the last atopile netlist, kept for reference only. Its circuit contains the errors corrected in the KiCad schematic.
 
 ### Secondary tools
 
 | Tool | Purpose | Command |
 |------|---------|---------|
-| **KiCad 9.x** | PCB layout, routing, DRC, Gerber export | Open `build/default/milsblo.kicad_pro` after `ato build` |
+| **KiCad 10.x** | Schematic, PCB layout, routing, DRC, Gerber export | Open `elec/kicad/milsblo.kicad_pro` |
 | **kicad-cli** | Headless DRC and Gerber export | `kicad-cli pcb drc`, `kicad-cli pcb export gerbers` |
-| **KiBot** | Automated manufacturing file generation | `kibot -c pcbway.kibot.yaml` |
-| **ngspice** | SPICE simulation of power and fan circuits | `ngspice -b milsblo_power.cir` |
+| **ngspice** | SPICE simulation of power and fan circuits | `ngspice -b simulation/power_chain.cir` |
 | **ESPHome** | ESP32 firmware configuration and OTA updates | `esphome run milsblo.yaml` |
 
 ---
 
 ## Project phases
 
-### Phase 1: Atopile project setup and component creation
+### Phases 1–2: Library and schematic (complete)
 
-**Goal:** Scaffold the project, create all custom component definitions, verify they compile.
+The circuit below is what `elec/kicad/milsblo.kicad_sch` implements and `tools/check_design.py` enforces.
 
-1. `ato create project milsblo && cd milsblo`
-2. Create custom parts that aren't in the Atopile ecosystem:
-   - `ato create part -s C970725` → CH224K (verify pin mapping against datasheet)
-   - `ato create part -s C2071056` → AP63205WU-7
-   - USB-C connector (C2765186 or find suitable 16-pin mid-mount)
-   - JST-SH 4-pin connector (C160404)
-   - JST-XH 4-pin headers or standard 2.54mm 4-pin headers for fans
-   - Note: AO3400A and SS14 are NOT needed (4-pin fans have internal controllers)
-3. Install any available community packages:
-   - Check `packages.atopile.io` for existing generic resistor/capacitor packages
-   - `ato install generics` if available
-4. Verify: `ato build` should compile with no errors (even if connections aren't wired yet)
+**USB-PD:**
+- USB-C CC1/CC2 run directly to the CH224K. Its reference circuits have no external pulldowns.
+- CFG1: 24kΩ to GND selects 12V. CFG2 and CFG3 float.
+- VDD: 12V → 1kΩ → VDD, with 1µF to GND. VDD is an internal 3.3V shunt regulator (30mA max sink).
+- VBUS sense (pin 8): 12V → 10kΩ → pin 8.
+- PG is open-drain and active low. It sinks the status LED: VDD → 470Ω → LED → PG. It is not routed to the ESP32.
 
-**Deliverable:** Project compiles. All component footprints are assigned and valid.
+**Buck converter:**
+- AP63205WU-7 is fixed at 5.0V: FB connects directly to the output, with no divider.
+- VIN and EN both connect to the 12V rail. PG must not drive EN, because PG is active low.
+- 22µF ceramic input cap, 22µF ceramic output cap, 4.7µH inductor, 100nF bootstrap cap between BST and SW. The datasheet's typical circuit shows two 22µF output caps.
+- Output → ESP32 DevKit 5V pin through the female header.
 
-### Phase 2: Schematic entry in Atopile
+**Fan driver (instantiated twice):**
+- 4-pin fan header: pin 1 = GND, pin 2 = +12V (always on), pin 3 = Tach (10kΩ pullup to 3.3V → ESP32 GPIO), pin 4 = PWM (100Ω series → ESP32 GPIO).
+- No MOSFETs or flyback diodes: the fan's internal controller handles switching.
+- 4-pin fans only. A 3-pin fan on this header runs at full speed.
 
-**Goal:** Write the complete circuit as `.ato` modules, compile to KiCad.
+**Sensor port:**
+- JST-SH 4-pin: pin 1 = GND, pin 2 = 3.3V, pin 3 = SDA, pin 4 = SCL.
+- 4.7kΩ pullups on SDA and SCL to 3.3V, 100nF decoupling on 3.3V.
+- 3.3V comes from the DevKit's 3V3 pin through the header.
 
-Create modular circuit blocks:
+**Board level:** 100µF electrolytic on the 12V rail near the fan headers, 100nF local VBUS bypass.
 
-```
-milsblo/
-├── elec/
-│   └── src/
-│       ├── milsblo.ato          # top-level board module
-│       ├── power/
-│       │   ├── usb_pd.ato       # CH224K + USB-C connector + CC resistors
-│       │   └── buck_5v.ato      # AP63205 + inductor + caps
-│       ├── fan/
-│       │   └── fan_driver.ato   # 4-pin PWM header + 100Ω PWM resistor + tach pullup (reused ×2)
-│       └── sensor/
-│           └── sensor_port.ato  # JST-SH connector + I2C pullups
-├── ato.yaml
-└── build/                        # generated by ato build
-```
+### Phase 3: SPICE simulation (complete)
 
-**Circuit details to implement:**
+`simulation/` covers what has a usable model: ripple on the 5V rail and the fan PWM signal path. The AP63205 has no public SPICE model, so its output voltage, stability and load-step response come from the datasheet and from measuring the board. See `simulation/README.md` for results.
 
-**USB-PD (usb_pd.ato):**
-- USB-C connector with 5.1kΩ pulldowns on CC1/CC2 (required for PD)
-- CH224K wired per datasheet: VBUS → VIN, 24kΩ from CFG1 to GND (selects 12V)
-- VDD circuit: VBUS → 470Ω → VDD node; **5.1V Zener (BZT52C5V1, C173407)** cathode→VDD, anode→GND (REQUIRED — without this, VDD=12V destroys the IC); 1µF bypass cap VDD→GND
-- PG (Power Good) output routed to ESP32 GPIO 10
-
-**Buck converter (buck_5v.ato):**
-- AP63205WU-7: VIN from 12V rail, EN tied to CH224K PG (power sequencing)
-- 22µF ceramic input cap, 22µF ceramic output cap, 4.7µH inductor, 100nF bootstrap cap
-- BST pin → bootstrap cap → SW pin
-- Output → ESP32 DevKit VIN pin through the female header
-
-**Fan driver (fan_driver.ato) — instantiate twice:**
-- 4-pin fan header: pin 1 = GND (board GND, direct), pin 2 = +12V (direct from 12V rail, always-on), pin 3 = Tach (10kΩ pullup to 3.3V → ESP32 GPIO), pin 4 = PWM (100Ω series → ESP32 GPIO)
-- No MOSFETs or flyback diodes — the fan's internal controller handles all PWM switching
-- 100Ω series resistor on PWM pin 4 for GPIO protection only
-- Tach line: 10kΩ pullup to 3.3V, routed to ESP32 GPIO 6/7
-- ESP32 3.3V GPIO drives pin 4 directly (4-pin fans accept 3.3V logic as valid high)
-- **Fan compatibility:** 4-pin fans only. 3-pin fans plugged into a 4-pin header will run at full speed (PWM pin unconnected to 3-pin fan).
-
-**Sensor port (sensor_port.ato):**
-- JST-SH 4-pin: pin 1 = GND, pin 2 = 3.3V, pin 3 = SDA, pin 4 = SCL
-- 4.7kΩ pullups on SDA and SCL to 3.3V
-- 100nF decoupling cap on 3.3V pin
-- Note: 3.3V comes from the ESP32 dev board's 3V3 output pin through the header
-- Total external 3.3V draw: ~5mA (pullups + sensor). Well within ESP32-S3-DevKitC-1's onboard 3.3V regulator capacity (~500mA available minus ~200mA for ESP32 SoC).
-
-**Top-level (milsblo.ato):**
-- Compose all submodules
-- Map signals to ESP32 header pins per the pin assignment table above
-- Add board-level decoupling: 100µF electrolytic on 12V rail near fan headers
-
-**Validation:** `ato build` compiles cleanly. Open `build/default/milsblo.kicad_pro` in KiCad and visually inspect the schematic for correctness.
-
-### Phase 3: SPICE simulation (optional but recommended)
-
-**Goal:** Verify power regulation and PWM behavior before building hardware.
-
-Write ngspice netlists to test:
-
-1. **CH224K → AP63205 power chain:** Verify 5V output is stable under 500mA load (ESP32 peak). Step input from 0→12V to simulate PD negotiation completing.
-2. **Worst-case power budget:** Two fans at 0.3A each + ESP32 at 0.5A = 1.1A at 12V = 13.2W. Verify USB-C PD source provides sufficient power (most 65W chargers handle this easily).
+**Worst-case power budget:** two fans at 0.3A each + ESP32 at 0.5A = 1.1A at 12V = 13.2W, well inside a 65W charger.
 
 ### Phase 4: Breadboard prototype
 
@@ -249,9 +156,9 @@ Write ngspice netlists to test:
 
 ### Phase 5: PCB layout in KiCad
 
-**Goal:** Produce a manufacturable board layout from the Atopile-generated schematic.
+**Goal:** Produce a manufacturable board layout from the KiCad schematic.
 
-This phase is **manual work in KiCad** — Atopile generates the schematic and netlist, but layout requires human judgment.
+This phase is **manual work in KiCad** — layout requires human judgment.
 
 **Layout priorities (in order):**
 1. Place female headers first — these define the board outline and must align with the DevKitC-1
@@ -286,7 +193,7 @@ kicad-cli pcb drc \
   --exit-code-violations \
   --format json \
   --output drc-report.json \
-  build/default/milsblo.kicad_pcb
+  elec/kicad/milsblo.kicad_pcb
 
 # Export Gerbers (PCBWAY compatible — NO x2 format)
 kicad-cli pcb export gerbers \
@@ -295,7 +202,7 @@ kicad-cli pcb export gerbers \
   --use-drill-file-origin \
   --layers "F.Cu,B.Cu,F.SilkS,B.SilkS,F.Mask,B.Mask,Edge.Cuts" \
   --output gerbers/ \
-  build/default/milsblo.kicad_pcb
+  elec/kicad/milsblo.kicad_pcb
 
 # Export drill files
 kicad-cli pcb export drill \
@@ -303,19 +210,19 @@ kicad-cli pcb export drill \
   --excellon-zeros-format suppressleading \
   --excellon-min-header \
   --output gerbers/ \
-  build/default/milsblo.kicad_pcb
+  elec/kicad/milsblo.kicad_pcb
 
 # Export BOM for assembly
 kicad-cli sch export bom \
   --output milsblo-bom.csv \
-  build/default/milsblo.kicad_sch
+  elec/kicad/milsblo.kicad_sch
 
 # Export pick-and-place for assembly
 kicad-cli pcb export pos \
   --format csv \
   --units mm \
   --output milsblo-pos.csv \
-  build/default/milsblo.kicad_pcb
+  elec/kicad/milsblo.kicad_pcb
 
 # Zip for upload
 cd gerbers && zip ../milsblo-gerbers.zip * && cd ..
@@ -455,15 +362,6 @@ fan:
     output: fan2_pwm
     name: "Fan 2"
 
-# Optional: Power Good status from CH224K
-binary_sensor:
-  - platform: gpio
-    pin:
-      number: GPIO10
-      mode:
-        input: true
-    name: "USB-C PD Power Good"
-    device_class: power
 ```
 
 **Key ESPHome features:**
@@ -508,7 +406,7 @@ esphome run milsblo.yaml --device milsblo.local
 Based on documented failures from AI-assisted PCB projects:
 
 1. **Power trace widths.** Claude defaults to minimum trace width for everything. 12V at 1A needs ≥40 mil traces. Always verify.
-2. **Forgotten connections.** Claude may generate component modules but forget to wire them together at the top level. Verify every net in the schematic after `ato build`.
+2. **Forgotten connections.** Claude may generate component modules but forget to wire them together at the top level. Run `python3 tools/check_design.py` after every schematic change.
 3. **Wrong passive values.** Claude has chosen 330Ω where 10kΩ was needed. Cross-reference every resistor/capacitor value against the relevant datasheet.
 4. **Missing decoupling caps.** Every IC needs a 100nF ceramic cap within 5mm of its power pins. Claude often forgets these.
 5. **Antenna keepout.** The ESP32-S3 module has a PCB antenna that requires 15mm clearance. Your backpack board should NOT extend under the antenna.
@@ -518,56 +416,35 @@ Based on documented failures from AI-assisted PCB projects:
 
 ### Things that must be verified by a human
 
-- Every pin mapping between Atopile code and the actual ESP32-S3-DevKitC-1 pinout diagram
-- CH224K voltage selection resistor value (24kΩ for 12V — verify against YOUR charger's PD capabilities)
+- Every pin mapping between the schematic and the actual ESP32-S3-DevKitC-1 pinout diagram
+- CH224K voltage selection resistor value (24kΩ for 12V). WCH publishes this value for the CH224Q/A and CH224D but no CH224K-specific table, so measure 12V on the breadboard.
 - AP63205 inductor value and saturation current rating
 - Board outline alignment with DevKitC-1 header spacing (measure your actual board with calipers)
 - USB-C connector footprint compatibility with your specific connector part
 
 ---
 
-## File structure after setup
+## File structure
 
 ```
 milsblo/
 ├── CLAUDE.md               ← this file
-├── elec/                    ← Atopile circuit design
-│   ├── ato.yaml
-│   └── src/
-│       ├── milsblo.ato
-│       ├── power/
-│       ├── fan/
-│       └── sensor/
+├── elec/
+│   ├── kicad/               ← KiCad project: the design source
+│   │   ├── milsblo.kicad_pro
+│   │   ├── milsblo.kicad_sch
+│   │   ├── milsblo.kicad_pcb
+│   │   ├── connectivity.golden
+│   │   └── library/
+│   └── preserved/default.net
+├── tools/                   ← design check and its tests, run locally and in CI
 ├── firmware/                ← ESPHome configuration
-│   ├── milsblo.yaml
-│   └── secrets.yaml
 ├── simulation/              ← ngspice netlists
-│   ├── power_chain.cir
-│   └── fan_driver.cir
-├── manufacturing/           ← PCBWAY-ready outputs
-│   ├── gerbers/
-│   ├── milsblo-bom.csv
-│   └── milsblo-pos.csv
-├── docs/                    ← breadboard photos, schematic PDFs, notes
-│   ├── breadboard-test.md
-│   └── schematic.pdf
-└── build/                   ← Atopile output (generated, gitignored)
-    └── default/
-        ├── milsblo.kicad_pro
-        ├── milsblo.kicad_sch
-        └── milsblo.kicad_pcb
+└── docs/                    ← breadboard guide, layout preview
 ```
 
 ---
 
 ## Start here
 
-Begin with **Phase 1**. Run:
-
-```bash
-uv pip install "atopile>=0.12,<0.13"
-ato create project milsblo
-cd milsblo
-```
-
-Then create the CH224K part definition from LCSC C970725 and verify it compiles. Proceed sequentially through the phases. Do not skip the breadboard prototype — USB-C PD at 12V can damage components if the circuit has errors.
+The schematic is complete and passes `python3 tools/check_design.py`. The next work is the Phase 4 breadboard, then Phase 5 layout. Do not skip the breadboard prototype — USB-C PD at 12V can damage components if the circuit has errors.

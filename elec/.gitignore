@@ -97,7 +97,6 @@ venv.bak/
 
 # Misc
 .DS_Store
-.ato/
 .ruff_cache/
 
 # PyInstaller
@@ -194,3 +193,7 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# KiCad local history and project locks
+.history/
+~*.lck

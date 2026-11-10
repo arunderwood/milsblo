@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "milsblo")(type "KiCad")(uri "${KIPRJMOD}/library/milsblo.kicad_sym")(options "")(descr "milsblo project parts"))
+)
