@@ -8,12 +8,16 @@ from the part datasheets:
   AP63205: Diodes Inc. DS41326 Rev. 3-2
   CH224K:  WCH CH224 manual 1, V2.1
 
+With kicad-cli available it also gates on ERC and schematic-to-board parity, so
+this one command is the whole design check, locally and in CI.
+
 Usage: check_design.py [--netlist FILE] [--kicad-cli PATH] [--update-golden]
 Exit codes: 0 all rules pass, 1 a rule failed, 2 the check could not run.
 """
 
 import argparse
 import dataclasses
+import json
 import os
 import pathlib
 import re
@@ -24,6 +28,7 @@ import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SCHEMATIC = ROOT / "elec/kicad/milsblo.kicad_sch"
+BOARD = ROOT / "elec/kicad/milsblo.kicad_pcb"
 GOLDEN = ROOT / "elec/kicad/connectivity.golden"
 MACOS_KICAD_CLI = "/Applications/KiCad/KiCad.app/Contents/MacOS/kicad-cli"
 
@@ -149,6 +154,26 @@ def export_netlist(kicad_cli, out):
         check=True,
         capture_output=True,
     )
+
+
+def run_report(kicad_cli, command, report, source):
+    subprocess.run(
+        [kicad_cli, *command, "--severity-all", "--format", "json", "-o", str(report), str(source)],
+        check=True,
+        capture_output=True,
+    )
+    return json.loads(report.read_text(encoding="utf-8"))
+
+
+def kicad_checks(kicad_cli, tmp):
+    erc = run_report(kicad_cli, ["sch", "erc"], tmp / "erc.json", SCHEMATIC)
+    # Only the parity section gates here; layout DRC is judged separately.
+    drc = run_report(kicad_cli, ["pcb", "drc", "--schematic-parity"], tmp / "drc.json", BOARD)
+    violations = [v for sheet in erc["sheets"] for v in sheet["violations"]]
+    return [
+        ("ERC", [f"{v['severity']} {v['type']}: {v['description']}" for v in violations]),
+        ("schematic parity", [f"{v['type']}: {v['description']}" for v in drc["schematic_parity"]]),
+    ]
 
 
 def find_kicad_cli(explicit):
@@ -348,6 +373,7 @@ def main():
     parser.add_argument("--update-golden", action="store_true", help="accept current connectivity as reviewed")
     args = parser.parse_args()
 
+    kicad_results = []
     with tempfile.TemporaryDirectory() as tmp:
         netlist = args.netlist
         if netlist is None:
@@ -358,8 +384,12 @@ def main():
             netlist = pathlib.Path(tmp) / "design.net"
             try:
                 export_netlist(kicad_cli, netlist)
+                kicad_results = kicad_checks(kicad_cli, pathlib.Path(tmp))
             except subprocess.CalledProcessError as error:
-                print(f"cannot run: netlist export failed: {error.stderr!r}", file=sys.stderr)
+                print(f"cannot run: kicad-cli failed: {error.stderr!r}", file=sys.stderr)
+                return 2
+            except (ValueError, KeyError) as error:
+                print(f"cannot run: unreadable kicad-cli report: {error!r}", file=sys.stderr)
                 return 2
         try:
             design = load_design(netlist)
@@ -375,7 +405,7 @@ def main():
         print(f"cannot run: {GOLDEN.relative_to(ROOT)} is missing", file=sys.stderr)
         return 2
 
-    results = [("connectivity golden", check_golden(design, GOLDEN)), *evaluate(design)]
+    results = [*kicad_results, ("connectivity golden", check_golden(design, GOLDEN)), *evaluate(design)]
     failed = 0
     for name, problems in results:
         print(f"{'FAIL' if problems else 'PASS'}  {name}")

@@ -2,6 +2,8 @@
 
 Phase 3 simulations for the milsblo power chain and fan PWM driver.
 
+> **`power_chain.cir` does not match the board.** It models an adjustable 0.6V feedback divider at 1.5MHz. The AP63205WU-7 is fixed at 5.0V with FB on the output and switches at 1.1MHz, so its buck results do not apply. The fan PWM simulation is unaffected.
+
 ## Prerequisites
 
 Install ngspice (macOS):

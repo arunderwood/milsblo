@@ -1,7 +1,7 @@
 # milsblo — Phase 4 Breadboard Prototype Test Guide
 
 This document guides you through breadboard validation of the milsblo circuit before PCB fabrication.
-Phases 1–3 are complete: Atopile schematic compiles (19/19 parts), SPICE simulations passed.
+The KiCad schematic is complete and passes `tools/check_design.py`.
 
 ---
 
@@ -18,18 +18,17 @@ Phases 1–3 are complete: Atopile schematic compiles (19/19 parts), SPICE simul
 
 **Do NOT attempt to breadboard the CH224K IC directly.**
 Use a CH224K breakout board (AliExpress, ~$2–3). Breakout boards include onboard VDD regulation,
-so the VDD clamping problem (see below) is already solved.
+so the VDD supply (see below) is already handled.
 
-The breakout board tests the PD negotiation itself but NOT your specific CC resistor values or
-USB-C connector footprint — those must be verified at PCB stage.
+The breakout board tests the PD negotiation itself but NOT your USB-C connector footprint — that
+must be verified at PCB stage.
 
-### CH224K VDD clamping issue (PCB design only — irrelevant for breakout)
+### CH224K VDD supply (PCB design only — irrelevant for breakout)
 
-The final PCB design includes a 5.1V Zener (BZT52C5V1, LCSC C173407) to clamp the CH224K VDD pin.
-Without this clamp, at 12V VBUS the VDD pin sees ~12V, exceeding the 5.5V maximum, permanently
-destroying the IC. This fix is already implemented in `elec/src/power/usb_pd.ato`.
+The CH224K holds VDD at 3.3V with an internal shunt regulator that can sink 30mA. On the PCB, R10
+(1kΩ) feeds it from the 12V rail.
 
-Math: (12V − 5.1V) / 470Ω = 14.7mA; Zener dissipation = 74.9mW (< 500mW SOD-123 rating) ✓
+Math: (12V − 3.3V) / 1kΩ = 8.7mA; R10 dissipation = 76mW (< 100mW rating) ✓
 
 ---
 
@@ -87,37 +86,32 @@ Work through these stages in order. Verify each stage passes before proceeding.
 **Fail criteria:** Voltage stays at 5V (PD not negotiating — check charger supports PD 2.0/3.0),
 or shows <11V (poor contact), or charger protection trips immediately (short circuit).
 
-**5V-only charger warning:** milsblo will NOT power up with a 5V-only USB-C charger or a
-USB-A-to-C cable. CH224K only negotiates 12V; if the charger does not offer PD at 12V, PG
-stays low, the AP63205 EN pin is never asserted, the buck never starts, and the ESP32 never
-boots. Use a 65W+ USB-C PD charger that explicitly supports 12V (check the charger's PD
+**5V-only charger warning:** the 12V rail is VBUS itself, and the AP63205 starts as soon as
+VBUS appears. With a 5V-only USB-C charger or a USB-A-to-C cable the rail stays at 5V, so the
+ESP32 may boot while the fans get 5V and may not spin. Use a 65W+ USB-C PD charger that explicitly supports 12V (check the charger's PD
 voltage list in its specs).
 
 ---
 
 ### Stage 2: 5V Buck — ESP32 power rail
 
-**Goal:** Verify 5.1V output to feed the ESP32 DevKit.
+**Goal:** Verify 5V output to feed the ESP32 DevKit.
 
-**Note:** The SPICE simulation of AP63205WU-7 with 750kΩ/100kΩ FB divider predicts **5.075V** output
-(not exactly 5.0V). This is correct and expected — the DevKitC-1's AMS1117-3.3 LDO accepts 4.75–12V input.
+**Note:** The AP63205WU-7 on the PCB is fixed at 5.0V (4.95–5.05V). The module used here stands in
+for it on the breadboard.
 
 **Setup:**
 - Use a pre-built 12V→5V adjustable buck module for breadboard testing (safer than breadboarding the AP63205)
-- Set output to 5.1V before connecting load
+- Set output to 5.0V before connecting load
 - Input: 12V from Stage 1
 - Output: no load yet
 
 **Verify:**
-- Multimeter on buck output: **5.0–5.2V** ✓
+- Multimeter on buck output: **4.9–5.1V** ✓
 
 **Then add load (100mA):**
 - Connect a 50Ω / 0.5W resistor across the 5V output (100mA load)
-- Voltage should hold at **5.0–5.2V** ✓
-
-**Expected from SPICE (power_chain.cir, Stage 3):**
-- Vout = 5.075V, ripple < 12.3mV at 500mA load
-- Settling time < 200µs on step load
+- Voltage should hold at **4.9–5.1V** ✓
 
 **Fail criteria:** Voltage below 4.75V or above 5.5V, or buck oscillates/gets hot.
 
@@ -149,7 +143,6 @@ ESPHome will compile, flash via USB, and begin logging. Expected serial output:
 - Board boots without reset loop ✓
 - WiFi connects (check router DHCP) ✓
 - ESPHome dashboard shows "milsblo" online ✓
-- Power Good sensor shows "Off" (no 12V PD connected to GPIO 10 yet) ✓
 
 **Fail criteria:** Boot loop (power issue, try USB power only to isolate), WiFi not connecting
 (check secrets.yaml SSID/password).
@@ -284,8 +277,5 @@ Once all 6 stages pass:
 1. Document any discrepancies from expected values (actual RPM range, actual buck output voltage, etc.)
 2. Photograph the breadboard setup for reference
 3. Proceed to Phase 5: PCB layout in KiCad
-   - Open `elec/build/default/milsblo.kicad_pro`
+   - Open `elec/kicad/milsblo.kicad_pro`
    - Follow layout priorities in CLAUDE.md Phase 5
-4. Remaining Phase 5 Atopile tasks (requires interactive TTY):
-   - `ato create part` for 2× 1×22 female pin headers (ESP32 mating headers)
-   - Wire all 44 ESP32 header pins in milsblo.ato

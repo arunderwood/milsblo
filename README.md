@@ -2,7 +2,7 @@
 
 **milsblo** is a portmanteau of **[MILSBO](https://www.ikea.com/us/en/p/milsbo-glass-door-cabinet-anthracite-30396448/)** — IKEA's popular glass-door cabinet — and ***blow***, for the fan-control feature at the heart of the board.
 
-> An experiment in [vibe-coded circuit design](https://atopile.io) by someone without much electronics experience.
+> An experiment in vibe-coded circuit design by someone without much electronics experience.
 
 ## Background
 
@@ -36,7 +36,7 @@ CH224K (PD sink) → 12V rail ──→ Fan headers × 2 (always-on 12V)
 | Phase | Status |
 |-------|--------|
 | Phase 1: Component definitions | ✅ Complete |
-| Phase 2: Atopile schematic | ✅ Complete |
+| Phase 2: KiCad schematic | ✅ Complete |
 | Phase 3: SPICE simulations | ✅ Complete |
 | Phase 4: Firmware + test guide | ✅ Complete |
 | Phase 5: PCB layout (KiCad) | 🔲 Not started |
@@ -44,15 +44,14 @@ CH224K (PD sink) → 12V rail ──→ Fan headers × 2 (always-on 12V)
 
 ## Design
 
-Designed in [Atopile](https://atopile.io) (code-first EDA); the schematic lives in `.ato` source files and compiles to a KiCad project for fabrication.
+Designed in [KiCad](https://www.kicad.org/). The project lives in `elec/kicad/`, and `tools/check_design.py` checks it against the part datasheets.
 
 **For full architecture decisions and build instructions, see [CLAUDE.md](CLAUDE.md).**
 
 ## Toolchain
 
 ```bash
-uv pip install "atopile>=0.12,<0.13"
-ato build                           # compile to KiCad project in build/
+python3 tools/check_design.py       # ERC, parity, connectivity and datasheet rules
 ngspice -b simulation/power_chain.cir
 esphome run firmware/milsblo.yaml
 ```

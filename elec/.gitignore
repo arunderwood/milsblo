@@ -97,7 +97,6 @@ venv.bak/
 
 # Misc
 .DS_Store
-.ato/
 .ruff_cache/
 
 # PyInstaller
