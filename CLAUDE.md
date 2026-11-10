@@ -14,7 +14,7 @@ milsblo is a small, single-purpose circuit board that "backpacks" onto an **ESP3
 USB-C PD charger (65W+)
     │
     ▼
-USB-C connector → CH224K (negotiates 12V)
+USB-C connector → CH224A (negotiates 12V)
     │
     ├──→ 12V rail ──→ Fan headers × 2 (pin 2, always-on 12V)
     │
@@ -28,8 +28,8 @@ USB-C connector → CH224K (negotiates 12V)
 ### Design constraints
 
 - **Two-layer PCB**, 1.6mm FR4, 1oz copper
-- Board dimensions: **shorter** than ESP32-S3-DevKitC-1 (~69mm × 25.5mm). Target ~50–55mm length to avoid antenna keepout zone. Width matches header spacing (~25.5mm) or slightly wider for edge-mounted connectors. **Measure your actual DevKit with calipers before layout.**
-- All SMD components on top side (bottom has female headers for the dev board)
+- Board dimensions: **68.5mm × 26.66mm**. J1 and J2 (DevKit J1/J3) are 22.86mm apart per Espressif's v1.1 drawing, and the DevKit is 62.74mm × 25.4mm. The board runs from just past the pin 1 row (stopping before the antenna) to 5mm past the DevKit's USB end, which gives the connectors room.
+- Stacking: **DevKit on top.** Sockets and all SMD parts are on this board's top side; the DevKit plugs down into the sockets, so its USB ports, buttons and antenna stay exposed. Tall parts must clear the ~11mm under the DevKit.
 - PCBWAY standard capabilities: ≥6 mil trace/space, ≥0.3mm drill, ≥0.15mm annular ring
 - Power traces: 12V rail ≥ 40 mil (1mm), 5V rail ≥ 20 mil (0.5mm)
 
@@ -39,9 +39,9 @@ USB-C connector → CH224K (negotiates 12V)
 
 | Subsystem | Component | Package | LCSC Part # | Why |
 |-----------|-----------|---------|-------------|-----|
-| USB-C PD sink | **CH224K** | ESSOP-10 | C970725 | Standalone 12V selection via single 24kΩ resistor. No MCU firmware needed. **PD 2.0/3.0 only** (no PD 3.1 EPR). Upgrade path: HUSB238 if PD 3.1 needed in future revision. |
-| CH224K VDD feed | **1kΩ series + BZT52C5V1** | 0603 + SOD-123 | C21190, C173407 | VDD is an internal 3.3V shunt regulator (3.6V max, 30mA max sink). 1kΩ from 12V gives 8.7mA and 76mW in a 100mW part. The 5.1V Zener never conducts and is optional. |
-| Buck converter | **AP63205WU-7** | TSOT-26 | C2071056 | Fixed 5V/2A output, 3.8–32V input, 4 external components. FB connects directly to the output; EN connects to the input. |
+| USB-C PD sink | **CH224A** | ESSOP-10 | C42459160 | Standalone 12V selection via single 24kΩ resistor (WCH Table 5-1). No MCU firmware needed. Replaces the CH224K, which LCSC has stopped selling; WCH's manual names the CH224A as its replacement. |
+| CH224A supply links | **R10, R15: 0Ω** | 0603 | C21189 | Pin 1 (VHV) and pin 8 (VBUS) tolerate 32V and connect straight to the 12V rail. WCH says to short or 0Ω the CH224K's series resistors, so the footprints stay. |
+| Buck converter | **AP63205WU-7** | TSOT-26 | C2071056 | Fixed 5V/2A output, 3.8–32V input, 5 external components (2 × 22µF output). FB connects directly to the output; EN connects to the input. |
 | Temp/humidity sensor | **BME280** (external breakout) | — | — | Connected via JST-SH 4-pin Qwiic/STEMMA QT connector on board. |
 | USB-C connector | **USB-C 16-pin SMD** | — | C2765186 (or similar) | Needs CC1/CC2 for PD negotiation. **Verify LCSC part C2765186 is in stock and has exposed CC1 and CC2 pads** before layout. If unavailable, search LCSC for "USB-C 16-pin mid-mount SMD" with CC pins. 16 pins is sufficient (no USB 3.x data lines needed). |
 | Sensor connector | **JST-SH 4-pin** (SM04B-SRSS-TB) | — | C160404 | Qwiic/STEMMA QT compatible: GND, 3.3V, SDA, SCL. |
@@ -98,16 +98,16 @@ python3 -m unittest discover -s tools          # prove each rule fails on a deli
 The circuit below is what `elec/kicad/milsblo.kicad_sch` implements and `tools/check_design.py` enforces.
 
 **USB-PD:**
-- USB-C CC1/CC2 run directly to the CH224K. Its reference circuits have no external pulldowns.
+- USB-C CC1/CC2 run directly to the CH224A. Its reference circuits have no external pulldowns.
 - CFG1: 24kΩ to GND selects 12V. CFG2 and CFG3 float.
-- VDD: 12V → 1kΩ → VDD, with 1µF to GND. VDD is an internal 3.3V shunt regulator (30mA max sink).
-- VBUS sense (pin 8): 12V → 10kΩ → pin 8.
-- PG is open-drain and active low. It sinks the status LED: VDD → 470Ω → LED → PG. It is not routed to the ESP32.
+- VHV (pin 1): 12V → R10 (0Ω) → VHV, with 1µF to GND.
+- VBUS sense (pin 8): 12V → R15 (0Ω) → pin 8.
+- PG is open-drain and active low. It sinks the status LED: VHV → 4.7kΩ → LED → PG (about 2mA, 18mW). WCH does not specify a PG sink limit. PG is not routed to the ESP32.
 
 **Buck converter:**
 - AP63205WU-7 is fixed at 5.0V: FB connects directly to the output, with no divider.
 - VIN and EN both connect to the 12V rail. PG must not drive EN, because PG is active low.
-- 22µF ceramic input cap, 22µF ceramic output cap, 4.7µH inductor, 100nF bootstrap cap between BST and SW. The datasheet's typical circuit shows two 22µF output caps.
+- 22µF ceramic input cap, two 22µF ceramic output caps, 4.7µH inductor, 100nF bootstrap cap between BST and SW.
 - Output → ESP32 DevKit 5V pin through the female header.
 
 **Fan driver (instantiated twice):**
@@ -137,7 +137,7 @@ The circuit below is what `elec/kicad/milsblo.kicad_sch` implements and `tools/c
 | Item | Purpose | Approx cost |
 |------|---------|-------------|
 | ESP32-S3-DevKitC-1 v1.1 | Dev board | $12–18 |
-| CH224K breakout board | PD negotiation test (AliExpress/AnalogLamb) | $2–3 |
+| CH224A or CH224K breakout board | PD negotiation test (AliExpress/AnalogLamb) | $2–3 |
 | BME280 breakout (GY-BME280) | Sensor testing | $3–5 |
 | 12V PC fan (4-pin PWM) | Load testing — **must be 4-pin** | $8–15 |
 | Resistor kit (assorted) | 100Ω PWM series, 10kΩ tach pullups, etc. | $5 (kit) |
@@ -147,33 +147,35 @@ The circuit below is what `elec/kicad/milsblo.kicad_sch` implements and `tools/c
 
 **Testing sequence:**
 
-1. **PD power:** CH224K breakout → verify 12V with multimeter. Do this FIRST and ALONE.
+1. **PD power:** CH224A or CH224K breakout → verify 12V with multimeter. Do this FIRST and ALONE. A CH224K breakout proves the PD chain only; confirm the CH224A's 24kΩ setting on the first assembled board before plugging in the DevKit.
 2. **Buck converter:** Wire AP63205 eval circuit (or use a pre-built 12V→5V buck module for breadboard). Verify 5V output.
 3. **ESP32 power:** Feed 5V to DevKit VIN. Confirm boot, serial output, WiFi scan.
 4. **Sensor:** Wire BME280 breakout to I2C. Run test sketch. Verify temp/humidity readings.
 5. **Single fan:** Connect 4-pin fan: pin 1 = GND, pin 2 = 12V, pin 3 = tach (10kΩ pullup to 3.3V), pin 4 = ESP32 GPIO via 100Ω. PWM at 25kHz from ESP32. Verify speed control from 0–100%.
 6. **Full integration:** Both fans + sensor + PD power. Run for 30+ minutes. Monitor for thermal issues.
 
-### Phase 5: PCB layout in KiCad
+### Phase 5: PCB layout in KiCad (complete)
 
-**Goal:** Produce a manufacturable board layout from the KiCad schematic.
+The layout is generated: `tools/layout_board.py` holds the outline, placement, every copper path and the pours, so a layout change is a reviewable diff. It needs the Python inside KiCad, because it uses pcbnew:
 
-This phase is **manual work in KiCad** — layout requires human judgment.
+```bash
+/Applications/KiCad/KiCad.app/Contents/Frameworks/Python.framework/Versions/Current/bin/python3 tools/layout_board.py
+python3 tools/check_design.py
+```
 
-**Layout priorities (in order):**
-1. Place female headers first — these define the board outline and must align with the DevKitC-1
-2. Place USB-C connector on one end of the board (accessible when backpacked)
-3. Place CH224K and AP63205 near the USB-C connector (short high-current paths)
-4. AP63205 thermal pad: place ≥4 thermal vias (0.3mm drill) under the exposed pad, connecting to bottom-layer ground pour. This is critical even at 500mA load.
-5. Place fan headers on the board edge (accessible for cable routing)
-6. Place 100Ω PWM series resistors near the fan headers (short signal traces)
-7. Place sensor JST-SH connector on the board edge
-8. Route 12V power traces at ≥40 mil width
-9. Route 5V traces at ≥20 mil width
-10. Fill remaining area with ground copper pour (both layers)
-11. Verify antenna keepout: ensure no copper pour or traces within 15mm of the ESP32 module's antenna (the antenna end of the DevKit hangs off one end — your backpack board should be shorter to avoid this zone entirely)
+KiCad's board editor and this script both write `elec/kicad/milsblo.kicad_pcb`. After a hand edit, port the change to the script, or the next regeneration loses it.
 
-**DRC settings for PCBWAY:**
+**Layout facts `check_design.py` enforces:**
+- Board DRC with 0 violations and 0 unconnected at every severity, using the PCBWAY rules in the project and `elec/kicad/milsblo.kicad_dru`.
+- 12V tracks at 1.016mm (40 mil) or more, 5V at 0.508mm (20 mil) or more. The two USB VBUS pads join the rail through named copper zones because the pads are narrower than the track.
+- Sockets 22.86mm apart, pin 1 at the antenna end, on the top side.
+- Antenna: the board stops at the pin 1 row, and no pour, via or routing is allowed in the first 6mm below it except the 3.3V and ground stubs from pins 1 and 2 that the header forces.
+- USB-C and JST-SH on the bottom edge, fan headers on the left and right edges.
+- Decoupling within 5mm of the parts they serve, and ground pours on both layers with stitching vias.
+
+The AP63205 is TSOT-26, with no exposed pad. Its input capacitor sits on pins 3 and 4, and ground vias sit at the capacitor and pin 4 to reach the bottom-layer pour.
+
+**DRC settings for PCBWAY (in the project):**
 ```
 Min trace width: 6 mil (0.15mm)
 Min trace spacing: 6 mil (0.15mm)
@@ -186,51 +188,15 @@ Min hole-to-trace: 0.35mm
 
 **Goal:** Generate PCBWAY-ready Gerber zip.
 
-**Using kicad-cli (preferred for automation):**
 ```bash
-# Run DRC first
-kicad-cli pcb drc \
-  --exit-code-violations \
-  --format json \
-  --output drc-report.json \
-  elec/kicad/milsblo.kicad_pcb
-
-# Export Gerbers (PCBWAY compatible — NO x2 format)
-kicad-cli pcb export gerbers \
-  --no-x2 \
-  --subtract-soldermask \
-  --use-drill-file-origin \
-  --layers "F.Cu,B.Cu,F.SilkS,B.SilkS,F.Mask,B.Mask,Edge.Cuts" \
-  --output gerbers/ \
-  elec/kicad/milsblo.kicad_pcb
-
-# Export drill files
-kicad-cli pcb export drill \
-  --format excellon \
-  --excellon-zeros-format suppressleading \
-  --excellon-min-header \
-  --output gerbers/ \
-  elec/kicad/milsblo.kicad_pcb
-
-# Export BOM for assembly
-kicad-cli sch export bom \
-  --output milsblo-bom.csv \
-  elec/kicad/milsblo.kicad_sch
-
-# Export pick-and-place for assembly
-kicad-cli pcb export pos \
-  --format csv \
-  --units mm \
-  --output milsblo-pos.csv \
-  elec/kicad/milsblo.kicad_pcb
-
-# Zip for upload
-cd gerbers && zip ../milsblo-gerbers.zip * && cd ..
+tools/export_fab.sh
 ```
+
+This writes `elec/build/fab/milsblo-gerbers.zip` (Gerbers, separate PTH and NPTH drill files), `milsblo-bom.csv` and `milsblo-pos.csv`, with the drill origin at the bottom-left board corner so positions are positive. CI runs it too.
 
 **PCBWAY order settings:**
 - Layers: 2
-- Dimensions: measure from KiCad Edge.Cuts
+- Dimensions: 68.5mm × 26.66mm
 - Thickness: 1.6mm
 - Copper weight: 1oz
 - Surface finish: HASL (cheapest) or ENIG (if hand-soldering fine-pitch)
@@ -411,15 +377,16 @@ Based on documented failures from AI-assisted PCB projects:
 4. **Missing decoupling caps.** Every IC needs a 100nF ceramic cap within 5mm of its power pins. Claude often forgets these.
 5. **Antenna keepout.** The ESP32-S3 module has a PCB antenna that requires 15mm clearance. Your backpack board should NOT extend under the antenna.
 6. **Ground pours.** Claude doesn't do layout, but when you do it manually, ensure solid ground planes on both layers with adequate stitching vias.
-7. **Thermal considerations.** The AP63205 dissipates ~0.5W at full load. Its thermal pad needs vias to a ground copper pour on the bottom layer.
+7. **Thermal considerations.** The AP63205 dissipates ~0.5W at full load. It is TSOT-26 with no exposed pad, so heat leaves through its pins into the ground pour; its datasheet recommends 2oz copper and this board is 1oz.
 8. **4-pin fans required.** This board is designed for 4-pin PWM fans. 3-pin fans plugged in will run at full speed (no PWM control) since their GND is on pin 1 and the PWM pin 4 will be unconnected.
 
 ### Things that must be verified by a human
 
 - Every pin mapping between the schematic and the actual ESP32-S3-DevKitC-1 pinout diagram
-- CH224K voltage selection resistor value (24kΩ for 12V). WCH publishes this value for the CH224Q/A and CH224D but no CH224K-specific table, so measure 12V on the breadboard.
+- CH224A voltage: measure 12V on the assembled board before plugging in the DevKit. 24kΩ comes from WCH Table 5-1 and has not been measured on this board.
 - AP63205 inductor value and saturation current rating
-- Board outline alignment with DevKitC-1 header spacing (measure your actual board with calipers)
+- DevKit pin-to-edge dimensions and the real socket height (calipers on a real DevKit), including the antenna-end overhang
+- A real fan plug on the A2541WR-4P header: it has no key, so a plug can go on reversed
 - USB-C connector footprint compatibility with your specific connector part
 
 ---
@@ -437,7 +404,7 @@ milsblo/
 │   │   ├── connectivity.golden
 │   │   └── library/
 │   └── preserved/default.net
-├── tools/                   ← design check and its tests, run locally and in CI
+├── tools/                   ← design check, its tests, layout generator, fab export
 ├── firmware/                ← ESPHome configuration
 ├── simulation/              ← ngspice netlists
 └── docs/                    ← breadboard guide, layout preview
@@ -447,4 +414,4 @@ milsblo/
 
 ## Start here
 
-The schematic is complete and passes `python3 tools/check_design.py`. The next work is the Phase 4 breadboard, then Phase 5 layout. Do not skip the breadboard prototype — USB-C PD at 12V can damage components if the circuit has errors.
+The schematic and layout are complete and pass `python3 tools/check_design.py`. The next work is the Phase 4 breadboard, then an order from `elec/build/fab/`. Do not skip the breadboard prototype — USB-C PD at 12V can damage components if the circuit has errors.

@@ -247,7 +247,7 @@ def outline(board):
         line.SetWidth(pn.FromMM(0.1))
         board.Add(line)
     settings = board.GetDesignSettings()
-    settings.SetAuxOrigin(mm(0, 0))
+    settings.SetAuxOrigin(mm(0, HEIGHT))
     settings.SetGridOrigin(mm(0, 0))
 
 
