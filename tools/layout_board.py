@@ -188,6 +188,11 @@ TEXT = [
     ("BME280", 7.3, 68.0, 0, "F.Fab"),
 ]
 
+# reference: cathode pad number. The rails run this far either side of the pad
+# centre, clear of the pad's solder mask opening.
+CATHODE_PAD = {"LED1": "1"}
+CATHODE_RAIL_OFFSET, CATHODE_RAIL_LENGTH = 0.8, 1.0
+
 
 def mm(x, y):
     return pn.VECTOR2I(pn.FromMM(ORIGIN[0] + x), pn.FromMM(ORIGIN[1] + y))
@@ -302,6 +307,28 @@ def labels(board):
         board.Add(item)
 
 
+def cathode_marks(board):
+    # Silk rails either side of the cathode pad: the LED has no other silk, and
+    # the mark on the part itself is on its underside. An end bar, the more
+    # common convention, would land on the cathode's ground via.
+    for ref, cathode in CATHODE_PAD.items():
+        footprint = board.FindFootprintByReference(ref)
+        centre, pad = footprint.GetPosition(), footprint.FindPadByNumber(cathode).GetPosition()
+        dx, dy = pad.x - centre.x, pad.y - centre.y
+        length = (dx * dx + dy * dy) ** 0.5
+        ux, uy = dx / length, dy / length
+        side, half = pn.FromMM(CATHODE_RAIL_OFFSET), pn.FromMM(CATHODE_RAIL_LENGTH / 2)
+        for sign in (1, -1):
+            mid_x, mid_y = pad.x - uy * side * sign, pad.y + ux * side * sign
+            rail = pn.PCB_SHAPE(board)
+            rail.SetShape(pn.SHAPE_T_SEGMENT)
+            rail.SetStart(pn.VECTOR2I(round(mid_x - ux * half), round(mid_y - uy * half)))
+            rail.SetEnd(pn.VECTOR2I(round(mid_x + ux * half), round(mid_y + uy * half)))
+            rail.SetLayer(pn.F_SilkS)
+            rail.SetWidth(pn.FromMM(0.2))
+            board.Add(rail)
+
+
 def block_end(text, start):
     depth, end, in_string = 0, start, False
     while True:
@@ -369,6 +396,7 @@ def main():
     outline(board)
     route(board)
     labels(board)
+    cathode_marks(board)
     pours(board)
     pn.SaveBoard(str(BOARD), board)
     print(f"wrote {BOARD}")
