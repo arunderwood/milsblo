@@ -298,7 +298,7 @@ def labels(board):
         item.SetLayer(LAYER[layer])
         item.SetMirrored(layer == "B.SilkS")
         item.SetTextSize(pn.VECTOR2I(pn.FromMM(0.9), pn.FromMM(0.9)))
-        item.SetTextThickness(pn.FromMM(0.13))
+        item.SetTextThickness(pn.FromMM(0.15))
         board.Add(item)
 
 
