@@ -1,20 +1,20 @@
 # CLAUDE.md — milsblo
 
-> **milsblo** is a USB-C PD powered, ESP32-S3 backpack PCB that controls two 4-pin PWM PC fans and reads a BME280 temperature/humidity sensor. Designed in KiCad, manufactured at PCBWAY.
+> **milsblo** is a 12 V barrel-jack powered, ESP32-S3 backpack PCB that controls two 4-pin PWM PC fans and reads a BME280 temperature/humidity sensor. Designed in KiCad, manufactured at PCBWAY.
 
 ---
 
 ## Project overview
 
-milsblo is a small, single-purpose circuit board that "backpacks" onto an **ESP32-S3-DevKitC-1 v1.1** dev board via female pin headers. A single USB-C cable provides 12V via Power Delivery negotiation, which powers the fans directly and steps down to 5V to feed the ESP32. The ESP32 sends 25kHz PWM directly to the fans' built-in controllers and reads ambient conditions from a BME280 sensor over I2C.
+milsblo is a small, single-purpose circuit board that "backpacks" onto an **ESP32-S3-DevKitC-1 v1.1** dev board via female pin headers. A 12 V DC supply on a 5.5 × 2.1 mm barrel jack powers the fans directly and steps down to 5V to feed the ESP32. The ESP32 sends 25kHz PWM directly to the fans' built-in controllers and reads ambient conditions from a BME280 sensor over I2C.
 
 ### What this board does
 
 ```
-USB-C PD charger (65W+)
+12 V DC supply, centre positive, 1.5 A or more
     │
     ▼
-USB-C connector → CH224A (negotiates 12V)
+Barrel jack → AO3407A (reverse-polarity protection)
     │
     ├──→ 12V rail ──→ Fan headers × 2 (pin 2, always-on 12V)
     │
@@ -29,7 +29,7 @@ USB-C connector → CH224A (negotiates 12V)
 
 - **Two-layer PCB**, 1.6mm FR4, 1oz copper
 - Board dimensions: **68.5mm × 26.66mm**. J1 and J2 (DevKit J1/J3) are 22.86mm apart per Espressif's v1.1 drawing, and the DevKit is 62.74mm × 25.4mm. The board runs from just past the pin 1 row (stopping before the antenna) to 5mm past the DevKit's USB end, which gives the connectors room.
-- Stacking: **DevKit on top.** Sockets and all SMD parts are on this board's top side; the DevKit plugs down into the sockets, so its USB ports, buttons and antenna stay exposed. Tall parts must clear the ~11mm under the DevKit.
+- Stacking: **DevKit on top.** Sockets and every part except the barrel jack are on this board's top side; the DevKit plugs down into the sockets, so its USB ports, buttons and antenna stay exposed. Tall parts must clear the ~11mm under the DevKit. The jack is 11.0mm tall, so it is on the back.
 - PCBWAY standard capabilities: ≥6 mil trace/space, ≥0.3mm drill, ≥0.15mm annular ring
 - Power traces: 12V rail ≥ 40 mil (1mm), 5V rail ≥ 20 mil (0.5mm)
 
@@ -39,11 +39,10 @@ USB-C connector → CH224A (negotiates 12V)
 
 | Subsystem | Component | Package | LCSC Part # | Why |
 |-----------|-----------|---------|-------------|-----|
-| USB-C PD sink | **CH224A** | ESSOP-10 | C42459160 | Standalone 12V selection via single 24kΩ resistor (WCH Table 5-1). No MCU firmware needed. Replaces the CH224K, which LCSC has stopped selling; WCH's manual names the CH224A as its replacement. |
-| CH224A supply links | **R10, R15: 0Ω** | 0603 | C21189 | Pin 1 (VHV) and pin 8 (VBUS) tolerate 32V and connect straight to the 12V rail. WCH says to short or 0Ω the CH224K's series resistors, so the footprints stay. |
+| Power input | **DC050-T** barrel jack | SMD, right angle | C431534 | 5.5mm plug, 2.0mm pin, rated 12V 1.5A. Mounted on the back at the bottom edge. A fixed 12V supply needs no negotiation, so any 12V brick works. USB-C PD is not used because 12V is an optional charger profile. |
+| Reverse-polarity protection | **AO3407A** P-MOSFET | SOT-23 | C15155 | Barrel plugs come in both polarities. Drain to the jack, source to the 12V rail, gate to ground: 48mΩ when on, so the fans still get 12V. VGS limit is ±20V. |
 | Buck converter | **AP63205WU-7** | TSOT-26 | C2071056 | Fixed 5V/2A output, 3.8–32V input, 5 external components (2 × 22µF output). FB connects directly to the output; EN connects to the input. |
 | Temp/humidity sensor | **BME280** (external breakout) | — | — | Connected via JST-SH 4-pin Qwiic/STEMMA QT connector on board. |
-| USB-C connector | **USB-C 16-pin SMD** | — | C2765186 (or similar) | Needs CC1/CC2 for PD negotiation. **Verify LCSC part C2765186 is in stock and has exposed CC1 and CC2 pads** before layout. If unavailable, search LCSC for "USB-C 16-pin mid-mount SMD" with CC pins. 16 pins is sufficient (no USB 3.x data lines needed). |
 | Sensor connector | **JST-SH 4-pin** (SM04B-SRSS-TB) | — | C160404 | Qwiic/STEMMA QT compatible: GND, 3.3V, SDA, SCL. |
 | Fan headers (×2) | **JST-XH 4-pin** or 2.54mm 4-pin header | Through-hole | — | Standard 4-pin PC fan pinout: GND, +12V, Tach, PWM. Fan's internal controller handles switching. |
 | Dev board headers | **2×22-pin female header, 2.54mm** | Through-hole | — | Mates with ESP32-S3-DevKitC-1 male pins. |
@@ -97,16 +96,16 @@ python3 -m unittest discover -s tools          # prove each rule fails on a deli
 
 The circuit below is what `elec/kicad/milsblo.kicad_sch` implements and `tools/check_design.py` enforces.
 
-**USB-PD:**
-- USB-C CC1/CC2 run directly to the CH224A. Its reference circuits have no external pulldowns.
-- CFG1: 24kΩ to GND selects 12V. CFG2 and CFG3 float.
-- VHV (pin 1): 12V → R10 (0Ω) → VHV, with 1µF to GND.
-- VBUS sense (pin 8): 12V → R15 (0Ω) → pin 8.
-- PG is open-drain and active low. It sinks the status LED: VHV → 4.7kΩ → LED → PG (about 2mA, 18mW). WCH does not specify a PG sink limit. PG is not routed to the ESP32.
+**Power input:**
+- Jack centre pin → net `vin` → Q1 drain. Q1 source → 12V rail. Q1 gate → GND. Nothing else connects to `vin`.
+- Jack sleeve (pad 4) and switch contact (pad 3) both go to GND.
+- A centre-negative supply leaves Q1 off with its body diode reverse biased, so the board stays unpowered and undamaged.
+- Q1's gate sees the full supply voltage, so the input limit is 20V. The 12V-rail capacitors are rated 25V or more.
+- Power LED: 12V → 4.7kΩ → LED → GND (about 2mA).
 
 **Buck converter:**
 - AP63205WU-7 is fixed at 5.0V: FB connects directly to the output, with no divider.
-- VIN and EN both connect to the 12V rail. PG must not drive EN, because PG is active low.
+- VIN and EN both connect to the 12V rail.
 - 22µF ceramic input cap, two 22µF ceramic output caps, 4.7µH inductor, 100nF bootstrap cap between BST and SW.
 - Output → ESP32 DevKit 5V pin through the female header.
 
@@ -120,13 +119,13 @@ The circuit below is what `elec/kicad/milsblo.kicad_sch` implements and `tools/c
 - 4.7kΩ pullups on SDA and SCL to 3.3V, 100nF decoupling on 3.3V.
 - 3.3V comes from the DevKit's 3V3 pin through the header.
 
-**Board level:** 100µF electrolytic on the 12V rail near the fan headers, 100nF local VBUS bypass.
+**Board level:** 100µF electrolytic on the 12V rail near the fan headers, 100nF bypass on the 12V rail at Q1.
 
 ### Phase 3: SPICE simulation (complete)
 
 `simulation/` covers what has a usable model: ripple on the 5V rail and the fan PWM signal path. The AP63205 has no public SPICE model, so its output voltage, stability and load-step response come from the datasheet and from measuring the board. See `simulation/README.md` for results.
 
-**Worst-case power budget:** two fans at 0.3A each + ESP32 at 0.5A = 1.1A at 12V = 13.2W, well inside a 65W charger.
+**Worst-case power budget:** two fans at 0.3A each, plus the ESP32 at 0.5A on 5V (about 0.25A from the 12V rail through the buck) = 0.85A at 12V, about 10W. The jack is rated 1.5A; use a 12V supply rated 1.5A or more.
 
 ### Phase 4: Breadboard prototype
 
@@ -137,22 +136,21 @@ The circuit below is what `elec/kicad/milsblo.kicad_sch` implements and `tools/c
 | Item | Purpose | Approx cost |
 |------|---------|-------------|
 | ESP32-S3-DevKitC-1 v1.1 | Dev board | $12–18 |
-| CH224A or CH224K breakout board | PD negotiation test (AliExpress/AnalogLamb) | $2–3 |
 | BME280 breakout (GY-BME280) | Sensor testing | $3–5 |
 | 12V PC fan (4-pin PWM) | Load testing — **must be 4-pin** | $8–15 |
 | Resistor kit (assorted) | 100Ω PWM series, 10kΩ tach pullups, etc. | $5 (kit) |
 | Capacitor kit (assorted) | Decoupling | $5 (kit) |
-| 65W+ USB-C PD charger | Power source | $15–25 (or use existing) |
+| 12V DC supply, 1.5A+, 5.5 × 2.1mm centre-positive plug | Power source | $8–12 (or use existing) |
 | Breadboard + jumper wires | — | $5–10 |
 
 **Testing sequence:**
 
-1. **PD power:** CH224A or CH224K breakout → verify 12V with multimeter. Do this FIRST and ALONE. A CH224K breakout proves the PD chain only; confirm the CH224A's 24kΩ setting on the first assembled board before plugging in the DevKit.
+1. **12V supply:** measure the plug with a multimeter before connecting anything: 11.4–12.6V, centre positive. Do this FIRST and ALONE. Unregulated bricks read high with no load; anything over 15V is the wrong supply.
 2. **Buck converter:** Wire AP63205 eval circuit (or use a pre-built 12V→5V buck module for breadboard). Verify 5V output.
 3. **ESP32 power:** Feed 5V to DevKit VIN. Confirm boot, serial output, WiFi scan.
 4. **Sensor:** Wire BME280 breakout to I2C. Run test sketch. Verify temp/humidity readings.
 5. **Single fan:** Connect 4-pin fan: pin 1 = GND, pin 2 = 12V, pin 3 = tach (10kΩ pullup to 3.3V), pin 4 = ESP32 GPIO via 100Ω. PWM at 25kHz from ESP32. Verify speed control from 0–100%.
-6. **Full integration:** Both fans + sensor + PD power. Run for 30+ minutes. Monitor for thermal issues.
+6. **Full integration:** Both fans + sensor + the 12V supply. Run for 30+ minutes. Monitor for thermal issues.
 
 ### Phase 5: PCB layout in KiCad (complete)
 
@@ -167,10 +165,10 @@ KiCad's board editor and this script both write `elec/kicad/milsblo.kicad_pcb`. 
 
 **Layout facts `check_design.py` enforces:**
 - Board DRC with 0 violations and 0 unconnected at every severity, using the PCBWAY rules in the project and `elec/kicad/milsblo.kicad_dru`.
-- 12V tracks at 1.016mm (40 mil) or more, 5V at 0.508mm (20 mil) or more. The two USB VBUS pads join the rail through named copper zones because the pads are narrower than the track.
+- 12V tracks at 1.016mm (40 mil) or more, including the `vin` run from the jack to Q1, and 5V at 0.508mm (20 mil) or more. No supply rail runs through a zone.
 - Sockets 22.86mm apart, pin 1 at the antenna end, on the top side.
 - Antenna: the board stops at the pin 1 row, and no pour, via or routing is allowed in the first 6mm below it except the 3.3V and ground stubs from pins 1 and 2 that the header forces.
-- USB-C and JST-SH on the bottom edge, fan headers on the left and right edges.
+- Barrel jack on the back with its mouth at the bottom edge, JST-SH on the bottom edge, fan headers on the left and right edges.
 - Decoupling within 5mm of the parts they serve, and ground pours on both layers with stitching vias.
 
 The AP63205 is TSOT-26, with no exposed pad. Its input capacitor sits on pins 3 and 4, and ground vias sit at the capacitor and pin 4 to reach the bottom-layer pour.
@@ -192,7 +190,7 @@ Min hole-to-trace: 0.35mm
 tools/export_fab.sh
 ```
 
-This writes `elec/build/fab/milsblo-gerbers.zip` (Gerbers, separate PTH and NPTH drill files), `milsblo-bom.csv` and `milsblo-pos.csv`, with the drill origin at the bottom-left board corner so positions are positive. CI runs it too.
+This writes `elec/build/fab/milsblo-gerbers.zip` (Gerbers, separate PTH and NPTH drill files), `milsblo-bom.csv` and `milsblo-pos.csv`, with the drill origin at the bottom-left board corner so positions are positive. CI runs it too. The position file covers the top side only: the jack on the back is soldered by hand, like the sockets and fan headers.
 
 **PCBWAY order settings:**
 - Layers: 2
@@ -383,11 +381,12 @@ Based on documented failures from AI-assisted PCB projects:
 ### Things that must be verified by a human
 
 - Every pin mapping between the schematic and the actual ESP32-S3-DevKitC-1 pinout diagram
-- CH224A voltage: measure 12V on the assembled board before plugging in the DevKit. 24kΩ comes from WCH Table 5-1 and has not been measured on this board.
+- Supply polarity and voltage: measure the plug before first use. Q1 blocks a reversed supply, but nothing stops a 19V laptop brick from reaching the fans.
 - AP63205 inductor value and saturation current rating
 - DevKit pin-to-edge dimensions and the real socket height (calipers on a real DevKit), including the antenna-end overhang
 - A real fan plug on the A2541WR-4P header: it has no key, so a plug can go on reversed
-- USB-C connector footprint compatibility with your specific connector part
+- The barrel jack footprint against a real DC050-T: it was drawn from the SHOU HAN drawing, not from a tested library part. Check the two locating pegs and the four pads before soldering.
+- That the jack on the back suits the enclosure: it stands 11mm off the back of the board.
 
 ---
 
@@ -414,4 +413,4 @@ milsblo/
 
 ## Start here
 
-The schematic and layout are complete and pass `python3 tools/check_design.py`. The next work is the Phase 4 breadboard, then an order from `elec/build/fab/`. Do not skip the breadboard prototype — USB-C PD at 12V can damage components if the circuit has errors.
+The schematic and layout are complete and pass `python3 tools/check_design.py`. The next work is the Phase 4 breadboard, then an order from `elec/build/fab/`. Do not skip the breadboard prototype — 12V can damage components if the circuit has errors.

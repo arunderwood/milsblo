@@ -12,21 +12,21 @@ Hobbyists convert MILSBO cabinets into [miniature indoor greenhouses](https://da
 
 ## What it does
 
-A single USB-C cable delivers [12V via USB Power Delivery](https://learn.adafruit.com/understanding-usb-type-c-cable-types-pitfalls-and-more/usb-power-delivery-usb-pd) — one cord powers both fans and the microcontroller. The board backpacks onto an ESP32-S3-DevKitC-1 via female pin headers.
+A 12V DC supply on a 5.5 × 2.1mm barrel jack powers both fans and the microcontroller from one cord. The board backpacks onto an ESP32-S3-DevKitC-1 via female pin headers.
 
 ```
-USB-C PD charger (65W+)
+12V DC supply (centre positive, 1.5A+)
     │
     ▼
-CH224A (PD sink) → 12V rail ──→ Fan headers × 2 (always-on 12V)
-                           └──→ AP63205 buck → 5V → ESP32-S3-DevKitC-1
+Barrel jack → AO3407A → 12V rail ──→ Fan headers × 2 (always-on 12V)
+                                └──→ AP63205 buck → 5V → ESP32-S3-DevKitC-1
                                                          │
                                                          ├── 25kHz PWM → Fan 1 & 2 speed control
                                                          ├── Tach input ← Fan RPM feedback
                                                          └── I2C → BME280 temp/humidity sensor
 ```
 
-- **Power:** USB-C PD negotiates 12V via CH224A; stepped to 5V by AP63205 buck converter
+- **Power:** 12V barrel jack with reverse-polarity protection (AO3407A); stepped to 5V by AP63205 buck converter
 - **Fan control:** 25kHz PWM on GPIO 4/5 (silent, full-range speed), tach feedback on GPIO 6/7
 - **Sensor:** BME280 via JST-SH 4-pin (Qwiic/STEMMA QT compatible) on I2C GPIO 8/9
 - **Firmware:** ESPHome (`firmware/milsblo.yaml`) — integrates with Home Assistant

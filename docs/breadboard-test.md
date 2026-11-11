@@ -7,38 +7,31 @@ The KiCad schematic is complete and passes `tools/check_design.py`.
 
 ## ⚠️ Safety: Read Before Applying Power
 
-### USB-C PD at 12V is dangerous to prototype circuits
+### 12V is dangerous to prototype circuits
 
 - 12V × 1A = 12W. Reversed or shorted connections can destroy components instantly.
 - Always **verify polarity with a multimeter** before connecting load circuits.
 - Build and test one stage at a time. Never jump ahead.
-- A 65W USB-C PD charger can source 3A+ at 12V. A short circuit will blow your charger's protection, not just the wire.
+- A 12V brick can source several amps. A short circuit heats the wire before the brick shuts down.
 
-### Use a CH224A or CH224K breakout board for prototyping
+### The PCB protects against a reversed plug; the breadboard does not
 
-**Do NOT attempt to breadboard the CH224A IC directly.**
-Use a CH224A or CH224K breakout board (AliExpress, ~$2–3). Breakout boards include onboard VDD regulation,
-so the VDD supply (see below) is already handled.
-
-The breakout board tests the PD negotiation itself but NOT your USB-C connector footprint — that
-must be verified at PCB stage.
-
-### CH224A supply (PCB design only — irrelevant for breakout)
-
-The PCB uses the CH224A, whose VHV pin connects to the 12V rail through R10 (0Ω). A CH224K breakout proves the PD chain but not the CH224A's 24kΩ setting, so measure 12V on the first assembled board before plugging in the DevKit.
+On the PCB, Q1 (AO3407A) sits between the barrel jack and the 12V rail and stays off when the
+plug is centre negative. A breadboard fed from a barrel-jack breakout has no such part, so the
+polarity check in Stage 1 is the only protection.
 
 ## Shopping List
 
 | Item | Purpose | LCSC/Source | Approx cost |
 |------|---------|-------------|-------------|
-| CH224A or CH224K breakout board | PD negotiation test | AliExpress / AnalogLamb | $2–3 |
+| Barrel jack breakout, 5.5 × 2.1mm | Brings the supply onto the breadboard | AliExpress / Amazon | $1–2 |
 | ESP32-S3-DevKitC-1 v1.1 | Dev board (exact variant!) | Espressif / AliExpress | $12–18 |
 | BME280 breakout (GY-BME280) | Sensor testing | AliExpress / Amazon | $3–5 |
 | 4-pin PWM PC fan (120mm or 140mm) | Load testing — **must be 4-pin** | Amazon / PC supply store | $8–15 |
 | 12V → 5V buck module (pre-built) | Power for ESP32 during breadboard test | AliExpress | $2–3 |
-| 65W+ USB-C PD charger | Power source | Existing or Amazon | $15–25 |
+| 12V DC supply, 1.5A or more, 5.5 × 2.1mm centre-positive plug | Power source | Existing or Amazon | $8–12 |
 | Resistors: 100Ω (×2), 10kΩ (×2), 4.7kΩ (×2) | PWM series, tach pullups, I2C pullups | Resistor kit | $5 (kit) |
-| Capacitors: 100nF (×2), 1µF (×1) | Decoupling | Capacitor kit | $5 (kit) |
+| Capacitors: 100nF (×2) | Decoupling | Capacitor kit | $5 (kit) |
 | Breadboard + jumper wires | — | — | $5–10 |
 | Multimeter | Voltage verification | Existing | — |
 
@@ -62,25 +55,18 @@ Work through these stages in order. Verify each stage passes before proceeding.
 
 ---
 
-### Stage 1: PD Power — 12V rail
+### Stage 1: 12V supply
 
-**Goal:** Confirm 12V PD negotiation works before connecting any other components.
+**Goal:** Confirm the supply's voltage and polarity before connecting any other components.
 
 **Setup:**
-- Connect the breakout VOUT+ and GND only (no load)
-- Plug in 65W+ USB-C PD charger
+- Plug the 12V supply into the barrel jack breakout, with nothing else connected
 
 **Verify:**
-- Multimeter on VOUT+ to GND: **11.9–12.1V** ✓
-- Breakout board's PG (Power Good) LED lights (if present) ✓
+- Multimeter, red probe on the centre-pin terminal and black on the sleeve terminal: **+11.4 to +12.6V** ✓
 
-**Fail criteria:** Voltage stays at 5V (PD not negotiating — check charger supports PD 2.0/3.0),
-or shows <11V (poor contact), or charger protection trips immediately (short circuit).
-
-**5V-only charger warning:** the 12V rail is VBUS itself, and the AP63205 starts as soon as
-VBUS appears. With a 5V-only USB-C charger or a USB-A-to-C cable the rail stays at 5V, so the
-ESP32 may boot while the fans get 5V and may not spin. Use a 65W+ USB-C PD charger that explicitly supports 12V (check the charger's PD
-voltage list in its specs).
+**Fail criteria:** A negative reading (centre-negative supply: do not use it on the breadboard),
+or more than 15V with no load (an unregulated or wrong-voltage brick).
 
 ---
 
@@ -115,7 +101,7 @@ for it on the breadboard.
 **Setup:**
 - Connect buck 5V output → DevKit VIN pin
 - Connect GND → DevKit GND pin
-- Connect USB cable for flashing (laptop USB, not the PD charger)
+- Connect USB cable for flashing (laptop USB)
 
 **Flash firmware (first time):**
 ```bash
@@ -211,13 +197,13 @@ If SDO pin is connected to VCC on the breakout, add `address: 0x77` to milsblo.y
 **Worst-case power budget (from CLAUDE.md Phase 3 analysis):**
 - Two fans at 0.3A each = 0.6A at 12V = 7.2W
 - ESP32 peak = 0.5A at 5V = 2.5W (via buck from 12V: 0.21A at 12V)
-- Total 12V draw: ~0.81A = **9.7W** (well within 65W charger capability)
+- Total 12V draw: ~0.81A = **9.7W** (inside the 1.5A the jack and supply are rated for)
 
 **Run for 30 minutes:**
 - Set both fans to 75% in Home Assistant
 - Monitor ESPHome logs for errors
 - Check temperature readings remain plausible (shouldn't spike due to fan cooling)
-- Touch 12V → 5V buck module and CH224 breakout: should be warm but not hot
+- Touch the 12V → 5V buck module: should be warm but not hot
 
 **Pass criteria:**
 - Both fans spin at commanded speed ✓

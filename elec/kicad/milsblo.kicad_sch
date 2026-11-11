@@ -6,130 +6,9 @@
 	(paper "A2")
 	(title_block
 		(title "milsblo")
-		(comment 1 "USB-C PD ESP32-S3 backpack: two 4-pin PWM fans and a BME280 port")
+		(comment 1 "12 V barrel jack ESP32-S3 backpack: two 4-pin PWM fans and a BME280 port")
 	)
 	(lib_symbols
-		(symbol "milsblo:0402WGF2402TCE"
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "R"
-				(at 0 5.08 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "0402WGF2402TCE"
-				(at 0 -5.08 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" "milsblo:R0402"
-				(at 0 -7.62 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" "https://lcsc.com/product-detail/Chip-Resistor-Surface-Mount-UniOhm_24KR-2402-1_C25769.html"
-				(at 0 -10.16 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "LCSC Part" "C25769"
-				(at 0 -12.7 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "0402WGF2402TCE_0_1"
-				(rectangle
-					(start -2.54 1.02)
-					(end 2.54 -1.02)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(pin passive line
-					(at -5.08 0 0)
-					(length 2.54)
-					(name "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 5.08 0 180)
-					(length 2.54)
-					(name "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "milsblo:0402WGF4701TCE"
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -322,127 +201,6 @@
 				)
 			)
 			(symbol "0603WAF1000T5E_0_1"
-				(rectangle
-					(start -2.54 1.02)
-					(end 2.54 -1.02)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(pin passive line
-					(at -5.08 0 0)
-					(length 2.54)
-					(name "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 5.08 0 180)
-					(length 2.54)
-					(name "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-		(symbol "milsblo:0603WAF0000T5E"
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "R"
-				(at 0 5.08 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "0Ω ±1% 100mW"
-				(at 0 -5.08 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" "milsblo:R0603"
-				(at 0 -7.62 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/f42da6c80a0747bae77c2f98f4e46d1d.pdf?productCode=C21189"
-				(at 0 -10.16 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "LCSC Part" "C21189"
-				(at 0 -12.7 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "0603WAF0000T5E_0_1"
 				(rectangle
 					(start -2.54 1.02)
 					(end 2.54 -1.02)
@@ -1581,289 +1339,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "milsblo:CH224A"
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "U"
-				(at 0 15.24 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "CH224A"
-				(at 0 -16.51 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" "milsblo:ESSOP-10_L4.9-W3.9-P1.0-LS6.0-TL-EP"
-				(at 0 -19.05 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "LCSC Part" "C42459160"
-				(at 0 -21.59 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "CH224A_0_1"
-				(rectangle
-					(start -8.89 12.7)
-					(end 7.62 -13.97)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(pin power_in line
-					(at 10.16 10.16 180)
-					(length 2.54)
-					(name "VHV"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -11.43 7.62 0)
-					(length 2.54)
-					(name "CFG2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -11.43 5.08 0)
-					(length 2.54)
-					(name "CFG3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -11.43 1.27 0)
-					(length 2.54)
-					(name "DP"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -11.43 -1.27 0)
-					(length 2.54)
-					(name "DM"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -11.43 -11.43 0)
-					(length 2.54)
-					(name "CC2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "6"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -11.43 -8.89 0)
-					(length 2.54)
-					(name "CC1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "7"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -11.43 -6.35 0)
-					(length 2.54)
-					(name "VBUS"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "8"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -11.43 10.16 0)
-					(length 2.54)
-					(name "CFG1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "9"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin open_collector line
-					(at 10.16 0 180)
-					(length 2.54)
-					(name "PG"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "10"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin power_in line
-					(at 10.16 -11.43 180)
-					(length 2.54)
-					(name "GND"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "11"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "milsblo:CKCS4018-4.7UH_M"
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -2004,164 +1479,6 @@
 				(pin passive line
 					(at -5.08 0 0)
 					(length 0.762)
-					(name "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-		(symbol "milsblo:CL05A105KA5NQNC"
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "C"
-				(at 0 5.08 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "CL05A105KA5NQNC"
-				(at 0 -5.08 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" "milsblo:C0402"
-				(at 0 -7.62 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" "https://lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_SAMSUNG_CL05A105KA5NQNC_1uF-105-10-25V_C52923.html"
-				(at 0 -10.16 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "LCSC Part" "C52923"
-				(at 0 -12.7 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "CL05A105KA5NQNC_0_1"
-				(polyline
-					(pts
-						(xy -0.51 0) (xy -2.54 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -0.51 -2.03) (xy -0.51 2.03)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0.51 2.03) (xy 0.51 -2.03)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.54 0) (xy 0.51 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(pin passive line
-					(at -5.08 0 0)
-					(length 2.54)
-					(name "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 5.08 0 180)
-					(length 2.54)
 					(name "2"
 						(effects
 							(font
@@ -3300,14 +2617,14 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "milsblo:TYPE-C16PIN2MD(073)"
+		(symbol "milsblo:DC050-T"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "USB"
-				(at 0 19.05 0)
+			(property "Reference" "DC"
+				(at 0 10.16 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
@@ -3316,8 +2633,8 @@
 					)
 				)
 			)
-			(property "Value" "TYPE-C 16PIN 2MD(073)"
-				(at 0 -19.05 0)
+			(property "Value" "DC050-T"
+				(at 0 -10.16 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
@@ -3326,22 +2643,22 @@
 					)
 				)
 			)
-			(property "Footprint" "milsblo:USB-C-SMD_TYPE-C-6PIN-2MD-073"
-				(at 0 -21.59 0)
-				(show_name no)
-				(do_not_autoplace no)
+			(property "Footprint" "milsblo:DC-SMD_DC050-T"
+				(at 0 -12.7 0)
 				(hide yes)
+				(show_name no)
+				(do_not_autoplace no)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Datasheet" ""
-				(at 0 0 0)
+			(property "Datasheet" "https://lcsc.com/product-detail/C431534.html"
+				(at 0 -15.24 0)
+				(hide yes)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -3350,30 +2667,30 @@
 			)
 			(property "Description" ""
 				(at 0 0 0)
+				(hide yes)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "LCSC Part" "C2765186"
-				(at 0 -24.13 0)
+			(property "LCSC Part" "C431534"
+				(at 0 -17.78 0)
+				(hide yes)
 				(show_name no)
 				(do_not_autoplace no)
-				(hide yes)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(symbol "TYPE-C16PIN2MD(073)_0_1"
+			(symbol "DC050-T_0_1"
 				(rectangle
-					(start -8.89 16.51)
-					(end 7.62 -16.51)
+					(start -7.62 5.08)
+					(end 2.54 -5.08)
 					(stroke
 						(width 0)
 						(type default)
@@ -3382,21 +2699,149 @@
 						(type background)
 					)
 				)
-				(circle
-					(center -7.62 15.24)
-					(radius 0.38)
+				(pin passive line
+					(at 5.08 2.54 180)
+					(length 2.54)
+					(name "TIP"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 2.54)
+					(name "SLEEVE"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -2.54 180)
+					(length 2.54)
+					(name "SW"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "milsblo:AO3407A"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "Q"
+				(at 0 10.16 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "AO3407A"
+				(at 0 -10.16 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "milsblo:SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR"
+				(at 0 -12.7 0)
+				(hide yes)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://lcsc.com/product-detail/C15155.html"
+				(at 0 -15.24 0)
+				(hide yes)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(hide yes)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "LCSC Part" "C15155"
+				(at 0 -17.78 0)
+				(hide yes)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "AO3407A_0_1"
+				(rectangle
+					(start -2.54 5.08)
+					(end 2.54 -5.08)
 					(stroke
 						(width 0)
 						(type default)
 					)
 					(fill
-						(type none)
+						(type background)
 					)
 				)
 				(pin passive line
-					(at -11.43 13.97 0)
+					(at -5.08 0 0)
 					(length 2.54)
-					(name "GND"
+					(name "G"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3412,27 +2857,9 @@
 					)
 				)
 				(pin passive line
-					(at -11.43 11.43 0)
+					(at 5.08 2.54 180)
 					(length 2.54)
-					(name "VBUS"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -11.43 8.89 0)
-					(length 2.54)
-					(name "SBU2"
+					(name "D"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3447,197 +2874,17 @@
 						)
 					)
 				)
-				(pin bidirectional line
-					(at -11.43 6.35 0)
-					(length 2.54)
-					(name "CC1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -11.43 3.81 0)
-					(length 2.54)
-					(name "DN2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -11.43 1.27 0)
-					(length 2.54)
-					(name "DP1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "6"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -11.43 -1.27 0)
-					(length 2.54)
-					(name "DN1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "7"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -11.43 -3.81 0)
-					(length 2.54)
-					(name "DP2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "8"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -11.43 -6.35 0)
-					(length 2.54)
-					(name "SBU1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "9"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -11.43 -8.89 0)
-					(length 2.54)
-					(name "CC2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "10"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
 				(pin passive line
-					(at -11.43 -11.43 0)
+					(at 5.08 -2.54 180)
 					(length 2.54)
-					(name "VBUS"
+					(name "S"
 						(effects
 							(font
 								(size 1.27 1.27)
 							)
 						)
 					)
-					(number "11"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -11.43 -13.97 0)
-					(length 2.54)
-					(name "GND"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "12"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 10.16 -13.97 180)
-					(length 2.54)
-					(name "SHELL"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "13"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 10.16 13.97 180)
-					(length 2.54)
-					(name "SHELL"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "14"
+					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3661,7 +2908,7 @@
 		)
 		(uuid "07475af4-f03c-5c6f-98b8-9a858c51501a")
 	)
-	(text "USB-C PD sink (12 V)"
+	(text "12 V barrel jack input"
 		(exclude_from_sim no)
 		(at 25.4 25.4 0)
 		(effects
@@ -3770,10 +3017,6 @@
 		(uuid "4189f39b-3b19-578f-b0b4-d6780727fabe")
 	)
 	(no_connect
-		(at 31.75 62.23)
-		(uuid "41f9e75c-4bf2-5c9f-bb16-8e2935172bd4")
-	)
-	(no_connect
 		(at 60.96 358.14)
 		(uuid "43201ec9-bb2f-5676-8389-6bda9be45ca4")
 	)
@@ -3784,10 +3027,6 @@
 	(no_connect
 		(at 60.96 340.36)
 		(uuid "4ed4e5b6-d99f-58af-8ab4-4b725a017a7e")
-	)
-	(no_connect
-		(at 31.75 46.99)
-		(uuid "5011912a-e73f-5a63-9237-bec369b34676")
 	)
 	(no_connect
 		(at 43.18 363.22)
@@ -3830,24 +3069,12 @@
 		(uuid "91e1a292-1c84-508b-b3e3-75a4094412f6")
 	)
 	(no_connect
-		(at 31.75 52.07)
-		(uuid "967203c0-7956-504d-ab44-e7e10cdef266")
-	)
-	(no_connect
-		(at 77.47 45.72)
-		(uuid "981eb584-f3b4-5ad1-bee9-7aca7d38ad73")
-	)
-	(no_connect
 		(at 60.96 370.84)
 		(uuid "9ad611cd-ebb3-5624-b913-4ed88de89e6f")
 	)
 	(no_connect
 		(at 43.18 378.46)
 		(uuid "9f6adba3-7947-59b5-9def-6d98cf46fbfd")
-	)
-	(no_connect
-		(at 31.75 59.69)
-		(uuid "a161b841-74e4-534e-97b9-ee5f937f022a")
 	)
 	(no_connect
 		(at 60.96 335.28)
@@ -3860,10 +3087,6 @@
 	(no_connect
 		(at 43.18 355.6)
 		(uuid "d1b5e14d-5bda-58b4-b753-0f1af35ecb6e")
-	)
-	(no_connect
-		(at 77.47 48.26)
-		(uuid "e2d9b6dd-8a6c-5ec7-bfc6-30ddd4704f9b")
 	)
 	(no_connect
 		(at 60.96 332.74)
@@ -4026,26 +3249,6 @@
 		(uuid "17c9839c-9b11-59be-a804-7e2c079fe0c7")
 	)
 	(label "gnd"
-		(at 99.06 64.77 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "1c1ca192-4113-5630-985d-0b52d52ddc55")
-	)
-	(label "ch224a_vhv"
-		(at 358.14 43.18 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "1db3b36e-5ccb-5017-8ef3-f5434a7f6f85")
-	)
-	(label "gnd"
 		(at 31.75 293.37 90)
 		(effects
 			(font
@@ -4054,36 +3257,6 @@
 			(justify left bottom)
 		)
 		(uuid "1e5059ba-907f-51bc-8a52-d48ff27e2eab")
-	)
-	(label "v12"
-		(at 31.75 44.45 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "2b96f1e8-8c9e-5956-81da-ee135d5ca183")
-	)
-	(label "gnd"
-		(at 88.9 91.44 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "2c849147-fe0e-5ed3-b9c2-733cbee97408")
-	)
-	(label "v12"
-		(at 30.48 91.44 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "3127f928-07e8-5aef-9fc6-88b6e69008e8")
 	)
 	(label "v3v3"
 		(at 43.18 332.74 180)
@@ -4095,7 +3268,7 @@
 		)
 		(uuid "316943d3-370e-57bb-9d0c-5211ba4f78eb")
 	)
-	(label "ch224a_vhv"
+	(label "v12"
 		(at 396.24 43.18 180)
 		(effects
 			(font
@@ -4134,16 +3307,6 @@
 			(justify right bottom)
 		)
 		(uuid "35f23347-f6a9-5433-8daf-6e9abda8e5fd")
-	)
-	(label "v12"
-		(at 31.75 67.31 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "35fe7fa5-4593-5990-a0b0-d762a8699012")
 	)
 	(label "fan2_tach"
 		(at 39.37 252.73 180)
@@ -4205,16 +3368,6 @@
 		)
 		(uuid "50cf5f3c-f26f-5c05-8f43-cfd950bd3eac")
 	)
-	(label "CFG1"
-		(at 77.47 43.18 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "51ab4eb9-d2ad-59a6-b2ff-fb708927059b")
-	)
 	(label "fan2_pwm"
 		(at 78.74 246.38 0)
 		(effects
@@ -4275,16 +3428,6 @@
 		)
 		(uuid "69967d75-da97-5ec9-9879-2a64b703672f")
 	)
-	(label "ch224a_vhv"
-		(at 78.74 91.44 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "6ec7bd3c-04ae-5b4b-a65e-215cf36b0a55")
-	)
 	(label "sda"
 		(at 99.06 289.56 180)
 		(effects
@@ -4294,16 +3437,6 @@
 			(justify right bottom)
 		)
 		(uuid "72450598-ab2a-552b-8561-a7ed519ce069")
-	)
-	(label "gnd"
-		(at 325.12 43.18 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "73bd48b2-f5fb-5166-a270-ea79d3224045")
 	)
 	(label "sda"
 		(at 43.18 358.14 180)
@@ -4325,7 +3458,7 @@
 		)
 		(uuid "78cdf942-256b-5ed0-b44a-ccd4657c1408")
 	)
-	(label "pg"
+	(label "gnd"
 		(at 210.82 43.18 180)
 		(effects
 			(font
@@ -4334,16 +3467,6 @@
 			(justify right bottom)
 		)
 		(uuid "7a5da1cb-2db2-5e9e-9718-e6a34c7392a4")
-	)
-	(label "CC1"
-		(at 77.47 62.23 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "7c301373-7d9b-5ca0-af1d-6a8e29355cd4")
 	)
 	(label "gnd"
 		(at 165.1 167.64 0)
@@ -4365,16 +3488,6 @@
 		)
 		(uuid "80358335-c1df-5fb2-8942-a58211db0bf1")
 	)
-	(label "ch224a_vbus"
-		(at 40.64 91.44 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "81610534-cbc6-533a-87f1-8ae3b00cb0b7")
-	)
 	(label "v3v3"
 		(at 109.22 289.56 0)
 		(effects
@@ -4384,16 +3497,6 @@
 			(justify left bottom)
 		)
 		(uuid "82994297-b8b4-5d6d-8518-76346069b271")
-	)
-	(label "DM"
-		(at 77.47 54.61 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "8512563e-686d-58a1-a737-3ee551fcab6b")
 	)
 	(label "fan2_gpio_pwm"
 		(at 43.18 340.36 180)
@@ -4405,26 +3508,6 @@
 		)
 		(uuid "867284f7-35d4-5be1-8ce6-a376c8dd34e5")
 	)
-	(label "DM"
-		(at 31.75 57.15 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "8b438e33-624e-51e9-bc35-d9f5fcfc4e3e")
-	)
-	(label "gnd"
-		(at 31.75 41.91 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "8ebc2fb2-3448-5a4a-8947-fbd16d4893fb")
-	)
 	(label "fan2_tach"
 		(at 43.18 345.44 180)
 		(effects
@@ -4434,16 +3517,6 @@
 			(justify right bottom)
 		)
 		(uuid "9553f220-5b62-502c-a2d4-bfd49353fb4d")
-	)
-	(label "v12"
-		(at 347.98 43.18 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "96321a9e-c626-5d0e-9335-e493f80c52ee")
 	)
 	(label "led_anode"
 		(at 406.4 43.18 0)
@@ -4505,16 +3578,6 @@
 		)
 		(uuid "a74a34a0-4e25-5c03-8ead-00c21a618446")
 	)
-	(label "ch224a_vhv"
-		(at 99.06 43.18 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "a852f58e-e6ec-5025-849e-42732745f3ca")
-	)
 	(label "v3v3"
 		(at 73.66 289.56 0)
 		(effects
@@ -4524,16 +3587,6 @@
 			(justify left bottom)
 		)
 		(uuid "acd279db-4f78-5a44-a9da-f7c0a37af48d")
-	)
-	(label "gnd"
-		(at 53.34 41.91 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "aeb1dba0-a2f1-5654-b261-db20942efa48")
 	)
 	(label "v12"
 		(at 39.37 207.01 180)
@@ -4565,16 +3618,6 @@
 		)
 		(uuid "b69f0894-cf19-59e3-a90a-a4506050ed37")
 	)
-	(label "CC2"
-		(at 31.75 64.77 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "b82d94de-5b8c-570d-b665-db4ae4c57863")
-	)
 	(label "fan2_tach"
 		(at 114.3 246.38 180)
 		(effects
@@ -4594,16 +3637,6 @@
 			(justify right bottom)
 		)
 		(uuid "b95cf8b7-8e39-5505-a615-65357627f451")
-	)
-	(label "gnd"
-		(at 31.75 69.85 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "ba1cb0bf-0ffa-5e4d-8191-d073c0628d75")
 	)
 	(label "gnd"
 		(at 49.53 132.08 0)
@@ -4626,16 +3659,6 @@
 		(uuid "bc3ca159-4b6b-5574-ab8b-3a8aab2859a6")
 	)
 	(label "gnd"
-		(at 53.34 69.85 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "bca22c19-9b8d-511f-bd01-5445f00b1c92")
-	)
-	(label "gnd"
 		(at 201.93 127 0)
 		(effects
 			(font
@@ -4644,26 +3667,6 @@
 			(justify left bottom)
 		)
 		(uuid "c101896b-4f84-5c16-8d5b-b9174991fea3")
-	)
-	(label "CFG1"
-		(at 314.96 43.18 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "c4cab432-a511-5e65-b8d8-977881526ec1")
-	)
-	(label "CC2"
-		(at 77.47 64.77 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "c887417d-14ea-5021-a093-4fa17b4032be")
 	)
 	(label "v3v3"
 		(at 43.18 330.2 180)
@@ -4675,36 +3678,6 @@
 		)
 		(uuid "c8ca72ed-686d-5693-97b4-c3ddb963694f")
 	)
-	(label "ch224a_vbus"
-		(at 77.47 59.69 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "cb1b2b34-6210-5118-87ab-7b189035f850")
-	)
-	(label "CC1"
-		(at 31.75 49.53 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "cb8dd16f-5ed6-5944-8a60-98d3ab79d0f6")
-	)
-	(label "pg"
-		(at 99.06 53.34 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "d10d96a8-f272-55fd-bb3f-85aec1d36f72")
-	)
 	(label "gnd"
 		(at 229.87 127 0)
 		(effects
@@ -4714,16 +3687,6 @@
 			(justify left bottom)
 		)
 		(uuid "d2af27d8-fc07-56f0-95bb-47694d9b90ec")
-	)
-	(label "ch224a_vhv"
-		(at 203.2 167.64 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "d72c2274-1499-5341-8e3b-b3161d8878d3")
 	)
 	(label "v12"
 		(at 194.31 127 180)
@@ -4744,26 +3707,6 @@
 			(justify left bottom)
 		)
 		(uuid "daea77f8-0237-57b5-98a7-bc5073928a39")
-	)
-	(label "DP"
-		(at 77.47 52.07 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "e732a141-6017-5bb7-9621-44de6ebda1b0")
-	)
-	(label "DP"
-		(at 31.75 54.61 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "e9a32129-c27e-5886-8e50-f23d13d1669d")
 	)
 	(label "gnd"
 		(at 44.45 293.37 90)
@@ -5510,6 +4453,28 @@
 				)
 			)
 		)
+		(property "LCSC Part" "C41376161"
+			(at 63.5 330.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Partnumber" "HC-PM254-8.5H-1x22PZ"
+			(at 63.5 330.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(property "Role" "headers.j3"
 			(at 63.5 330.2 0)
 			(hide yes)
@@ -5720,129 +4685,6 @@
 		)
 	)
 	(symbol
-		(lib_id "milsblo:0402WGF2402TCE")
-		(at 320.04 43.18 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "2c375134-938a-5e91-91a5-6b9024af9b93")
-		(property "Reference" "R9"
-			(at 320.04 36.83 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "24kΩ ±1% 62.5mW"
-			(at 320.04 50.8 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "milsblo:R0402"
-			(at 320.04 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2206010100_UNI-ROYAL-Uniroyal-Elec-0402WGF2402TCE_C25769.pdf"
-			(at 320.04 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 320.04 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC Part" "C25769"
-			(at 320.04 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
-			(at 320.04 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Partnumber" "0402WGF2402TCE"
-			(at 320.04 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Role" "pd.r_cfg1"
-			(at 320.04 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "243c67c8-daed-5269-8a10-a169ca1af843")
-		)
-		(pin "2"
-			(uuid "5cc1d619-77aa-52fb-ac02-d55922e2d327")
-		)
-		(instances
-			(project "milsblo"
-				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
-					(reference "R9")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "milsblo:PinSocket_1x22_P2.54mm_Vertical")
 		(at 45.72 330.2 0)
 		(unit 1)
@@ -5896,6 +4738,28 @@
 			)
 		)
 		(property "Description" ""
+			(at 45.72 330.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C41376161"
+			(at 45.72 330.2 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Partnumber" "HC-PM254-8.5H-1x22PZ"
 			(at 45.72 330.2 0)
 			(hide yes)
 			(show_name no)
@@ -6110,402 +4974,6 @@
 			(project "milsblo"
 				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
 					(reference "R12")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "milsblo:0603WAF0000T5E")
-		(at 35.56 91.44 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "3fafa502-99b3-5dff-a398-ec82e58b531e")
-		(property "Reference" "R15"
-			(at 35.56 85.09 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "0Ω ±1% 100mW"
-			(at 35.56 99.06 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "milsblo:R0603"
-			(at 35.56 91.44 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/f42da6c80a0747bae77c2f98f4e46d1d.pdf?productCode=C21189"
-			(at 35.56 91.44 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 35.56 91.44 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC Part" "C21189"
-			(at 35.56 91.44 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
-			(at 35.56 91.44 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Partnumber" "0603WAF0000T5E"
-			(at 35.56 91.44 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Role" "pd.r_vbus"
-			(at 35.56 91.44 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "8a9f0ae2-ff13-5c65-8469-f3fc43c25d76")
-		)
-		(pin "2"
-			(uuid "8f4b564a-29f8-597d-be06-cd95fc07fc9c")
-		)
-		(instances
-			(project "milsblo"
-				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
-					(reference "R15")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "milsblo:CH224A")
-		(at 88.9 53.34 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "5a8c55d8-d660-55a0-9f7b-5b02b41598f8")
-		(property "Reference" "U2"
-			(at 88.265 36.83 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "CH224A"
-			(at 88.265 72.39 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "milsblo:ESSOP-10_L4.9-W3.9-P1.0-LS6.0-TL-EP"
-			(at 88.9 53.34 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 88.9 53.34 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 88.9 53.34 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC Part" "C42459160"
-			(at 88.9 53.34 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "WCH"
-			(at 88.9 53.34 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Partnumber" "CH224A"
-			(at 88.9 53.34 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Role" "pd.ch224a"
-			(at 88.9 53.34 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "3bd04591-2c42-5047-88a3-98c59e8ac7e6")
-		)
-		(pin "2"
-			(uuid "ab937cbb-af85-5fd1-996c-60d526c26307")
-		)
-		(pin "3"
-			(uuid "688b1956-c64e-55f8-86df-c900a829de42")
-		)
-		(pin "4"
-			(uuid "0a6e1f50-c57e-54cb-ae49-02e452090476")
-		)
-		(pin "5"
-			(uuid "d8cb6296-f744-52b8-908b-53915d473fba")
-		)
-		(pin "6"
-			(uuid "8d37f28f-e9fd-57ef-bedd-81ede863913d")
-		)
-		(pin "7"
-			(uuid "4e8b117e-009e-5dce-be72-c0d5730e915f")
-		)
-		(pin "8"
-			(uuid "60bc1a1d-ef98-5481-a3d7-04a9720e1dab")
-		)
-		(pin "9"
-			(uuid "1dc62a3c-3e5f-512e-8b8b-3134e37c253b")
-		)
-		(pin "10"
-			(uuid "ed6c6c0c-159d-5a6f-bd06-3ba89534f6a1")
-		)
-		(pin "11"
-			(uuid "414dda2a-80e5-5d84-9dc9-69451fb4b7cc")
-		)
-		(instances
-			(project "milsblo"
-				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
-					(reference "U2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "milsblo:CL05A105KA5NQNC")
-		(at 83.82 91.44 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "6305c34f-75ee-5303-b782-7805d87fcc9b")
-		(property "Reference" "C5"
-			(at 83.82 85.09 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "1µF ±10% 25V X5R"
-			(at 83.82 99.06 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "milsblo:C0402"
-			(at 83.82 91.44 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_Samsung-Electro-Mechanics-CL05A105KA5NQNC_C52923.pdf"
-			(at 83.82 91.44 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 83.82 91.44 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC Part" "C52923"
-			(at 83.82 91.44 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "Samsung Electro-Mechanics"
-			(at 83.82 91.44 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Partnumber" "CL05A105KA5NQNC"
-			(at 83.82 91.44 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Role" "pd.c_vdd"
-			(at 83.82 91.44 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "b52756d1-09df-5156-8de1-157c4713eddc")
-		)
-		(pin "2"
-			(uuid "5353cebb-c9ca-54d0-a23c-10656f592880")
-		)
-		(instances
-			(project "milsblo"
-				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
-					(reference "C5")
 					(unit 1)
 				)
 			)
@@ -6731,7 +5199,7 @@
 				)
 			)
 		)
-		(property "Role" "pd.c_vbus"
+		(property "Role" "pwr.c_bypass"
 			(at 116.84 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -6752,165 +5220,6 @@
 			(project "milsblo"
 				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
 					(reference "C7")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "milsblo:TYPE-C16PIN2MD(073)")
-		(at 43.18 55.88 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "7e59e586-4b4a-5b5f-a2f1-d206a4ba8ce0")
-		(property "Reference" "USB1"
-			(at 42.545 35.56 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TYPE-C 16PIN 2MD(073)"
-			(at 42.545 77.47 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "milsblo:USB-C-SMD_TYPE-C-6PIN-2MD-073"
-			(at 43.18 55.88 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 43.18 55.88 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 43.18 55.88 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC Part" "C2765186"
-			(at 43.18 55.88 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "SHOU HAN"
-			(at 43.18 55.88 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Partnumber" "TYPE-C 16PIN 2MD(073)"
-			(at 43.18 55.88 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Role" "pd.usb_c"
-			(at 43.18 55.88 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "ecba5634-771f-5906-be78-973a4cf64581")
-		)
-		(pin "2"
-			(uuid "19b83540-1e90-5376-8ee8-5140bc0774cd")
-		)
-		(pin "3"
-			(uuid "39726b40-6642-513b-9f67-dadf93984661")
-		)
-		(pin "4"
-			(uuid "5f174d82-ac6f-5db2-a0f4-082fedc9896d")
-		)
-		(pin "5"
-			(uuid "a485e713-8d20-5630-8bf6-2c99726b3401")
-		)
-		(pin "6"
-			(uuid "ab60d922-fcac-50f2-9750-926042578440")
-		)
-		(pin "7"
-			(uuid "fb7c2824-1bb6-5b54-a46c-8f2215bddc46")
-		)
-		(pin "8"
-			(uuid "7d4dc0a0-9c4a-526f-94af-c5ebf18b1975")
-		)
-		(pin "9"
-			(uuid "ef5fe5d2-7a69-51ee-a60a-32bcfdf64718")
-		)
-		(pin "10"
-			(uuid "9cd67ebd-768c-523f-9bca-62a1e1c51764")
-		)
-		(pin "11"
-			(uuid "3a54a1ca-f664-57c5-a09b-b4f12b0e0c2a")
-		)
-		(pin "12"
-			(uuid "b72ea152-cdba-5c85-8eac-ae600e29ed49")
-		)
-		(pin "13"
-			(uuid "5273beac-0216-5b96-a487-2e03cd2b111e")
-		)
-		(pin "14"
-			(uuid "f066cdc9-b0dd-5c5c-ae39-cc12bcace3a1")
-		)
-		(instances
-			(project "milsblo"
-				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
-					(reference "USB1")
 					(unit 1)
 				)
 			)
@@ -7271,7 +5580,7 @@
 				)
 			)
 		)
-		(property "Role" "pd.r_led"
+		(property "Role" "pwr.r_led"
 			(at 401.32 43.18 0)
 			(hide yes)
 			(show_name no)
@@ -7427,83 +5736,6 @@
 		)
 	)
 	(symbol
-		(lib_id "milsblo:PWR_FLAG")
-		(at 203.2 167.64 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board no)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "a143a838-b9f9-5ec8-99df-40fe14fbb68b")
-		(property "Reference" "#FLG03"
-			(at 203.2 165.735 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "PWR_FLAG"
-			(at 203.2 163.83 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 203.2 167.64 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 203.2 167.64 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 203.2 167.64 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "74e2c5a1-6d98-5609-8e4f-e118216299d0")
-		)
-		(instances
-			(project "milsblo"
-				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
-					(reference "#FLG03")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "milsblo:SM04B-SRSS-TB(LF)(SN)")
 		(at 35.56 297.18 0)
 		(unit 1)
@@ -7633,129 +5865,6 @@
 			(project "milsblo"
 				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
 					(reference "CN1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "milsblo:0603WAF0000T5E")
-		(at 353.06 43.18 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "aed28f14-a64e-586e-9c85-2f6b1d6d9f64")
-		(property "Reference" "R10"
-			(at 353.06 36.83 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "0Ω ±1% 100mW"
-			(at 353.06 50.8 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "milsblo:R0603"
-			(at 353.06 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/f42da6c80a0747bae77c2f98f4e46d1d.pdf?productCode=C21189"
-			(at 353.06 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 353.06 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC Part" "C21189"
-			(at 353.06 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "UNI-ROYAL(Uniroyal Elec)"
-			(at 353.06 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Partnumber" "0603WAF0000T5E"
-			(at 353.06 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Role" "pd.r_vhv"
-			(at 353.06 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "8bb71c4b-3d59-5054-baad-9438a1294446")
-		)
-		(pin "2"
-			(uuid "80ed7ced-f0c7-5ed6-b2e2-eb2d0e03afe8")
-		)
-		(instances
-			(project "milsblo"
-				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
-					(reference "R10")
 					(unit 1)
 				)
 			)
@@ -8181,7 +6290,7 @@
 				)
 			)
 		)
-		(property "Role" "pd.led_pg"
+		(property "Role" "pwr.led"
 			(at 215.9 43.18 0)
 			(hide yes)
 			(show_name no)
@@ -8652,6 +6761,318 @@
 				)
 			)
 		)
+	)
+	(symbol
+		(lib_id "milsblo:DC050-T")
+		(at 43.18 55.88 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "e6e6a7c4-dde2-5b25-a593-95e60e682dae")
+		(property "Reference" "DC1"
+			(at 43.18 48.26 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "DC050-T"
+			(at 43.18 63.5 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "milsblo:DC-SMD_DC050-T"
+			(at 43.18 55.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://lcsc.com/product-detail/C431534.html"
+			(at 43.18 55.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 43.18 55.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C431534"
+			(at 43.18 55.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "SHOU HAN"
+			(at 43.18 55.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Partnumber" "DC050-T"
+			(at 43.18 55.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Role" "pwr.jack"
+			(at 43.18 55.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "f4707931-61f0-50a8-8772-e771e78c3838")
+		)
+		(pin "4"
+			(uuid "6a9d7d5d-74df-5722-a021-1ab90f1707e0")
+		)
+		(pin "3"
+			(uuid "9e3d1a24-1d5f-568d-ad1d-126c22f5e08b")
+		)
+		(instances
+			(project "milsblo"
+				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
+					(reference "DC1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "milsblo:AO3407A")
+		(at 88.9 53.34 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "9b12c54e-f669-50df-a5bf-86265d3a3839")
+		(property "Reference" "Q1"
+			(at 88.9 45.72 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "AO3407A"
+			(at 88.9 60.96 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "milsblo:SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR"
+			(at 88.9 53.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://lcsc.com/product-detail/C15155.html"
+			(at 88.9 53.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 88.9 53.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C15155"
+			(at 88.9 53.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "AOS"
+			(at 88.9 53.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Partnumber" "AO3407A"
+			(at 88.9 53.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Role" "pwr.q_rev"
+			(at 88.9 53.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "ff446139-560b-5326-b8d6-03dda9bcd548")
+		)
+		(pin "3"
+			(uuid "b87ad498-6850-5a84-842d-2e379b36e2c2")
+		)
+		(pin "2"
+			(uuid "179cd8f6-1954-5fbf-b03a-43c0b361318e")
+		)
+		(instances
+			(project "milsblo"
+				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
+					(reference "Q1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "vin"
+		(at 48.26 53.34 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "ae544d75-9ecc-550f-a3a3-084ad20d097e")
+	)
+	(label "gnd"
+		(at 48.26 55.88 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "6b789ae7-d543-520e-adfe-a58f1a75e894")
+	)
+	(label "gnd"
+		(at 48.26 58.42 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "ab4b8c23-4423-547c-bf2c-524caabc9b54")
+	)
+	(label "gnd"
+		(at 83.82 53.34 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "8ef0c9f8-b7a2-5610-a7db-e0803ecec642")
+	)
+	(label "vin"
+		(at 93.98 50.8 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d5003b28-102b-5fe9-8093-fca2dc76732c")
+	)
+	(label "v12"
+		(at 93.98 55.88 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "68c8847f-1116-5816-8b9b-307d75c95f1f")
 	)
 	(sheet_instances
 		(path "/"

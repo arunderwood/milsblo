@@ -6,7 +6,8 @@ that a fixed-output regulator's FB pin belongs on the output. These rules come
 from the part datasheets:
 
   AP63205: Diodes Inc. DS41326 Rev. 3-2
-  CH224A:  WCH CH224 manual 1, V2.1
+  AO3407A: Alpha & Omega AO3407A datasheet
+  DC050-T: SHOU HAN DC050-T drawing
 
 With kicad-cli available it also gates on ERC, schematic-to-board parity and
 board DRC, and it enforces the layout rules DRC cannot express: rail widths,
@@ -35,13 +36,12 @@ BOARD = ROOT / "elec/kicad/milsblo.kicad_pcb"
 GOLDEN = ROOT / "elec/kicad/connectivity.golden"
 MACOS_KICAD_CLI = "/Applications/KiCad/KiCad.app/Contents/MacOS/kicad-cli"
 
-V12 = 12.0
-CH224A_VHV_MAX_V = 32.0
 LED_RESISTOR_MIN_OHMS = 2.2e3
 V12_CAP_MIN_RATING = 25.0
 
 V12_MIN_TRACK_MM = 1.016
-V5_MIN_TRACK_MM = 0.508
+# The jack's centre pin carries the whole board current before Q1.
+RAIL_MIN_TRACK_MM = {"v12": V12_MIN_TRACK_MM, "vin": V12_MIN_TRACK_MM, "v5": 0.508}
 
 # DevKitC-1 v1.1 drawing: 2.54 mm pitch, rows 22.86 mm apart, pin 1 at the
 # antenna end. The module antenna begins 1.54 mm past the pin 1 row.
@@ -55,7 +55,7 @@ ANTENNA_POUR_START_MM = 6.0
 
 # reference: (edge, nearest allowed, furthest allowed), anchor-to-edge distance
 EDGE_CONNECTORS = {
-    "USB1": ("bottom", 3.5, 4.5),
+    "DC1": ("bottom", 0.0, 0.5),
     "CN1": ("bottom", 2.8, 3.8),
     "H1": ("left", 2.0, 3.0),
     "H2": ("right", 2.0, 3.0),
@@ -68,16 +68,14 @@ DECOUPLING = [
     (("C1", "1"), ("U1", "6"), 5.0),
     (("C3", "1"), ("L1", "2"), 5.0),
     (("C8", "1"), ("L1", "2"), 5.0),
-    (("C5", "1"), ("U2", "1"), 5.0),
-    (("C7", "1"), ("USB1", "11"), 5.0),
+    (("C7", "1"), ("Q1", "2"), 5.0),
     (("C6", "1"), ("CN1", "2"), 5.0),
 ]
 
 MIN_GROUND_VIAS = 25
 
 RESISTORS = {
-    "pd.r_cfg1": 24e3,
-    "pd.r_led": 4.7e3,
+    "pwr.r_led": 4.7e3,
     "fan1.r_pwm": 100,
     "fan1.r_tach": 10e3,
     "fan2.r_pwm": 100,
@@ -89,10 +87,11 @@ RESISTORS = {
 # J1 pin numbers are the ESP32-S3-DevKitC-1 left header: pin 4 is GPIO4, pin 12
 # is GPIO8, pin 15 is GPIO9.
 PIN_TABLES = {
-    "pd.ch224a": {
-        "1": "ch224a_vhv", "4": "DP", "5": "DM", "6": "CC2", "7": "CC1",
-        "9": "CFG1", "11": "gnd",
-    },
+    # DC050-T: pad 2 is the centre pin, 4 the sleeve spring, 3 the switch
+    # contact that rests on the sleeve spring until a plug is inserted.
+    "pwr.jack": {"2": "vin", "3": "gnd", "4": "gnd"},
+    # AO3407A in SOT-23: 1 gate, 2 source, 3 drain.
+    "pwr.q_rev": {"1": "gnd", "2": "v12", "3": "vin"},
     "buck.buck": {"3": "v12", "4": "gnd", "5": "SW", "6": "BST"},
     "fan1.hdr": {"1": "gnd", "2": "v12", "3": "fan1_tach", "4": "fan1_pwm"},
     "fan2.hdr": {"1": "gnd", "2": "v12", "3": "fan2_tach", "4": "fan2_pwm"},
@@ -276,20 +275,27 @@ def load_layout(path):
 def check_rail_widths(layout):
     out = []
     for track in layout.tracks:
-        minimum = {"v12": V12_MIN_TRACK_MM, "v5": V5_MIN_TRACK_MM}.get(track.net)
+        minimum = RAIL_MIN_TRACK_MM.get(track.net)
         if minimum and track.width < minimum:
             out.append(f"{track.net} track at {track.start}: {track.width} mm is under {minimum} mm")
     return out
 
 
 def check_rail_zones(layout):
-    # USB VBUS pads are narrower than the 12 V track, so short zones bridge
-    # them to the rail. Anything else on 12 V should be a track that DRC sizes.
+    # Supply current runs in tracks, which the width rule sizes. A zone can
+    # neck down between pads without any rule noticing.
     return [
-        f"zone {z.name!r} on {z.net}: only the named USB neck zones may carry v12"
+        f"zone {z.name!r} on {z.net}: supply rails must be routed as tracks"
         for z in layout.zones
-        if z.net == "v12" and not z.name.startswith("v12 neck")
+        if z.net in RAIL_MIN_TRACK_MM
     ]
+
+
+def check_jack_side(layout):
+    # The jack is 11 mm tall and the DevKit sits about 11 mm above the top
+    # side, so the jack only fits on the back.
+    jack = layout.footprints["DC1"]
+    return [] if jack.layer == "B.Cu" else [f"DC1 must be on the back of the board, found {jack.layer}"]
 
 
 def check_antenna_keepout(layout):
@@ -368,6 +374,7 @@ LAYOUT_RULES = [
     ("rail zones", check_rail_zones),
     ("antenna keepout", check_antenna_keepout),
     ("connectors on edges", check_connector_edges),
+    ("jack on the back", check_jack_side),
     ("DevKit header geometry", check_header_geometry),
     ("decoupling distance", check_decoupling_distance),
     ("ground pours and stitching", check_ground_stitching),
@@ -496,24 +503,22 @@ def check_ap63205_feedback(design):
 
 
 def check_ap63205_enable(design):
-    # EN starts the buck automatically when tied to VIN or left open. CH224A PG
-    # is open-drain and active low, so on EN it would hold the buck off.
+    # EN starts the buck automatically when tied to VIN or left open.
     en = design.net("buck.buck", "2")
     if not (en == "v12" or is_unconnected(en)):
         return [f"AP63205 EN must connect to v12 or be left open, found {en}"]
     return []
 
 
-def check_pg_led(design):
-    # PG is an open-drain sink, active low. The LED hangs from the supply pin
-    # into PG, so its series resistor sets the current and takes the 12 V drop.
+def check_power_led(design):
+    # The LED runs from the 12 V rail, so its series resistor sets the current
+    # and takes most of the 12 V.
     out = []
-    pg, vhv = design.net("pd.ch224a", "10"), design.net("pd.ch224a", "1")
-    if design.net("pd.led_pg", "1") != pg:
-        out.append(f"PG LED cathode must be on {pg}, found {design.net('pd.led_pg', '1')}")
-    series = design.two_terminal("R", vhv, design.net("pd.led_pg", "2"))
+    if design.net("pwr.led", "1") != "gnd":
+        out.append(f"power LED cathode must be on gnd, found {design.net('pwr.led', '1')}")
+    series = design.two_terminal("R", "v12", design.net("pwr.led", "2"))
     if not series:
-        out.append("PG LED anode needs a series resistor from the CH224A supply")
+        out.append("power LED anode needs a series resistor from v12")
     for part in series:
         ohms = resistance(part.value)
         if ohms is None or ohms < LED_RESISTOR_MIN_OHMS:
@@ -521,40 +526,21 @@ def check_pg_led(design):
     return out
 
 
-def check_ch224a_supply(design):
-    # The CH224A supply and VBUS sense pins tolerate 32 V, and WCH's CH224K
-    # replacement note says both former series resistors are shorted or 0 ohm.
-    vhv, sense = design.net("pd.ch224a", "1"), design.net("pd.ch224a", "8")
+def check_reverse_protection(design):
+    # Q1 is a P-channel MOSFET in the positive lead: drain to the jack, source
+    # to the rail, gate to ground. A centre-negative supply leaves the gate at
+    # the source potential and the body diode reverse biased, so nothing after
+    # Q1 sees it. That only holds if Q1's drain is the sole load on the jack.
+    jack, fet = design.by_role("pwr.jack"), design.by_role("pwr.q_rev")
+    if jack is None or fet is None:
+        return ["reverse-polarity protection needs both pwr.jack and pwr.q_rev"]
     out = []
-    for role, net, name in (("pd.r_vhv", vhv, "VHV"), ("pd.r_vbus", sense, "VBUS sense")):
-        part = design.by_role(role)
-        if part is None:
-            out.append(f"CH224A {name}: 0 ohm link {role} is missing")
-        elif resistance(part.value) != 0 or design.nets_of(part.ref) != {"v12", net}:
-            out.append(f"CH224A {name} must link to v12 through 0 ohm, found {part.ref} {part.value!r} on {sorted(design.nets_of(part.ref))}")
-    return out
-
-
-def check_ch224a_cc(design):
-    # The CH224A reference circuits run CC straight to the connector; the
-    # 5.1 kOhm pulldowns appear only in the CH224D and CH221K references.
-    out = []
-    for role_pin, name in (("6", "CC2"), ("7", "CC1")):
-        net = design.net("pd.ch224a", role_pin)
-        for part in design.two_terminal("R", net, "gnd"):
-            out.append(f"{part.ref} pulls {name} to ground: the CH224A reference circuit has no external CC pulldowns")
-    return out
-
-
-def check_ch224a_config(design):
-    out = []
-    cfg1 = design.net("pd.ch224a", "9")
-    if not any(resistance(p.value) == 24e3 for p in design.two_terminal("R", cfg1, "gnd")):
-        out.append("CH224A CFG1 needs 24 kOhm to ground to request 12 V")
-    for pin in ("2", "3"):
-        net = design.net("pd.ch224a", pin)
-        if not (is_unconnected(net) or net == "gnd"):
-            out.append(f"CH224A pin {pin} must float or be grounded for single-resistor mode, found {net}")
+    tip = design.net("pwr.jack", "2")
+    if tip == "v12":
+        out.append("jack centre pin connects straight to v12, bypassing Q1")
+    others = [f"{ref}.{pin}" for ref, pin in design.pins_on(tip) if (ref, pin) not in ((jack.ref, "2"), (fet.ref, "3"))]
+    if others:
+        out.append(f"only Q1's drain may share the jack centre pin net, found {' '.join(others)}")
     return out
 
 
@@ -562,9 +548,8 @@ def check_support_parts(design):
     out = []
     if not any(p.value.startswith("100nF") for p in design.two_terminal("C", "BST", "SW")):
         out.append("AP63205 needs 100 nF between BST and SW")
-    vhv = design.net("pd.ch224a", "1")
-    if not any(p.value.startswith("1µF") for p in design.two_terminal("C", vhv, "gnd")):
-        out.append("CH224A VHV needs 1 uF to ground")
+    if not any(p.value.startswith("100nF") for p in design.two_terminal("C", "v12", "gnd")):
+        out.append("12 V rail needs a 100 nF bypass to ground")
     v5_caps = [p for p in design.two_terminal("C", "v5", "gnd") if p.value.startswith("22µF")]
     if len(v5_caps) < 2:
         out.append(f"AP63205 output needs two 22 uF capacitors per the datasheet typical circuit, found {len(v5_caps)}")
@@ -577,10 +562,8 @@ RULES = [
     ("12 V capacitor ratings", check_cap_ratings),
     ("AP63205 feedback", check_ap63205_feedback),
     ("AP63205 enable", check_ap63205_enable),
-    ("CH224A PG LED", check_pg_led),
-    ("CH224A supply links", check_ch224a_supply),
-    ("CH224A CC pins", check_ch224a_cc),
-    ("CH224A voltage selection", check_ch224a_config),
+    ("power LED", check_power_led),
+    ("reverse-polarity protection", check_reverse_protection),
     ("support parts", check_support_parts),
 ]
 

@@ -40,14 +40,10 @@ PLACEMENT = {
     "J2": (J2_X, PIN1_Y, 0),
     "H1": (2.54, 62.6, 90),
     "H2": (24.12, 62.6, 270),
-    "USB1": (16.2, 64.53, 0),
+    "DC1": (13.33, HEIGHT, 180),
     "CN1": (7.3, 65.16, 0),
-    "U2": (16.2, 56.4, 270),
-    "R9": (20.7, 55.4, 0),
-    "R15": (21.0, 56.4, 180),
-    "C7": (20.9, 59.3, 180),
-    "R10": (11.45, 53.1, 270),
-    "C5": (11.45, 55.7, 270),
+    "Q1": (20.0, 57.0, 270),
+    "C7": (20.9, 60.3, 180),
     "R13": (14.0, 53.3, 0),
     "LED1": (17.0, 53.3, 180),
     "C4": (16.2, 46.0, 180),
@@ -66,6 +62,10 @@ PLACEMENT = {
     "C6": (6.8, 61.0, 90),
 }
 
+# The jack is 11 mm tall and the DevKit sits about 11 mm above this board, so
+# it mounts on the back with its plug mouth at the bottom edge.
+BACK_SIDE = {"DC1"}
+
 # Each path is (net, layer, width, points). A via is (net, x, y).
 F, B = "F.Cu", "B.Cu"
 
@@ -74,20 +74,20 @@ def path(net, layer, width, *points):
     return (net, layer, width, points)
 
 
-USB_Y = 61.6
 TRACKS = [
-    # 12 V ring: both VBUS pads reach the buck, bulk capacitor and fan headers.
-    path("/v12", F, V12_W, (13.8, 60.7), (10.2, 60.7), (10.2, 52.0), (22.2, 52.0)),
-    path("/v12", F, V12_W, (18.8, 60.7), (22.2, 60.7), (22.2, 39.5), (19.6, 39.5)),
+    # Jack centre pin: both back pads join, then two vias lift it to Q1's drain.
+    path("/vin", B, V12_W, (19.08, 63.4), (19.08, 54.9), (18.2, 54.9)),
+    path("/vin", F, V12_W, (20.0, 55.76), (20.0, 54.9), (18.2, 54.9)),
+    # 12 V from Q1's source: a trunk up to the buck, branches to each fan header.
+    path("/v12", F, V12_W, (20.95, 58.24), (22.2, 58.24)),
+    path("/v12", F, V12_W, (22.2, 61.33), (22.2, 39.5), (19.6, 39.5)),
     path("/v12", F, V12_W, (19.6, 39.59), (19.6, 39.5), (17.1, 39.2)),
     path("/v12", F, V12_W, (22.2, 61.33), (23.22, 61.33)),
-    path("/v12", F, V12_W, (22.2, 60.7), (22.2, 61.33)),
     path("/v12", F, V12_W, (20.0, 46.0), (22.2, 46.0)),
-    path("/v12", F, V12_W, (11.45, 52.0), (11.45, 52.35)),
-    path("/v12", F, V12_W, (22.2, 56.4), (21.75, 56.4)),
-    path("/v12", F, V12_W, (22.2, 59.3), (21.6, 59.3)),
+    path("/v12", F, V12_W, (22.2, 60.3), (21.6, 60.3)),
+    path("/v12", F, V12_W, (22.2, 52.0), (10.2, 52.0), (10.2, 60.9)),
+    path("/v12", F, V12_W, (13.25, 52.0), (13.25, 53.3)),
     path("/v12", B, V12_W, (10.2, 60.9), (4.6, 60.9), (4.6, 63.87), (2.54, 63.87)),
-    path("/v12", F, V12_W, (10.2, 60.7), (10.2, 60.9)),
     # Switching node, kept to the shortest path from pin 5 into L1.
     path("/gnd", F, 0.6, (17.95, 37.0), (18.55, 37.35)),
     path("/gnd", F, 0.6, (18.55, 37.35), (19.6, 36.5)),
@@ -101,21 +101,11 @@ TRACKS = [
     path("/v5", F, V5_W, (14.19, 29.72), (14.19, 30.5), (13.6, 31.1), (13.6, 40.45), (16.05, 40.45), (16.05, 39.2)),
     path("/v5", F, V5_W, (14.19, 30.5), (13.6, 31.1)),
     path("/v5", B, V5_W, (13.6, 31.1), (9.7, 31.1), (9.7, 50.0), (3.6, 50.0), (3.6, pin_y(21)), (J1_X, pin_y(21))),
-    # CH224A
-    path("/CC1", F, SIG_W, (14.95, USB_Y), (14.95, 60.2)),
-    path("/CC1", B, SIG_W, (14.95, 60.2), (20.9, 60.2), (20.9, 57.4)),
-    path("/CC1", F, SIG_W, (20.9, 57.4), (19.8, 57.4)),
-    path("/CC2", F, SIG_W, (17.95, USB_Y), (17.95, 58.4), (18.45, 58.4)),
-    path("/DP", F, SIG_W, (15.95, USB_Y), (15.95, 59.4), (12.0, 59.4), (12.0, 57.4), (12.6, 57.4)),
-    path("/DM", F, SIG_W, (16.45, USB_Y), (16.45, 58.4), (13.95, 58.4)),
-    path("/ch224a_vbus", F, SIG_W, (19.95, 56.4), (20.25, 56.4)),
-    path("/CFG1", F, SIG_W, (19.95, 55.4), (20.27, 55.4)),
-    path("/ch224a_vhv", F, SIG_W, (11.45, 53.85), (12.2, 53.85), (12.2, 54.4), (12.6, 54.4)),
-    path("/ch224a_vhv", F, SIG_W, (12.2, 53.85), (12.2, 53.3), (13.25, 53.3)),
-    path("/ch224a_vhv", F, SIG_W, (11.45, 53.85), (11.45, 55.27)),
-    path("/gnd", F, SIG_W, (11.45, 56.13), (11.6, 56.85)),
+    # Power LED and the ground returns around Q1.
     path("/led_anode", F, SIG_W, (14.75, 53.3), (16.25, 53.3)),
-    path("/pg", F, SIG_W, (17.75, 53.3), (20.2, 53.3), (20.2, 54.4), (19.95, 54.4)),
+    path("/gnd", F, SIG_W, (17.75, 53.3), (18.7, 53.3)),
+    path("/gnd", F, SIG_W, (19.05, 58.24), (19.05, 60.3)),
+    path("/gnd", F, SIG_W, (20.2, 60.3), (17.2, 60.3)),
     # 3.3 V from the top of J1 to the pullups and the sensor connector.
     path("/v3v3", F, SIG_W, (J1_X, pin_y(1)), (J1_X, pin_y(2))),
     path("/v3v3", F, SIG_W, (J1_X, pin_y(2)), (3.4, pin_y(2)), (3.4, 8.0), (9.25, 8.0), (9.25, 61.4), (9.5, 62.0), (9.5, 64.6), (6.8, 64.6), (6.8, 63.5)),
@@ -125,10 +115,6 @@ TRACKS = [
     path("/v3v3", F, SIG_W, (9.25, 35.17), (8.6, 35.17)),
     path("/v3v3", F, SIG_W, (6.8, 61.7), (6.8, 62.8)),
     path("/gnd", F, SIG_W, (6.8, 60.3), (6.8, 59.5)),
-    path("/gnd", F, SIG_W, (13.0, 62.15), (12.4, 62.2)),
-    path("/gnd", F, SIG_W, (19.4, 62.15), (20.0, 62.2)),
-    path("/gnd", F, SIG_W, (20.2, 59.3), (19.5, 59.4)),
-    path("/gnd", F, SIG_W, (21.13, 55.4), (21.0, 54.5)),
     # Fan 1
     path("/fan1_gpio_pwm", F, SIG_W, (J1_X, pin_y(4)), (4.4, pin_y(4)), (4.4, 55.0), (4.6, 55.0), (4.6, 55.85)),
     path("/fan1_pwm", F, SIG_W, (4.6, 57.35), (4.6, 58.79), (3.44, 58.79)),
@@ -156,17 +142,15 @@ TRACKS = [
 VIAS = [
     ("/v12", 10.2, 60.9),
     ("/v5", 13.6, 31.1),
-    ("/CC1", 14.95, 60.2),
-    ("/CC1", 20.9, 57.4),
+    ("/vin", 18.2, 54.9),
+    ("/vin", 19.2, 54.9),
     ("/fan1_tach", 3.2, 57.0),
     ("/fan1_tach", 5.5, pin_y(6)),
     ("/fan2_tach", 5.5, pin_y(7)),
     ("/fan2_gpio_pwm", 22.85, 63.0),
     ("/sda", 7.8, pin_y(12)),
     ("/scl", 8.55, pin_y(15)),
-    # Ground: exposed pad, regulator return, capacitor returns and pad tie-downs.
-    ("/gnd", 16.2, 55.6),
-    ("/gnd", 16.2, 57.2),
+    # Ground: regulator return, capacitor returns and pad tie-downs.
     ("/gnd", 18.6, 35.7),
     ("/gnd", 19.6, 35.2),
     ("/gnd", 20.6, 35.7),
@@ -177,11 +161,10 @@ VIAS = [
     ("/gnd", 18.6, 24.4),
     ("/gnd", 11.8, 47.2),
     ("/gnd", 12.8, 47.2),
-    ("/gnd", 21.0, 54.5),
-    ("/gnd", 11.6, 56.85),
+    ("/gnd", 18.7, 53.3),
+    ("/gnd", 17.2, 60.3),
     ("/gnd", 5.8, 62.05),
     ("/gnd", 6.8, 59.5),
-    ("/gnd", 19.5, 59.4),
     ("/gnd", 23.6, 8.4),
 ]
 
@@ -190,26 +173,19 @@ STITCH = [
     (x, y)
     for y in (10.5, 15.87, 20.5, 25.5)
     for x in (6.5, 12.0, 17.5, 21.0)
-] + [(21.0, 30.5), (21.0, 41.5), (12.0, 42.5), (6.5, 40.0), (6.5, 46.0), (5.5, 53.0), (7.0, 56.5), (21.0, 50.4), (12.0, 50.0)]
+] + [(21.0, 30.5), (21.0, 41.5), (12.0, 42.5), (6.5, 40.0), (6.5, 46.0), (5.5, 53.0), (7.0, 55.0), (21.0, 50.4), (12.0, 50.0)]
 
-# The USB VBUS pads are 0.55 mm wide at 0.65 mm to their neighbours, narrower
-# than the 12 V track rule, so short copper zones join them to the rail.
-NECKS = [
-    [(13.525, 60.3), (14.075, 60.3), (14.075, 62.0), (13.525, 62.0)],
-    [(18.325, 60.3), (18.875, 60.3), (18.875, 62.0), (18.325, 62.0)],
-]
-
-SILK_KEPT = {"U1", "U2", "J1", "J2", "C4"}
+SILK_KEPT = {"U1", "J1", "J2", "C4", "DC1"}
 
 # The back faces outward once the DevKit is plugged in, so labels live there.
 TEXT = [
     ("milsblo", 13.33, 20.0, 0, "B.SilkS"),
-    ("FAN1", 6.5, 56.9, 0, "B.SilkS"),
-    ("FAN2", 19.8, 56.9, 0, "B.SilkS"),
-    ("GND >", 7.0, 66.4, 0, "B.SilkS"),
-    ("< GND", 20.0, 58.8, 0, "B.SilkS"),
+    ("FAN1", 5.2, 54.4, 0, "B.SilkS"),
+    ("FAN2", 21.4, 53.6, 0, "B.SilkS"),
+    ("GND >", 6.3, 66.4, 0, "B.SilkS"),
+    ("< GND", 21.3, 60.0, 0, "B.SilkS"),
+    ("12V DC  CENTRE +", 13.33, 52.3, 0, "B.SilkS"),
     ("BME280", 7.3, 68.0, 0, "F.Fab"),
-    ("USB-C 12V", 16.2, 67.9, 0, "F.Fab"),
 ]
 
 
@@ -224,15 +200,19 @@ def place(board):
     for ref, (x, y, rot) in PLACEMENT.items():
         footprint = board.FindFootprintByReference(ref)
         footprint.SetPosition(mm(x, y))
+        if footprint.IsFlipped() != (ref in BACK_SIDE):
+            footprint.Flip(footprint.GetPosition(), pn.FLIP_DIRECTION_LEFT_RIGHT)
         footprint.SetOrientationDegrees(rot)
-        footprint.Reference().SetLayer(pn.F_Fab)
+        footprint.Reference().SetLayer(pn.B_Fab if ref in BACK_SIDE else pn.F_Fab)
         footprint.Reference().SetVisible(True)
         for pad in footprint.Pads():
-            # SMD ground pads tie solid to the pour: thermal spokes starve on
-            # 0402/0603 pads and every part here is reflowed.
-            solid = pad.GetNetname() == "/gnd" and (pad.GetAttribute() == pn.PAD_ATTRIB_SMD or ref == "USB1")
-            if solid:
-                pad.SetLocalZoneConnection(pn.ZONE_CONNECTION_FULL)
+            # Reflowed SMD ground pads tie solid to the pour: thermal spokes
+            # starve on 0402/0603 pads.
+            if pad.GetNetname() == "/gnd" and pad.GetAttribute() == pn.PAD_ATTRIB_SMD:
+                # The jack is soldered by hand, where a solid tie to the pour
+                # steals the iron's heat.
+                hand_soldered = ref in BACK_SIDE
+                pad.SetLocalZoneConnection(pn.ZONE_CONNECTION_THERMAL if hand_soldered else pn.ZONE_CONNECTION_FULL)
     missing = {f.GetReference() for f in board.GetFootprints()} - set(PLACEMENT)
     if missing:
         raise SystemExit(f"unplaced footprints: {sorted(missing)}")
@@ -306,8 +286,6 @@ def pours(board):
     rect = [(edge, ANTENNA_KEEPOUT_Y), (WIDTH - edge, ANTENNA_KEEPOUT_Y), (WIDTH - edge, HEIGHT - edge), (edge, HEIGHT - edge)]
     zone(board, "/gnd", "F.Cu", rect, "gnd top")
     zone(board, "/gnd", "B.Cu", rect, "gnd bottom")
-    for index, points in enumerate(NECKS):
-        zone(board, "/v12", "F.Cu", points, f"v12 neck {index + 1}", priority=2, clearance=0.15, pad_connection=pn.ZONE_CONNECTION_FULL)
     pn.ZONE_FILLER(board).Fill(board.Zones())
 
 
@@ -381,15 +359,6 @@ def strip_generated_items():
         out.append(text[position:start] + block)
         position = end
     text = "".join(out) + text[position:]
-    # USB1 holes follow the connector drawing: longer shell slots than the
-    # imported footprint and 0.65 mm locating pegs.
-    for old, new in (
-        ("(drill oval 0.599999 1.499997)", "(drill oval 0.6 1.7)"),
-        ("(drill oval 0.599999 1.500022)", "(drill oval 0.6 1.7)"),
-        ("(drill oval 0.599999 1.199998)", "(drill oval 0.6 1.4)"),
-    ):
-        text = text.replace(old, new)
-    text = re.sub(r"\(size 0\.7 0\.7\)(\s+)\(drill 0\.7\)", r"(size 0.65 0.65)\1(drill 0.65)", text)
     BOARD.write_text(text, encoding="utf-8")
 
 
