@@ -8,6 +8,7 @@ Usage: python3 -m unittest discover -s tools
 
 import copy
 import pathlib
+import re
 import shutil
 import subprocess
 import sys
@@ -28,10 +29,10 @@ def set_pin(role, number, net):
     return lambda design: design.pin_net.__setitem__((design.by_role(role).ref, number), net)
 
 
-def add_cc_pulldown(design):
-    design.parts["R98"] = cd.Part("R98", "5.1kΩ ±1% 100mW", "test.r_cc")
-    design.pin_net[("R98", "1")] = "CC1"
-    design.pin_net[("R98", "2")] = "gnd"
+def add_load_before_q1(design):
+    design.parts["C98"] = cd.Part("C98", "100nF ±10% 50V X7R", "test.c_vin")
+    design.pin_net[("C98", "1")] = "vin"
+    design.pin_net[("C98", "2")] = "gnd"
 
 
 def remove(role):
@@ -45,23 +46,23 @@ def remove(role):
 
 MUTATIONS = [
     ("tach pullup wrong", "resistor values", set_value("fan1.r_tach", "330Ω ±1% 100mW")),
-    ("LED resistor wrong", "resistor values", set_value("pd.r_led", "10kΩ ±1% 100mW")),
+    ("LED resistor wrong", "resistor values", set_value("pwr.r_led", "10kΩ ±1% 100mW")),
     ("12 V capacitor under-rated", "12 V capacitor ratings", set_value("buck.c_in", "22µF ±10% 6.3V X5R")),
     ("fan on the wrong rail", "pin tables", set_pin("fan1.hdr", "2", "v5")),
     ("GPIO moved", "pin tables", set_pin("headers.j1", "4", "fan2_gpio_pwm")),
     ("FB off the output", "AP63205 feedback", set_pin("buck.buck", "1", "FB")),
     ("EN on PG", "AP63205 enable", set_pin("buck.buck", "2", "pg")),
-    ("VBUS sense link not zero ohm", "CH224A supply links", set_value("pd.r_vbus", "10kΩ ±1% 100mW")),
-    ("VBUS sense link off the rail", "CH224A supply links", set_pin("pd.r_vbus", "1", "v5")),
     ("BST capacitor wrong", "support parts", set_value("buck.c_bst", "22µF ±10% 25V X5R")),
-    ("VHV bypass missing", "support parts", remove("pd.c_vdd")),
-    ("VHV link not zero ohm", "CH224A supply links", set_value("pd.r_vhv", "1kΩ ±1% 100mW")),
+    ("12 V bypass missing", "support parts", remove("pwr.c_bypass")),
     ("second output capacitor missing", "support parts", remove("buck.c_out2")),
-    ("CC pulldown added", "CH224A CC pins", add_cc_pulldown),
-    ("CFG2 driven", "CH224A voltage selection", set_pin("pd.ch224a", "2", "v3v3")),
-    ("LED cathode off PG", "CH224A PG LED", set_pin("pd.led_pg", "1", "gnd")),
-    ("LED anode off its resistor", "CH224A PG LED", set_pin("pd.led_pg", "2", "v3v3")),
-    ("LED resistor too small", {"CH224A PG LED", "resistor values"}, set_value("pd.r_led", "470Ω ±1% 100mW")),
+    ("jack wired straight to the rail", {"pin tables", "reverse-polarity protection"}, set_pin("pwr.jack", "2", "v12")),
+    ("load ahead of Q1", "reverse-polarity protection", add_load_before_q1),
+    ("Q1 source and drain swapped", {"pin tables", "reverse-polarity protection"}, lambda d: (set_pin("pwr.q_rev", "2", "vin")(d), set_pin("pwr.q_rev", "3", "v12")(d))),
+    ("Q1 gate floating", "pin tables", set_pin("pwr.q_rev", "1", "unconnected-(Q1-G-Pad1)")),
+    ("jack sleeve off ground", "pin tables", set_pin("pwr.jack", "4", "v12")),
+    ("LED cathode off ground", "power LED", set_pin("pwr.led", "1", "v5")),
+    ("LED anode off its resistor", "power LED", set_pin("pwr.led", "2", "v3v3")),
+    ("LED resistor too small", {"power LED", "resistor values"}, set_value("pwr.r_led", "470Ω ±1% 100mW")),
 ]
 
 
@@ -144,6 +145,10 @@ def add_v12_zone(layout):
     layout.zones.append(cd.Zone("v12", "F.Cu", "extra", []))
 
 
+def jack_on_top(layout):
+    layout.footprints["DC1"].layer = "F.Cu"
+
+
 def remove_ground_pour(layer):
     def apply(layout):
         layout.zones = [z for z in layout.zones if not (z.net == "gnd" and z.layer == layer)]
@@ -158,12 +163,14 @@ def strip_ground_vias(layout):
 LAYOUT_MUTATIONS = [
     ("12 V track too thin", "rail track widths", thin_track("v12")),
     ("5 V track too thin", "rail track widths", thin_track("v5")),
-    ("extra 12 V zone", "rail zones", add_v12_zone),
+    ("12 V in a zone", "rail zones", add_v12_zone),
+    ("jack track too thin", "rail track widths", thin_track("vin")),
+    ("jack on the top side", "jack on the back", jack_on_top),
     ("pour under the antenna", "antenna keepout", pour_into_keepout),
     ("signal under the antenna", "antenna keepout", track_in_keepout),
     ("via under the antenna", "antenna keepout", via_in_keepout),
     ("board under the antenna", "antenna keepout", extend_under_antenna),
-    ("USB off the edge", "connectors on edges", move("USB1", 0.0, -2.0)),
+    ("jack off the edge", "connectors on edges", move("DC1", 0.0, -2.0)),
     ("sensor connector off the edge", "connectors on edges", move("CN1", 0.0, -1.0)),
     ("fan 1 off the edge", "connectors on edges", move("H1", 2.0, 0.0)),
     ("fan 2 off the edge", "connectors on edges", move("H2", -1.0, 0.0)),
@@ -222,7 +229,8 @@ class KicadChecks(unittest.TestCase):
 
     def test_drc_catches_a_missing_track(self):
         text = self.board.read_text(encoding="utf-8")
-        start = text.index("(segment")
+        # fan1_pwm is a single run of track, so losing any piece opens the net.
+        start = re.search(r'\(segment(?:\s+\((?:start|end|width|layer) [^)]*\))+\s+\(net "/fan1_pwm"\)', text).start()
         depth, end = 0, start
         while True:
             depth += (text[end] == "(") - (text[end] == ")")
@@ -239,7 +247,7 @@ class KicadChecks(unittest.TestCase):
 
     def test_erc_catches_a_missing_label(self):
         text = self.schematic.read_text(encoding="utf-8")
-        start = text.index('(label "CFG1"')
+        start = text.index('(label "vin"')
         depth, end = 0, start
         while True:
             depth += (text[end] == "(") - (text[end] == ")")

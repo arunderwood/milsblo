@@ -96,7 +96,7 @@ is achieved. Fan PWM control is valid.
 Fans:    2 × 0.3A × 12V = 7.2W
 Buck:    0.5A × 5.0V / 0.85η ≈ 2.9W  (draws about 245mA from the 12V rail)
 Total:   ~10.1W nominal
-Margin:  65W USB-C PD charger leaves more than 50W of headroom  ✓
+Margin:  0.84A from a jack rated 1.5A; use a 12V supply rated 1.5A or more  ✓
 ```
 
 ## Viewing waveforms (optional)
