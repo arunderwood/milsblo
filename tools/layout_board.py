@@ -176,6 +176,8 @@ STITCH = [
 ] + [(21.0, 30.5), (21.0, 41.5), (12.0, 42.5), (6.5, 40.0), (6.5, 46.0), (5.5, 53.0), (7.0, 55.0), (21.0, 50.4), (12.0, 50.0)]
 
 SILK_KEPT = {"U1", "J1", "J2", "C4", "DC1"}
+# PCBWAY prints legend strokes down to 0.15 mm; thinner ones may not appear.
+SILK_MIN_STROKE = 0.15
 
 # The back faces outward once the DevKit is plugged in, so labels live there.
 TEXT = [
@@ -363,6 +365,30 @@ def cut_blocks(text, pattern, keep=lambda block: False):
     return "".join(out) + text[position:]
 
 
+def widen_silk(footprint):
+    # Footprints are stored in the board, so a library change alone never
+    # reaches silk that is already placed.
+    def widen(match):
+        item = match.group(0)
+        if '(layer "F.SilkS")' not in item and '(layer "B.SilkS")' not in item:
+            return item
+        return re.sub(
+            r"\(width ([\d.]+)\)",
+            lambda width: f"(width {max(float(width.group(1)), SILK_MIN_STROKE):g})",
+            item,
+        )
+
+    out, position = [], 0
+    for match in re.finditer(r"^\t\t\(fp_(?:line|arc|circle|poly|rect)\b", footprint, re.M):
+        start = match.start() + 2
+        if start < position:
+            continue
+        end = block_end(footprint, start)
+        out.append(footprint[position:start] + widen(re.match(r"(?s).*", footprint[start:end])))
+        position = end
+    return "".join(out) + footprint[position:]
+
+
 def strip_generated_items():
     # KiCad 10's Python bindings return unusable objects when board items are
     # iterated, so the previous outline, copper and labels are cut from the
@@ -383,6 +409,7 @@ def strip_generated_items():
             r"^\t\t(\(fp_(?:line|arc|circle|poly|rect|text)\b)",
             lambda item: '(layer "F.SilkS")' not in item or (keep_silk and "${REFERENCE}" not in item),
         )
+        block = widen_silk(block)
         out.append(text[position:start] + block)
         position = end
     text = "".join(out) + text[position:]
