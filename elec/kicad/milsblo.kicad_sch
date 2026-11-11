@@ -372,7 +372,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "milsblo:0603WAF1001T5E"
+		(symbol "milsblo:0603WAF0000T5E"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -388,7 +388,7 @@
 					)
 				)
 			)
-			(property "Value" "1kΩ ±1% 100mW"
+			(property "Value" "0Ω ±1% 100mW"
 				(at 0 -5.08 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -409,7 +409,7 @@
 					)
 				)
 			)
-			(property "Datasheet" "https://www.lcsc.com/product-detail/C21190.html"
+			(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/f42da6c80a0747bae77c2f98f4e46d1d.pdf?productCode=C21189"
 				(at 0 -10.16 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -431,7 +431,7 @@
 					)
 				)
 			)
-			(property "LCSC Part" "C21190"
+			(property "LCSC Part" "C21189"
 				(at 0 -12.7 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -442,7 +442,7 @@
 					)
 				)
 			)
-			(symbol "0603WAF1001T5E_0_1"
+			(symbol "0603WAF0000T5E_0_1"
 				(rectangle
 					(start -2.54 1.02)
 					(end 2.54 -1.02)
@@ -614,7 +614,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "milsblo:0603WAF4700T5E"
+		(symbol "milsblo:0603WAF4701T5E"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -630,7 +630,7 @@
 					)
 				)
 			)
-			(property "Value" "0603WAF4700T5E"
+			(property "Value" "0603WAF4701T5E"
 				(at 0 -5.08 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -651,7 +651,7 @@
 					)
 				)
 			)
-			(property "Datasheet" "https://lcsc.com/product-detail/Chip-Resistor-Surface-Mount-UniOhm_470R-4700-1_C23179.html"
+			(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C23162"
 				(at 0 -10.16 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -673,7 +673,7 @@
 					)
 				)
 			)
-			(property "LCSC Part" "C23179"
+			(property "LCSC Part" "C23162"
 				(at 0 -12.7 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -684,7 +684,7 @@
 					)
 				)
 			)
-			(symbol "0603WAF4700T5E_0_1"
+			(symbol "0603WAF4701T5E_0_1"
 				(rectangle
 					(start -2.54 1.02)
 					(end 2.54 -1.02)
@@ -735,7 +735,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "milsblo:19-217_GHC-YR1S2_3T"
+		(symbol "milsblo:19-217_GHC-YQ1R1QY_6T"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -751,7 +751,7 @@
 					)
 				)
 			)
-			(property "Value" "19-217/GHC-YR1S2/3T"
+			(property "Value" "19-217/GHC-YQ1R1QY/6T"
 				(at 0 -5.08 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -772,7 +772,7 @@
 					)
 				)
 			)
-			(property "Datasheet" "https://lcsc.com/product-detail/Light-Emitting-Diodes-LED_0603-Green-light_C72043.html"
+			(property "Datasheet" "https://www.lcsc.com/product-detail/C2986032.html"
 				(at 0 -10.16 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -794,7 +794,7 @@
 					)
 				)
 			)
-			(property "LCSC Part" "C72043"
+			(property "LCSC Part" "C2986032"
 				(at 0 -12.7 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -805,7 +805,7 @@
 					)
 				)
 			)
-			(symbol "19-217_GHC-YR1S2_3T_0_1"
+			(symbol "19-217_GHC-YQ1R1QY_6T_0_1"
 				(polyline
 					(pts
 						(xy -2.29 3.81) (xy -1.27 3.3) (xy -1.78 2.79) (xy -2.29 3.81)
@@ -1581,7 +1581,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "milsblo:CH224K"
+		(symbol "milsblo:CH224A"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -1597,7 +1597,7 @@
 					)
 				)
 			)
-			(property "Value" "CH224K"
+			(property "Value" "CH224A"
 				(at 0 -16.51 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1640,7 +1640,7 @@
 					)
 				)
 			)
-			(property "LCSC Part" "C970725"
+			(property "LCSC Part" "C42459160"
 				(at 0 -21.59 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1651,7 +1651,7 @@
 					)
 				)
 			)
-			(symbol "CH224K_0_1"
+			(symbol "CH224A_0_1"
 				(rectangle
 					(start -8.89 12.7)
 					(end 7.62 -13.97)
@@ -1666,7 +1666,7 @@
 				(pin power_in line
 					(at 10.16 10.16 180)
 					(length 2.54)
-					(name "VDD"
+					(name "VHV"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3885,6 +3885,26 @@
 		(at 43.18 373.38)
 		(uuid "fa2e55f1-7996-5b38-b209-c3c7c78640a2")
 	)
+	(label "v5"
+		(at 250.19 127 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "2b95f27f-34e0-47d1-8ac2-c7e730859e87")
+	)
+	(label "gnd"
+		(at 257.81 127 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b9a5be44-c048-4e5a-aa9f-aa837aeabefb")
+	)
 	(label "v12"
 		(at 39.37 250.19 180)
 		(effects
@@ -3924,16 +3944,6 @@
 			(justify right bottom)
 		)
 		(uuid "07d92fbc-c619-5d7f-89de-b79922446190")
-	)
-	(label "gnd"
-		(at 180.34 43.18 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "07dbb55e-6e22-5fd6-b618-c1411812d220")
 	)
 	(label "v5"
 		(at 222.25 127 180)
@@ -4025,7 +4035,7 @@
 		)
 		(uuid "1c1ca192-4113-5630-985d-0b52d52ddc55")
 	)
-	(label "ch224k_vdd"
+	(label "ch224a_vhv"
 		(at 358.14 43.18 0)
 		(effects
 			(font
@@ -4085,7 +4095,7 @@
 		)
 		(uuid "316943d3-370e-57bb-9d0c-5211ba4f78eb")
 	)
-	(label "ch224k_vdd"
+	(label "ch224a_vhv"
 		(at 396.24 43.18 180)
 		(effects
 			(font
@@ -4265,7 +4275,7 @@
 		)
 		(uuid "69967d75-da97-5ec9-9879-2a64b703672f")
 	)
-	(label "ch224k_vdd"
+	(label "ch224a_vhv"
 		(at 78.74 91.44 180)
 		(effects
 			(font
@@ -4284,16 +4294,6 @@
 			(justify right bottom)
 		)
 		(uuid "72450598-ab2a-552b-8561-a7ed519ce069")
-	)
-	(label "ch224k_vdd"
-		(at 170.18 43.18 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "73a6bbe0-82b6-5a43-bef7-eb6edec92ba1")
 	)
 	(label "gnd"
 		(at 325.12 43.18 0)
@@ -4365,7 +4365,7 @@
 		)
 		(uuid "80358335-c1df-5fb2-8942-a58211db0bf1")
 	)
-	(label "ch224k_vbus"
+	(label "ch224a_vbus"
 		(at 40.64 91.44 0)
 		(effects
 			(font
@@ -4505,7 +4505,7 @@
 		)
 		(uuid "a74a34a0-4e25-5c03-8ead-00c21a618446")
 	)
-	(label "ch224k_vdd"
+	(label "ch224a_vhv"
 		(at 99.06 43.18 0)
 		(effects
 			(font
@@ -4675,7 +4675,7 @@
 		)
 		(uuid "c8ca72ed-686d-5693-97b4-c3ddb963694f")
 	)
-	(label "ch224k_vbus"
+	(label "ch224a_vbus"
 		(at 77.47 59.69 180)
 		(effects
 			(font
@@ -4715,7 +4715,7 @@
 		)
 		(uuid "d2af27d8-fc07-56f0-95bb-47694d9b90ec")
 	)
-	(label "ch224k_vdd"
+	(label "ch224a_vhv"
 		(at 203.2 167.64 0)
 		(effects
 			(font
@@ -4824,6 +4824,129 @@
 			(justify right bottom)
 		)
 		(uuid "fb3bfeb0-7a49-5063-b963-e849e03ff7c8")
+	)
+	(symbol
+		(lib_id "milsblo:CL31A226KAHNNNE")
+		(at 254 127 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "0f1ecfb7-10ca-45b9-8ecb-8bb9f35fb676")
+		(property "Reference" "C8"
+			(at 254 120.65 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "22µF ±10% 25V X5R"
+			(at 254 134.62 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "milsblo:C1206"
+			(at 254 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_Samsung-Electro-Mechanics-CL31A226KAHNNNE_C12891.pdf"
+			(at 254 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 254 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C12891"
+			(at 254 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 254 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Partnumber" "CL31A226KAHNNNE"
+			(at 254 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Role" "buck.c_out2"
+			(at 254 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "030e2ac8-e7a2-4e48-8534-d90a4aa90615")
+		)
+		(pin "2"
+			(uuid "d4240e64-d38a-497e-8199-e4b484baf10f")
+		)
+		(instances
+			(project "milsblo"
+				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
+					(reference "C8")
+					(unit 1)
+				)
+			)
+		)
 	)
 	(symbol
 		(lib_id "milsblo:CL31A226KAHNNNE")
@@ -5066,129 +5189,6 @@
 			(project "milsblo"
 				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
 					(reference "C1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "milsblo:BZT52C5V1_C173407")
-		(at 175.26 43.18 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "07355406-4b4b-5f60-bb04-d23a40167938")
-		(property "Reference" "D1"
-			(at 175.26 36.83 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "BZT52C5V1"
-			(at 175.26 50.8 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "milsblo:SOD-123_L2.7-W1.6-LS3.7-RD"
-			(at 175.26 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 175.26 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 175.26 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC Part" "C173407"
-			(at 175.26 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "MDD（Microdiode Electronics）"
-			(at 175.26 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Partnumber" "BZT52C5V1"
-			(at 175.26 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Role" "pd.z_vdd"
-			(at 175.26 43.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "aa4ee186-f5ce-5793-b275-9c709db02da1")
-		)
-		(pin "2"
-			(uuid "28170465-ca51-56eb-b6e5-cdfd34077888")
-		)
-		(instances
-			(project "milsblo"
-				(path "/1a596c89-5415-5ac3-a07b-d3c435f5cad8"
-					(reference "D1")
 					(unit 1)
 				)
 			)
@@ -6116,7 +6116,7 @@
 		)
 	)
 	(symbol
-		(lib_id "milsblo:0603WAF1002T5E")
+		(lib_id "milsblo:0603WAF0000T5E")
 		(at 35.56 91.44 0)
 		(unit 1)
 		(body_style 1)
@@ -6136,7 +6136,7 @@
 				)
 			)
 		)
-		(property "Value" "10kΩ ±1% 100mW"
+		(property "Value" "0Ω ±1% 100mW"
 			(at 35.56 99.06 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6157,7 +6157,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2206010045_UNI-ROYAL-Uniroyal-Elec-0603WAF1002T5E_C25804.pdf"
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/f42da6c80a0747bae77c2f98f4e46d1d.pdf?productCode=C21189"
 			(at 35.56 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -6179,7 +6179,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C25804"
+		(property "LCSC Part" "C21189"
 			(at 35.56 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -6201,7 +6201,7 @@
 				)
 			)
 		)
-		(property "Partnumber" "0603WAF1002T5E"
+		(property "Partnumber" "0603WAF0000T5E"
 			(at 35.56 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -6239,7 +6239,7 @@
 		)
 	)
 	(symbol
-		(lib_id "milsblo:CH224K")
+		(lib_id "milsblo:CH224A")
 		(at 88.9 53.34 0)
 		(unit 1)
 		(body_style 1)
@@ -6259,7 +6259,7 @@
 				)
 			)
 		)
-		(property "Value" "CH224K"
+		(property "Value" "CH224A"
 			(at 88.265 72.39 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6302,7 +6302,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C970725"
+		(property "LCSC Part" "C42459160"
 			(at 88.9 53.34 0)
 			(hide yes)
 			(show_name no)
@@ -6324,7 +6324,7 @@
 				)
 			)
 		)
-		(property "Partnumber" "CH224K"
+		(property "Partnumber" "CH224A"
 			(at 88.9 53.34 0)
 			(hide yes)
 			(show_name no)
@@ -6335,7 +6335,7 @@
 				)
 			)
 		)
-		(property "Role" "pd.ch224k"
+		(property "Role" "pd.ch224a"
 			(at 88.9 53.34 0)
 			(hide yes)
 			(show_name no)
@@ -7175,7 +7175,7 @@
 		)
 	)
 	(symbol
-		(lib_id "milsblo:0603WAF4700T5E")
+		(lib_id "milsblo:0603WAF4701T5E")
 		(at 401.32 43.18 0)
 		(unit 1)
 		(body_style 1)
@@ -7195,7 +7195,7 @@
 				)
 			)
 		)
-		(property "Value" "470Ω ±1% 100mW"
+		(property "Value" "4.7kΩ ±1% 100mW"
 			(at 401.32 50.8 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7216,7 +7216,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2206010116_UNI-ROYAL-Uniroyal-Elec-0603WAF4700T5E_C23179.pdf"
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/0a975aaa49b7c97f38a963127be4a823.pdf?productCode=C23162"
 			(at 401.32 43.18 0)
 			(hide yes)
 			(show_name no)
@@ -7238,7 +7238,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C23179"
+		(property "LCSC Part" "C23162"
 			(at 401.32 43.18 0)
 			(hide yes)
 			(show_name no)
@@ -7260,7 +7260,7 @@
 				)
 			)
 		)
-		(property "Partnumber" "0603WAF4700T5E"
+		(property "Partnumber" "0603WAF4701T5E"
 			(at 401.32 43.18 0)
 			(hide yes)
 			(show_name no)
@@ -7639,7 +7639,7 @@
 		)
 	)
 	(symbol
-		(lib_id "milsblo:0603WAF1001T5E")
+		(lib_id "milsblo:0603WAF0000T5E")
 		(at 353.06 43.18 0)
 		(unit 1)
 		(body_style 1)
@@ -7659,7 +7659,7 @@
 				)
 			)
 		)
-		(property "Value" "1kΩ ±1% 100mW"
+		(property "Value" "0Ω ±1% 100mW"
 			(at 353.06 50.8 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7680,7 +7680,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.lcsc.com/product-detail/C21190.html"
+		(property "Datasheet" "https://datasheet.lcsc.com/datasheet/pdf/f42da6c80a0747bae77c2f98f4e46d1d.pdf?productCode=C21189"
 			(at 353.06 43.18 0)
 			(hide yes)
 			(show_name no)
@@ -7702,7 +7702,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C21190"
+		(property "LCSC Part" "C21189"
 			(at 353.06 43.18 0)
 			(hide yes)
 			(show_name no)
@@ -7724,7 +7724,7 @@
 				)
 			)
 		)
-		(property "Partnumber" "0603WAF1001T5E"
+		(property "Partnumber" "0603WAF0000T5E"
 			(at 353.06 43.18 0)
 			(hide yes)
 			(show_name no)
@@ -7735,7 +7735,7 @@
 				)
 			)
 		)
-		(property "Role" "pd.r_vdd"
+		(property "Role" "pd.r_vhv"
 			(at 353.06 43.18 0)
 			(hide yes)
 			(show_name no)
@@ -8085,7 +8085,7 @@
 		)
 	)
 	(symbol
-		(lib_id "milsblo:19-217_GHC-YR1S2_3T")
+		(lib_id "milsblo:19-217_GHC-YQ1R1QY_6T")
 		(at 215.9 43.18 0)
 		(unit 1)
 		(body_style 1)
@@ -8105,7 +8105,7 @@
 				)
 			)
 		)
-		(property "Value" "19-217/GHC-YR1S2/3T"
+		(property "Value" "19-217/GHC-YQ1R1QY/6T"
 			(at 215.9 50.8 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8148,7 +8148,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C72043"
+		(property "LCSC Part" "C2986032"
 			(at 215.9 43.18 0)
 			(hide yes)
 			(show_name no)
@@ -8170,7 +8170,7 @@
 				)
 			)
 		)
-		(property "Partnumber" "19-217/GHC-YR1S2/3T"
+		(property "Partnumber" "19-217/GHC-YQ1R1QY/6T"
 			(at 215.9 43.18 0)
 			(hide yes)
 			(show_name no)

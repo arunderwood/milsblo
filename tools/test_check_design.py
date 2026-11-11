@@ -45,22 +45,23 @@ def remove(role):
 
 MUTATIONS = [
     ("tach pullup wrong", "resistor values", set_value("fan1.r_tach", "330Ω ±1% 100mW")),
-    ("LED resistor wrong", "resistor values", set_value("pd.r_led", "47Ω ±1% 100mW")),
+    ("LED resistor wrong", "resistor values", set_value("pd.r_led", "10kΩ ±1% 100mW")),
     ("12 V capacitor under-rated", "12 V capacitor ratings", set_value("buck.c_in", "22µF ±10% 6.3V X5R")),
     ("fan on the wrong rail", "pin tables", set_pin("fan1.hdr", "2", "v5")),
     ("GPIO moved", "pin tables", set_pin("headers.j1", "4", "fan2_gpio_pwm")),
     ("FB off the output", "AP63205 feedback", set_pin("buck.buck", "1", "FB")),
     ("EN on PG", "AP63205 enable", set_pin("buck.buck", "2", "pg")),
-    ("VBUS sense direct", "CH224K VBUS sense", set_pin("pd.ch224k", "8", "v12")),
-    ("VBUS sense resistor wrong", "CH224K VBUS sense", set_value("pd.r_vbus", "100Ω ±1% 100mW")),
+    ("VBUS sense link not zero ohm", "CH224A supply links", set_value("pd.r_vbus", "10kΩ ±1% 100mW")),
+    ("VBUS sense link off the rail", "CH224A supply links", set_pin("pd.r_vbus", "1", "v5")),
     ("BST capacitor wrong", "support parts", set_value("buck.c_bst", "22µF ±10% 25V X5R")),
-    ("VDD bypass missing", "support parts", remove("pd.c_vdd")),
-    ("VDD resistor overloaded", "CH224K VDD feed", set_value("pd.r_vdd", "470Ω ±1% 100mW")),
-    ("VDD shunt overcurrent", "CH224K VDD feed", set_value("pd.r_vdd", "220Ω ±1% 1W")),
-    ("CC pulldown added", "CH224K CC pins", add_cc_pulldown),
-    ("CFG2 driven", "CH224K voltage selection", set_pin("pd.ch224k", "2", "v3v3")),
-    ("LED cathode off PG", "CH224K PG LED", set_pin("pd.led_pg", "1", "gnd")),
-    ("LED anode off its resistor", "CH224K PG LED", set_pin("pd.led_pg", "2", "v3v3")),
+    ("VHV bypass missing", "support parts", remove("pd.c_vdd")),
+    ("VHV link not zero ohm", "CH224A supply links", set_value("pd.r_vhv", "1kΩ ±1% 100mW")),
+    ("second output capacitor missing", "support parts", remove("buck.c_out2")),
+    ("CC pulldown added", "CH224A CC pins", add_cc_pulldown),
+    ("CFG2 driven", "CH224A voltage selection", set_pin("pd.ch224a", "2", "v3v3")),
+    ("LED cathode off PG", "CH224A PG LED", set_pin("pd.led_pg", "1", "gnd")),
+    ("LED anode off its resistor", "CH224A PG LED", set_pin("pd.led_pg", "2", "v3v3")),
+    ("LED resistor too small", {"CH224A PG LED", "resistor values"}, set_value("pd.r_led", "470Ω ±1% 100mW")),
 ]
 
 
@@ -89,7 +90,7 @@ class DesignRules(unittest.TestCase):
             with self.subTest(label):
                 design = copy.deepcopy(self.design)
                 mutate(design)
-                self.assertEqual(failing(design), {rule})
+                self.assertEqual(failing(design), rule if isinstance(rule, set) else {rule})
 
     def test_left_open_enable_is_allowed(self):
         design = copy.deepcopy(self.design)
@@ -104,6 +105,94 @@ class DesignRules(unittest.TestCase):
         )
         self.assertEqual(cd.check_golden(self.design, cd.GOLDEN), [])
         self.assertTrue(cd.check_golden(design, cd.GOLDEN))
+
+
+def move(ref, dx, dy):
+    def apply(layout):
+        footprint = layout.footprints[ref]
+        footprint.at = (footprint.at[0] + dx, footprint.at[1] + dy)
+        footprint.pads = {n: (x + dx, y + dy) for n, (x, y) in footprint.pads.items()}
+
+    return apply
+
+
+def thin_track(net):
+    def apply(layout):
+        next(t for t in layout.tracks if t.net == net).width = 0.2
+
+    return apply
+
+
+def pour_into_keepout(layout):
+    layout.zones[0].filled.append((layout.edge[0] + 1.0, layout.edge[1] + 1.0))
+
+
+def track_in_keepout(layout):
+    layout.tracks[0].start = (layout.edge[0] + 12.0, layout.edge[1] + 1.0)
+
+
+def via_in_keepout(layout):
+    layout.vias[0].at = (layout.edge[0] + 12.0, layout.edge[1] + 1.0)
+
+
+def extend_under_antenna(layout):
+    x0, y0, x1, y1 = layout.edge
+    layout.edge = (x0, y0 - 2.0, x1, y1)
+
+
+def add_v12_zone(layout):
+    layout.zones.append(cd.Zone("v12", "F.Cu", "extra", []))
+
+
+def remove_ground_pour(layer):
+    def apply(layout):
+        layout.zones = [z for z in layout.zones if not (z.net == "gnd" and z.layer == layer)]
+
+    return apply
+
+
+def strip_ground_vias(layout):
+    layout.vias = [v for v in layout.vias if v.net != "gnd"]
+
+
+LAYOUT_MUTATIONS = [
+    ("12 V track too thin", "rail track widths", thin_track("v12")),
+    ("5 V track too thin", "rail track widths", thin_track("v5")),
+    ("extra 12 V zone", "rail zones", add_v12_zone),
+    ("pour under the antenna", "antenna keepout", pour_into_keepout),
+    ("signal under the antenna", "antenna keepout", track_in_keepout),
+    ("via under the antenna", "antenna keepout", via_in_keepout),
+    ("board under the antenna", "antenna keepout", extend_under_antenna),
+    ("USB off the edge", "connectors on edges", move("USB1", 0.0, -2.0)),
+    ("sensor connector off the edge", "connectors on edges", move("CN1", 0.0, -1.0)),
+    ("fan 1 off the edge", "connectors on edges", move("H1", 2.0, 0.0)),
+    ("fan 2 off the edge", "connectors on edges", move("H2", -1.0, 0.0)),
+    ("header row moved", "DevKit header geometry", move("J2", 0.2, 0.0)),
+    ("header row offset", "DevKit header geometry", move("J2", 0.0, 0.2)),
+    ("regulator bypass moved away", "decoupling distance", move("C2", 6.0, 0.0)),
+    ("no top pour", "ground pours and stitching", remove_ground_pour("F.Cu")),
+    ("no bottom pour", "ground pours and stitching", remove_ground_pour("B.Cu")),
+    ("no stitching vias", "ground pours and stitching", strip_ground_vias),
+]
+
+
+class LayoutRules(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.layout = cd.load_layout(cd.BOARD)
+
+    def failing(self, layout):
+        return {name for name, problems in cd.evaluate_layout(layout) if problems}
+
+    def test_committed_layout_passes(self):
+        self.assertEqual(self.failing(self.layout), set())
+
+    def test_each_rule_catches_its_error(self):
+        for label, rule, mutate in LAYOUT_MUTATIONS:
+            with self.subTest(label):
+                layout = copy.deepcopy(self.layout)
+                mutate(layout)
+                self.assertEqual(self.failing(layout), {rule})
 
 
 class KicadChecks(unittest.TestCase):
@@ -129,7 +218,24 @@ class KicadChecks(unittest.TestCase):
         text = self.board.read_text(encoding="utf-8")
         self.assertIn('(net "/sda")', text)
         self.board.write_text(text.replace('(net "/sda")', '(net "/scl")', 1), encoding="utf-8")
-        self.assertEqual(self.failures(), {"schematic parity"})
+        self.assertIn("schematic parity", self.failures())
+
+    def test_drc_catches_a_missing_track(self):
+        text = self.board.read_text(encoding="utf-8")
+        start = text.index("(segment")
+        depth, end = 0, start
+        while True:
+            depth += (text[end] == "(") - (text[end] == ")")
+            end += 1
+            if depth == 0:
+                break
+        self.board.write_text(text[:start] + text[end:], encoding="utf-8")
+        self.assertEqual(self.failures(), {"board DRC"})
+
+    def test_drc_catches_a_thin_rail(self):
+        text = self.board.read_text(encoding="utf-8")
+        self.board.write_text(text.replace("(width 1.016)", "(width 0.3)", 1), encoding="utf-8")
+        self.assertIn("board DRC", self.failures())
 
     def test_erc_catches_a_missing_label(self):
         text = self.schematic.read_text(encoding="utf-8")

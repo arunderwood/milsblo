@@ -14,29 +14,24 @@ The KiCad schematic is complete and passes `tools/check_design.py`.
 - Build and test one stage at a time. Never jump ahead.
 - A 65W USB-C PD charger can source 3A+ at 12V. A short circuit will blow your charger's protection, not just the wire.
 
-### Use a CH224K breakout board for prototyping
+### Use a CH224A or CH224K breakout board for prototyping
 
-**Do NOT attempt to breadboard the CH224K IC directly.**
-Use a CH224K breakout board (AliExpress, ~$2–3). Breakout boards include onboard VDD regulation,
+**Do NOT attempt to breadboard the CH224A IC directly.**
+Use a CH224A or CH224K breakout board (AliExpress, ~$2–3). Breakout boards include onboard VDD regulation,
 so the VDD supply (see below) is already handled.
 
 The breakout board tests the PD negotiation itself but NOT your USB-C connector footprint — that
 must be verified at PCB stage.
 
-### CH224K VDD supply (PCB design only — irrelevant for breakout)
+### CH224A supply (PCB design only — irrelevant for breakout)
 
-The CH224K holds VDD at 3.3V with an internal shunt regulator that can sink 30mA. On the PCB, R10
-(1kΩ) feeds it from the 12V rail.
-
-Math: (12V − 3.3V) / 1kΩ = 8.7mA; R10 dissipation = 76mW (< 100mW rating) ✓
-
----
+The PCB uses the CH224A, whose VHV pin connects to the 12V rail through R10 (0Ω). A CH224K breakout proves the PD chain but not the CH224A's 24kΩ setting, so measure 12V on the first assembled board before plugging in the DevKit.
 
 ## Shopping List
 
 | Item | Purpose | LCSC/Source | Approx cost |
 |------|---------|-------------|-------------|
-| CH224K breakout board | PD negotiation test | AliExpress / AnalogLamb | $2–3 |
+| CH224A or CH224K breakout board | PD negotiation test | AliExpress / AnalogLamb | $2–3 |
 | ESP32-S3-DevKitC-1 v1.1 | Dev board (exact variant!) | Espressif / AliExpress | $12–18 |
 | BME280 breakout (GY-BME280) | Sensor testing | AliExpress / Amazon | $3–5 |
 | 4-pin PWM PC fan (120mm or 140mm) | Load testing — **must be 4-pin** | Amazon / PC supply store | $8–15 |
@@ -72,7 +67,7 @@ Work through these stages in order. Verify each stage passes before proceeding.
 **Goal:** Confirm 12V PD negotiation works before connecting any other components.
 
 **Setup:**
-- Connect CH224K breakout VOUT+ and GND only (no load)
+- Connect the breakout VOUT+ and GND only (no load)
 - Plug in 65W+ USB-C PD charger
 
 **Verify:**
@@ -222,7 +217,7 @@ If SDO pin is connected to VCC on the breakout, add `address: 0x77` to milsblo.y
 - Set both fans to 75% in Home Assistant
 - Monitor ESPHome logs for errors
 - Check temperature readings remain plausible (shouldn't spike due to fan cooling)
-- Touch 12V → 5V buck module and CH224K breakout: should be warm but not hot
+- Touch 12V → 5V buck module and CH224 breakout: should be warm but not hot
 
 **Pass criteria:**
 - Both fans spin at commanded speed ✓

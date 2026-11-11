@@ -18,7 +18,7 @@ A single USB-C cable delivers [12V via USB Power Delivery](https://learn.adafrui
 USB-C PD charger (65W+)
     │
     ▼
-CH224K (PD sink) → 12V rail ──→ Fan headers × 2 (always-on 12V)
+CH224A (PD sink) → 12V rail ──→ Fan headers × 2 (always-on 12V)
                            └──→ AP63205 buck → 5V → ESP32-S3-DevKitC-1
                                                          │
                                                          ├── 25kHz PWM → Fan 1 & 2 speed control
@@ -26,7 +26,7 @@ CH224K (PD sink) → 12V rail ──→ Fan headers × 2 (always-on 12V)
                                                          └── I2C → BME280 temp/humidity sensor
 ```
 
-- **Power:** USB-C PD negotiates 12V via CH224K; stepped to 5V by AP63205 buck converter
+- **Power:** USB-C PD negotiates 12V via CH224A; stepped to 5V by AP63205 buck converter
 - **Fan control:** 25kHz PWM on GPIO 4/5 (silent, full-range speed), tach feedback on GPIO 6/7
 - **Sensor:** BME280 via JST-SH 4-pin (Qwiic/STEMMA QT compatible) on I2C GPIO 8/9
 - **Firmware:** ESPHome (`firmware/milsblo.yaml`) — integrates with Home Assistant
@@ -39,8 +39,8 @@ CH224K (PD sink) → 12V rail ──→ Fan headers × 2 (always-on 12V)
 | Phase 2: KiCad schematic | ✅ Complete |
 | Phase 3: SPICE simulations | ✅ Complete |
 | Phase 4: Firmware + test guide | ✅ Complete |
-| Phase 5: PCB layout (KiCad) | 🔲 Not started |
-| Phase 6: Manufacturing export | 🔲 Not started |
+| Phase 5: PCB layout (KiCad) | ✅ Complete |
+| Phase 6: Manufacturing export | ✅ Complete (`tools/export_fab.sh`) |
 
 ## Design
 
@@ -51,7 +51,8 @@ Designed in [KiCad](https://www.kicad.org/). The project lives in `elec/kicad/`,
 ## Toolchain
 
 ```bash
-python3 tools/check_design.py       # ERC, parity, connectivity and datasheet rules
+python3 tools/check_design.py       # ERC, DRC, parity, connectivity, datasheet and layout rules
+tools/export_fab.sh                 # Gerber zip, BOM and pick-and-place in elec/build/fab
 ngspice -b simulation/power_chain.cir
 esphome run firmware/milsblo.yaml
 ```
