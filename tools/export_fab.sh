@@ -26,4 +26,4 @@ mkdir -p "$OUT/gerbers"
 "$CLI" pcb export pos --format csv --units mm --side front --smd-only \
   --use-drill-file-origin --output "$OUT/milsblo-pos.csv" "$BOARD"
 
-(cd "$OUT/gerbers" && zip -q ../milsblo-gerbers.zip ./*)
+(cd "$OUT/gerbers" && python3 -m zipfile -c ../milsblo-gerbers.zip ./*)

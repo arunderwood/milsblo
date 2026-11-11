@@ -50,46 +50,6 @@
 	(attr through_hole)
 	(duplicate_pad_numbers_are_jumpers no)
 	(fp_line
-		(start -3.81 -3.81)
-		(end -3.81 -9.81)
-		(stroke
-			(width 0.25)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "c03b8843-3d39-47e0-b788-1529e29ab376")
-	)
-	(fp_line
-		(start -1.27 -3.81)
-		(end -1.27 -9.81)
-		(stroke
-			(width 0.25)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "4b4ec3a2-bee3-46f9-8632-04935d0981ff")
-	)
-	(fp_line
-		(start 1.27 -3.81)
-		(end 1.27 -9.81)
-		(stroke
-			(width 0.25)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "792aae2a-5a22-4408-a9ef-d9e9a3b8e90f")
-	)
-	(fp_line
-		(start 3.81 -3.81)
-		(end 3.81 -9.81)
-		(stroke
-			(width 0.25)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "496d8f5a-2278-4a3f-a80e-f01bc43681bb")
-	)
-	(fp_line
 		(start -5.08 -3.81)
 		(end -5.08 -3.81)
 		(stroke
